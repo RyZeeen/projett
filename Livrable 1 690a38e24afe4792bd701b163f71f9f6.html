@@ -1,0 +1,698 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Livrable 1</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="690a38e2-4afe-4792-bd70-1b163f71f9f6" class="page sans"><header><h1 class="page-title">Livrable 1</h1><p class="page-description"></p></header><div class="page-body"><p id="66d61b19-7221-4373-96a3-1d5f4c32429e" class="">
+</p><p id="0be9d557-ffa8-4c9e-bac3-c7d8fc11213a" class="">Organisation du réseau</p><p id="8d8e9b50-294d-4b5a-9695-9d15feb66622" class="">
+</p><p id="1134eab3-4f26-4e1c-94d5-6f2c50e66081" class="">Outils / Technologies utilisées : </p><p id="55ba4459-527a-4274-b234-677c23e41038" class="">Zero trust Architecture et SD-WAN (EDR également) : Palo alto Prisma SASE (Access and SD-WAN) </p><p id="64d3dfd0-cec9-4acf-be76-dfb2aee7dc78" class="">EDR/XDR : Palo Alto Cortex XDR</p><p id="9df2f4a6-2181-4619-8066-bb8f3ced3a83" class="">SIEM et gestion des logs : Splunk (ou Wazuh en OpenSource)</p><p id="5c45232f-2d8a-4962-a198-e4e665738e25" class="">IAM : Okta</p><p id="ba7f7391-3cef-49e5-99f2-cf77bd56fd2b" class="">Firewall : Palo Alto Next-Gen Firewall</p><p id="0d3e35d4-8cc1-4495-906a-b3837df7f2b5" class="">PRA / PCA : Veeam (Réplication cloud, restauration rapide, intégration avec AWS/Azure)</p><p id="7c9f2ba2-f6c3-4627-8575-b0e85b9a56c9" class="">Outils de monitoring : Prometheus et Grafana</p><p id="16dc9142-1260-4e10-bcf7-c2abf7088b75" class="">IPS : Palo Alto Networks Threat Prevention (IPS commercial) (IPS avec analyse comportementale et IA)</p><p id="ecd16e4b-049d-4e7b-bb98-82c7c2f634cf" class="">SOAR : Splunk SOAR</p><p id="af444e16-9331-4460-88de-f49194f24e16" class="">HAProxy</p><p id="23c9bf64-2300-47e8-b833-39e524c15ada" class="">
+</p><h2 id="c224f0cf-cd15-40e4-9123-2db026bde9bd" class=""><strong>1. Sécurité Zero Trust &amp; SD-WAN</strong></h2><p id="662a04dc-720a-45b6-99b0-b92651d2929c" class="">✅ <strong>Palo Alto Prisma SASE (Access &amp; SD-WAN)</strong></p><ul id="ce6d323e-50df-4794-a91b-f962512c4a4c" class="bulleted-list"><li style="list-style-type:disc">Intègre <strong>ZTNA 2.0</strong> et <strong>SD-WAN avancé</strong></li></ul><ul id="98f34b4e-9155-4828-bbe1-275f9fd11b8d" class="bulleted-list"><li style="list-style-type:disc">Sécurise l’accès aux applications sans VPN traditionnel</li></ul><ul id="3cd0b34d-a3b1-48a0-8435-dee240046535" class="bulleted-list"><li style="list-style-type:disc"><strong>Compatible avec Okta</strong> pour l’authentification Zero Trust</li></ul><p id="880a1da5-6a5c-4e07-ac0f-c3a28defd822" class=""><strong>👉 Cohérent et performant</strong>, surtout si ton infra est <strong>multi-cloud ou hybride</strong></p><p id="fbf50988-2f9e-4a89-ba46-b8dc60d83122" class="">🔹 <strong>Alternative / Complément ?</strong></p><ul id="5a31abd2-ddf9-4c55-bac4-f769ffc85fa3" class="bulleted-list"><li style="list-style-type:disc"><strong>Cisco SD-WAN (ex-Viptela)</strong> si besoin d’une solution <strong>plus réseau-centric</strong></li></ul><hr id="896a7713-97ac-44f2-aa4b-9ce971358283"/><h2 id="098e10b2-169e-4acc-9c06-a529f402b6f5" class=""><strong>🔹 2. Endpoint &amp; Threat Detection</strong></h2><p id="e1059e8c-b8dc-4d6f-a4c5-4070c9267bfa" class="">✅ <strong>Palo Alto Cortex XDR (EDR/XDR)</strong></p><ul id="4953adfa-4889-4b44-a5ca-f0cbd67aa6b1" class="bulleted-list"><li style="list-style-type:disc">Détection et réponse aux menaces sur <strong>endpoints, cloud, réseau</strong></li></ul><ul id="e16156dc-64db-4be6-92a8-365c5809563a" class="bulleted-list"><li style="list-style-type:disc">Intégration native avec <strong>Prisma Access &amp; Palo Alto NGFW</strong></li></ul><ul id="a9ff9aa2-813e-417c-800c-9d775e771865" class="bulleted-list"><li style="list-style-type:disc"><strong>Machine Learning &amp; Threat Hunting avancé</strong></li></ul><p id="5286d08f-1acb-460c-a141-202a886dd501" class=""><strong>👉 Excellente intégration avec ton stack Palo Alto</strong></p><p id="0de367f4-1d0c-4cf3-85cf-b65ce4788891" class="">🔹 <strong>Alternative / Complément ?</strong></p><ul id="65101ab1-613d-49e6-b328-6607b5757927" class="bulleted-list"><li style="list-style-type:disc"><strong>CrowdStrike Falcon</strong> si besoin d’une solution <strong>EDR/XDR ultra-légère</strong></li></ul><ul id="fdbc67ba-d555-400d-bcc4-d226e22b2a3a" class="bulleted-list"><li style="list-style-type:disc"><strong>SentinelOne</strong> pour une <strong>autonomie plus forte sur les endpoints</strong></li></ul><hr id="c6ab9a65-99ef-4ac8-a128-a5886b79e83e"/><h2 id="2636cff8-d656-4ac8-b052-504985fa82cf" class=""><strong>🔹 3. SIEM et Gestion des Logs</strong></h2><p id="cb7e25da-6aff-4f75-89e3-f6d35979371b" class="">✅ <strong>Splunk (ou Wazuh en OpenSource)</strong></p><ul id="53b4a0f4-ec0f-4d54-b556-824efb9fc937" class="bulleted-list"><li style="list-style-type:disc"><strong>Splunk</strong> = SIEM leader du marché, puissant pour <strong>corrélation &amp; threat hunting</strong></li></ul><ul id="ab86f746-7c32-4c37-abc0-ae999bdf4086" class="bulleted-list"><li style="list-style-type:disc"><strong>Wazuh</strong> = SIEM open-source, bon pour <strong>logs endpoint, conformité, vulnérabilités</strong></li></ul><p id="c7bd6d7c-e0d3-41a3-91c6-3314300c2d35" class=""><strong>👉 Splunk est top, mais Wazuh peut suffire si tu veux une alternative open-source</strong></p><p id="b46766a0-d75c-449d-aaea-f1282b97c6ab" class="">🔹 <strong>Alternative ?</strong></p><ul id="1b13c9b6-8540-47b0-b508-4cbe95f2a988" class="bulleted-list"><li style="list-style-type:disc"><strong>Elastic SIEM</strong> (Elasticsearch + Kibana + Beats) pour une <strong>solution scalable et open-source</strong></li></ul><ul id="0a8ee813-5e02-4da3-aa03-a338d24de54f" class="bulleted-list"><li style="list-style-type:disc"><strong>Microsoft Sentinel</strong> si tu es fortement intégré à <strong>Azure/Microsoft 365</strong></li></ul><hr id="77231da4-d8f3-4aaa-b4d8-cc441e15ccd5"/><h2 id="04da1bd6-82ab-409c-9cfa-fddfb35df55a" class=""><strong>🔹 4. Gestion des Identités et Accès (IAM)</strong></h2><p id="0f36a229-7c5b-4ad6-a4d2-50b2e88490be" class="">✅ <strong>Okta</strong></p><ul id="150a3327-77eb-442f-bcd0-613447284609" class="bulleted-list"><li style="list-style-type:disc">Authentification <strong>MFA, SSO, Zero Trust</strong></li></ul><ul id="ca189e3e-33c4-4aa1-bda7-51bb1710932b" class="bulleted-list"><li style="list-style-type:disc"><strong>Intégration avec Palo Alto Prisma Access</strong></li></ul><ul id="1dca678b-9ca2-44f6-9b58-f69e0d72a7a2" class="bulleted-list"><li style="list-style-type:disc"><strong>Gestion des rôles et accès conditionnels</strong></li></ul><p id="fd3dbf7a-b61e-4a1b-96ae-6551540deb1e" class=""><strong>👉 Okta est une des meilleures solutions IAM Zero Trust</strong></p><p id="280a98e1-14af-47e5-9ae9-0334cddb5602" class="">🔹 <strong>Alternative ?</strong></p><ul id="95f2383f-2bae-46ed-ba32-cf0d77e5a21f" class="bulleted-list"><li style="list-style-type:disc"><strong>Microsoft Entra ID (Azure AD)</strong> si ton infra est <strong>très Microsoft-oriented</strong></li></ul><hr id="b49a7779-dfdc-4774-ad20-e50200903954"/><h2 id="05016197-8d9f-4ea6-a03b-871888714c90" class=""><strong>🔹 5. Sécurité Réseau &amp; Firewall</strong></h2><p id="0c213e9a-3bfd-4786-b184-893ccf1380d8" class="">✅ <strong>Palo Alto Next-Gen Firewall (NGFW)</strong></p><ul id="976bbeef-8957-47f9-8b89-f4906cc3df6e" class="bulleted-list"><li style="list-style-type:disc"><strong>Détection des menaces en temps réel</strong> (App-ID, User-ID, Content-ID)</li></ul><ul id="440bbad8-a8bb-4e93-83cc-dc12d359b953" class="bulleted-list"><li style="list-style-type:disc"><strong>Intégration avec Cortex XDR, Prisma Access, et Okta</strong></li></ul><ul id="06f3d5b3-35e5-4621-846e-7306df06938a" class="bulleted-list"><li style="list-style-type:disc"><strong>Protection contre les attaques Zero Day (WildFire)</strong></li></ul><ul id="7e0109cd-1777-4ae4-a239-c3a974558bbd" class="bulleted-list"><li style="list-style-type:disc">*👉 Parfait si tu veux un firewall <strong>next-gen avec intégration ZTNA et cloud</strong></li></ul><p id="bb0439d7-f6de-4a4d-b189-c40c19b986c9" class="">🔹 <strong>Alternative ?</strong></p><ul id="4a54425e-e4d5-4075-b620-d3238f454df8" class="bulleted-list"><li style="list-style-type:disc"><strong>Fortinet FortiGate</strong> si besoin d’un <strong>firewall avec SD-WAN intégré</strong></li></ul><ul id="679157fc-e716-4d83-8c08-12210db5fd62" class="bulleted-list"><li style="list-style-type:disc"><strong>Cisco Firepower</strong> pour une <strong>intégration réseau avancée</strong></li></ul><hr id="3d7392fb-7117-4b76-9ef0-40e4e6164b9d"/><h2 id="aeb4c056-4339-4f25-93fd-940bab9dd648" class=""><strong>🔹 6. PRA / PCA &amp; Sauvegarde</strong></h2><p id="eb2a48a2-b189-46d1-9919-4a73b1be2c8e" class="">✅ <strong>Veeam (Réplication cloud, restauration rapide, AWS/Azure)</strong></p><ul id="2540429b-aaaf-4d19-a2ca-0de2f08bbd34" class="bulleted-list"><li style="list-style-type:disc"><strong>Sauvegarde fiable avec réplication cloud hybride</strong></li></ul><ul id="4fe40fe5-41e2-4829-be0a-ee661866c882" class="bulleted-list"><li style="list-style-type:disc"><strong>Recovery Time Objective (RTO) rapide</strong></li></ul><ul id="e349e3a5-a8b9-45f9-a8ed-a7214457c9bd" class="bulleted-list"><li style="list-style-type:disc"><strong>Protection contre ransomwares (immutabilité, test de restauration)</strong></li></ul><p id="2fdea10b-ed88-472d-9e53-727f688adedf" class=""><strong>👉 Veeam est top, surtout si ton infra est hybride AWS/Azure</strong></p><p id="788bb1b9-1040-4f8f-9841-e406f890a72b" class="">🔹 <strong>Alternative ?</strong></p><ul id="53687e8d-08a9-450e-9588-7661043f9605" class="bulleted-list"><li style="list-style-type:disc"><strong>Zerto</strong> si besoin d’une <strong>réplication en quasi-temps réel</strong></li></ul><ul id="44a978f0-21ea-4a89-ad25-9da7eaa11873" class="bulleted-list"><li style="list-style-type:disc"><strong>Rubrik Polaris</strong> si tu veux une <strong>approche SaaS + automatisation</strong></li></ul><hr id="a91ca781-5023-4087-80b0-64e9b08d440c"/><h2 id="9c148d7d-505d-4f56-b11a-82382f4b0188" class=""><strong>🔹 7. Load Balancing &amp; Proxy</strong></h2><p id="9af45e29-3576-43ca-899c-8bd1b1791c0d" class="">✅ <strong>HAProxy</strong></p><ul id="f9bf1af0-81f2-4827-a721-ea0ef1d328db" class="bulleted-list"><li style="list-style-type:disc"><strong>Performant, open-source, haute disponibilité</strong></li></ul><ul id="d675b682-e789-412b-8e7a-5ecd664d686a" class="bulleted-list"><li style="list-style-type:disc"><strong>Gestion du trafic applicatif &amp; équilibrage</strong></li></ul><ul id="7cf82bf4-47c6-459d-bd40-7aa1f31cbe2d" class="bulleted-list"><li style="list-style-type:disc"><strong>Compatible avec Kubernetes et microservices</strong></li></ul><p id="726f7b27-f361-4ed3-aa4c-d291493da1df" class=""><strong>👉 Très bon choix pour load balancing applicatif</strong></p><p id="116f9f66-b844-48ce-961a-c28c5828702f" class="">🔹 <strong>Alternative ?</strong></p><ul id="99bce1b6-2f01-49ad-be01-56b839d806c4" class="bulleted-list"><li style="list-style-type:disc"><strong>F5 BIG-IP</strong> si besoin de <strong>features avancées (WAF, SSL offloading)</strong></li></ul><ul id="e6e8f9bb-dfec-43a5-9c30-c01757d67559" class="bulleted-list"><li style="list-style-type:disc"><strong>NGINX Plus</strong> pour une <strong>alternative premium avec support</strong></li></ul><hr id="917e4c82-ca42-4bb1-a8b7-db14cd2532d4"/><h2 id="14865a1e-a92d-4386-b3ec-e22ec56f0d6d" class=""><strong>🔹 8. Architecture globale : cohérence et recommandations</strong></h2><h3 id="63689a0b-c7e0-479a-b68b-d7321d995a39" class="">✅ <strong>Points forts</strong></h3><p id="bb6819e1-95d7-49ac-b8e8-5e0407e104da" class="">✔️ <strong>Sécurité Zero Trust complète</strong> (ZTNA 2.0 + XDR + NGFW)</p><p id="ef03705a-163e-421a-9913-be412687e908" class="">✔️ <strong>SIEM &amp; Logs centralisés</strong> (Splunk ou Wazuh)</p><p id="99be9f89-8b70-4cca-bda3-b11fcc1ab062" class="">✔️ <strong>Réseau optimisé avec SD-WAN &amp; Load Balancing</strong></p><p id="090548ce-cc66-4183-981b-83d938646cd9" class="">✔️ <strong>PRA/PCA robuste avec Veeam</strong></p><h3 id="9b6b9cdc-4219-45f8-98dc-444c95f59d16" class="">🔹 <strong>Améliorations possibles</strong></h3><p id="72f99d82-d059-4b58-935c-ec32bea9662d" class="">1️⃣ <strong>Intégrer un SOAR (Security Orchestration &amp; Response)</strong></p><ul id="b40a332b-e723-4b3e-8acd-e1ab39211b30" class="bulleted-list"><li style="list-style-type:disc"><strong>Palo Alto XSOAR</strong> (ex-Demisto) pour automatiser les réponses aux incidents</li></ul><ul id="71bff6ff-081f-4cad-91b6-557fc7b17f87" class="bulleted-list"><li style="list-style-type:disc"><strong>Splunk SOAR (Phantom)</strong> si déjà Splunk utilisé</li></ul><p id="ca90d62e-5611-4013-ae78-823018ada14d" class="">2️⃣ <strong>Renforcer la détection des menaces avancées</strong></p><ul id="608d3aca-0fbc-4701-bc14-a26f693bc47b" class="bulleted-list"><li style="list-style-type:disc"><strong>Threat Intelligence</strong> : Palo Alto AutoFocus, CrowdStrike ThreatGraph</li></ul><ul id="2b56c0ab-a655-4e7f-997e-55f9b9b0f2ad" class="bulleted-list"><li style="list-style-type:disc"><strong>NDR (Network Detection &amp; Response)</strong> : <strong>Darktrace</strong> ou <strong>Corelight</strong></li></ul><p id="164b9f25-9110-4d12-a93d-aaf2bf6c6fc3" class="">3️⃣ <strong>Superviser le réseau &amp; cloud</strong></p><ul id="6c016044-3926-4181-b1c7-eb8de5bba529" class="bulleted-list"><li style="list-style-type:disc"><strong>Prometheus + Grafana</strong> pour monitoring <strong>Kubernetes &amp; cloud</strong></li></ul><ul id="239da636-20ae-4c35-bc7c-dc0c85f03bbd" class="bulleted-list"><li style="list-style-type:disc"><strong>Cisco ThousandEyes</strong> si besoin d’une <strong>visibilité réseau end-to-end</strong></li></ul><h2 id="a1706ad5-9faa-431d-8c6b-ac13bc34eba6" class="">Questions à poser : </h2><p id="43ae6e3e-ad93-4bba-8689-1cfdfef7ce0d" class="">
+</p><p id="e524f9e5-0825-4e27-b18b-618fba456e08" class="">Sommes-nous contraint à utiliser les technologies imposées dans les pages 12 à 14 ?</p><p id="3ceac632-fc58-4ca4-8f3c-31a75adcfc2c" class="">
+</p><p id="8779d69e-2850-4c29-9105-4673b96c1b59" class="">Y a-t-il déjà eu des cyberattaques contre l’entreprise, dans le passé ?</p><p id="91703a92-e473-46d3-8483-0313f1aba8b8" class="">
+</p><p id="5db7b0c1-9f22-499b-a4ca-6953450e69ef" class="">Y a-t-il des besoins spécifiques en termes de connectivités ?</p><p id="730b9578-7117-4499-bcb9-39e0b15dc35b" class="">
+</p><p id="1dab34b8-d1df-4049-8318-46114725c2cf" class="">Quelles sont les types de données qui circuleront dans le réseau ? (sensibles ?)</p><p id="0d1729c8-d9b4-4c3e-b5a6-95310edb9d09" class="">
+</p><p id="81c044e9-949e-490c-8f16-31b282b016d2" class="">Avez-vous une idée concernant les VLAN, c’est à dire quels sont les VLANs nécessaires et quelles ressources seront associées à chaque VLAN ?</p><p id="8e4a7ed0-f52e-42c5-b0f0-ca5f372d1939" class="">
+</p><p id="c1bc18d4-6f6c-4932-968b-92e69ea069fa" class="">Préférence au niveau des solutions EDR/XDR ?</p><p id="0367adc9-8206-4652-bec8-86e59d6cd229" class="">
+</p><p id="5b438b74-43be-436b-9f87-9d5266e5bf04" class="">
+</p><p id="322d64a0-70ed-4bdf-b383-2bd87c39112b" class="">Souhaitez-vous avoir des outils du même groupe, qui sont donc tous dans le même écosystème ?</p><p id="fd0a5e98-541b-4e5e-8c95-a5461812b218" class="">
+</p><p id="e8c9f9fa-59f5-41eb-bf81-4ff08c37d7ff" class="">PRA / PCA, un document par services, ou même document qui regroupe tout ?</p><p id="4547370a-1f5c-4ddd-bcfb-e946c5aecf8c" class="">
+</p><p id="15c456b1-6ac0-4f5f-9722-96eabce9f0e0" class="">Nous ne pouvons pas allier Rapide, Qualité et Quantité avec le temps que nous avons, nous avons 2 options : soit tout réaliser mais partiellement configuré (en terme de sécurité et d’optimisation), ou bien soit partiellement réalisé le travail mais configuré correctement.</p><p id="95483b94-7cef-4ff2-babd-9c5ee0ba3da0" class="">
+</p><p id="0c0d3ce9-4b40-4923-9b00-8023f5950348" class="">
+</p><p id="4e73a2b4-8032-425a-a791-1ebfff5c4b3a" class="">Pas de limite au niveau de l’argent</p><p id="fefadb91-7853-47c7-a740-dc4156ad51f6" class="">SD-WAN : </p><p id="c0addf3b-0a1b-4867-a62d-80c16b0466de" class="">Rajouter le hub sur le schéma</p><p id="b9fe55e0-f6d1-48a8-88d4-80f8529e279b" class="">EDR / XDR : utiliser EDR et XDR</p><p id="803711b6-9671-4a56-9374-91ee9877df4c" class="">Tous l’admin sur le serveur d’admin</p><p id="82cf33a5-4ae5-4752-95a1-253a2f3bd876" class="">Prendre en compte les normes suisses</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
