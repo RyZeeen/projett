@@ -1,0 +1,684 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Stratégie de gestion des firmwares et des mises à jour pour sécuriser les équipements.</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1af94c02-d31e-8099-9a09-e76a72873e7f" class="page sans"><header><h1 class="page-title">Stratégie de gestion des firmwares et des mises à jour pour sécuriser les équipements.</h1><p class="page-description"></p></header><div class="page-body"><p id="1af94c02-d31e-8035-978c-c13d1f7c2cb9" class="">
+</p><h2 id="f0a75fe9-1216-43fb-95db-34ef37ea5181" class="">🎯 Objectif</h2><p id="251847c5-ea9b-4ffb-aeac-18b2e6cad59a" class="">Garantir la <strong>sécurité</strong>, la <strong>stabilité</strong>, et la <strong>performance</strong> de l’infrastructure IT répartie sur deux sites (Paris &amp; Genève), en <strong>maîtrisant les mises à jour</strong> des firmwares, OS, logiciels et composants réseau.</p><hr id="a24ffad8-7731-4feb-a268-fa4440ab977c"/><h2 id="6cd3d4f7-0373-4633-857a-cf3baea2694c" class="">🧱 Contexte de l&#x27;infrastructure</h2><ul id="8d987883-3b6c-4ece-abac-bcf1883b070c" class="bulleted-list"><li style="list-style-type:disc"><strong>2 sites physiques</strong> : Paris &amp; Genève</li></ul><ul id="d2f24fc8-6d3a-417a-993d-58a40629d569" class="bulleted-list"><li style="list-style-type:disc">Interconnexion via <strong>SD-WAN</strong></li></ul><ul id="86d57599-68a7-4d37-98e7-1ad700e7b02e" class="bulleted-list"><li style="list-style-type:disc"><strong>ZTNA</strong> (Zero Trust Network Access) pour les utilisateurs sédentaires</li></ul><ul id="ab7e8fc2-bdff-4ce1-bc92-fd16a829b8af" class="bulleted-list"><li style="list-style-type:disc">Serveurs applicatifs sur <strong>Azure</strong> et <strong>AWS</strong></li></ul><ul id="9e1f6150-282c-4054-8ade-60f091ff2ea9" class="bulleted-list"><li style="list-style-type:disc"><strong>Équipements physiques</strong> : postes clients, serveurs locaux, firewalls, switches, AP Wi-Fi, imprimantes, etc.</li></ul><hr id="97a7ce58-a97b-40c3-9a3b-1beebc1fab8d"/><h2 id="1feac32b-a534-4198-971b-35cb53645a6d" class="">🛠️ Stratégie de gestion des firmwares &amp; MAJ</h2><h3 id="530a37bb-c0f4-4cea-938b-0032d441489c" class="">1. 🔍 <strong>Inventaire des équipements</strong></h3><p id="2d2b2e9b-63fa-4586-8089-0682ae1ffb12" class="">Créer et maintenir une base de données (CMDB) regroupant :</p><ul id="22388f7c-a6d5-4d45-811e-124c7ed62ad3" class="bulleted-list"><li style="list-style-type:disc">Matériel physique (modèle, firmware actuel, IP, etc.)</li></ul><ul id="59a37ffb-d5a4-445d-b16a-b2dcbd48001a" class="bulleted-list"><li style="list-style-type:disc">Logiciels installés (versions, date de dernière mise à jour)</li></ul><ul id="4041e66b-7c68-4ea6-955e-fc0e27ad5b69" class="bulleted-list"><li style="list-style-type:disc">OS (serveurs et postes)</li></ul><ul id="23f3fddb-04c3-4d21-98c8-372306b06e8a" class="bulleted-list"><li style="list-style-type:disc">Équipements réseau (firewalls, switches, AP, etc.)</li></ul><blockquote id="531e3504-3158-498b-b49e-8582a014c614" class="">Outils : GLPI, Lansweeper, OCS Inventory, ServiceNow, etc.</blockquote><hr id="d5dec648-d059-4b7d-8685-e2581cf8c923"/><h3 id="ec2cd485-8bdb-4275-abbf-4ab4458d4569" class="">2. 🔄 <strong>Politique de mises à jour (Patch Management)</strong></h3><h3 id="66ba8b71-caf0-4a72-9978-31bfdc7d8883" class="">a. <strong>Classification des équipements</strong></h3><ul id="31c1d08b-cc68-4c78-9659-aad9a1db912a" class="bulleted-list"><li style="list-style-type:disc">🔒 Critiques : firewalls, routeurs SD-WAN, serveurs exposés (cloud inclus), AD, etc.</li></ul><ul id="fb6ff806-d992-4d86-9c42-cf069c7a0f94" class="bulleted-list"><li style="list-style-type:disc">🧠 Stratégiques : switches, NAS, postes d’admin</li></ul><ul id="049cf172-3d9f-465a-8614-2a2d2b2b89cc" class="bulleted-list"><li style="list-style-type:disc">🖥️ Standard : postes utilisateurs, imprimantes</li></ul><h3 id="cebc32de-0df8-4126-a513-c5a6607372fc" class="">b. <strong>Fréquence des MAJ</strong></h3><ul id="c9c868ac-68aa-46d2-b03d-44a378bc1d33" class="bulleted-list"><li style="list-style-type:disc">Critiques : chaque mois + updates de sécurité ASAP</li></ul><ul id="4706d1b8-424c-4f85-af89-6149dc236b18" class="bulleted-list"><li style="list-style-type:disc">Stratégiques : mensuel</li></ul><ul id="0accafbe-e0de-4c82-81a7-50b8c4261210" class="bulleted-list"><li style="list-style-type:disc">Standard : trimestriel ou mensuel en cas de CVE critique</li></ul><h3 id="af83b41c-6e56-4aaa-9269-83c596be7650" class="">c. <strong>Type de mise à jour</strong></h3><ul id="fbb3876d-4835-4ca8-85c5-5b422a063a9c" class="bulleted-list"><li style="list-style-type:disc">🔧 Firmware</li></ul><ul id="4a72c1fa-ecac-44e4-8aa9-a8b7b407a2ad" class="bulleted-list"><li style="list-style-type:disc">🧱 Microcode (CPU/BIOS)</li></ul><ul id="0d85ac13-0340-4c4d-a0f4-8f43ad850a21" class="bulleted-list"><li style="list-style-type:disc">📦 OS (Windows, Linux…)</li></ul><ul id="198bafc5-b03d-4f33-9338-88a747a5a56f" class="bulleted-list"><li style="list-style-type:disc">☁️ Cloud (Azure/AWS patching policy)</li></ul><ul id="e377dec7-335a-4c03-90c7-8b63eaaed02c" class="bulleted-list"><li style="list-style-type:disc">🛡️ Logiciels de sécurité (EDR, VPN client, ZTNA client, etc.)</li></ul><hr id="c5626d30-acaf-4ac9-b7b7-439c8ca8d090"/><h3 id="591d7b0f-5910-44a0-ad33-7b562bea18ec" class="">3. 🧪 <strong>Validation &amp; Tests</strong></h3><p id="b6f9be2d-2132-44c3-a2b2-57e11483e187" class="">Avant déploiement large :</p><ul id="15b39a52-e74a-4f88-b7c4-f5b98ae52d0c" class="bulleted-list"><li style="list-style-type:disc">Maintenir un environnement <strong>de test/lab</strong> par site</li></ul><ul id="b52ae17f-ec9e-448c-8231-5fcc5938f865" class="bulleted-list"><li style="list-style-type:disc">Mettre en place un <strong>canary group</strong> (petit panel d’équipements) pour valider les mises à jour</li></ul><ul id="95a471f2-4d68-4271-b3d7-4cc102506fd2" class="bulleted-list"><li style="list-style-type:disc">Suivi via une checklist :<ul id="2fa191d2-0a5b-4395-b579-abfaf54f7b0d" class="bulleted-list"><li style="list-style-type:circle">Boot correct</li></ul><ul id="13ffeb3c-0e6a-43b8-b921-e169cd124a35" class="bulleted-list"><li style="list-style-type:circle">Logs d’erreurs</li></ul><ul id="7b5a4f96-7076-404f-a330-a9b9673281f2" class="bulleted-list"><li style="list-style-type:circle">Compatibilité applicative</li></ul><ul id="db9fe4f4-92fc-422d-8c33-00795a435998" class="bulleted-list"><li style="list-style-type:circle">Régression fonctionnelle</li></ul></li></ul><hr id="eb97dbed-4bdf-4fd9-a172-105738a9016a"/><h3 id="2d057d52-5f37-47d7-9c43-b326f4a4ef18" class="">4. 📦 <strong>Déploiement automatisé</strong></h3><h3 id="280853c8-9423-4eb4-8a42-0ecb2822b323" class="">a. <strong>Postes et serveurs</strong></h3><ul id="ca92d90d-9c08-4b0f-8506-3e952623946c" class="bulleted-list"><li style="list-style-type:disc"><strong>WSUS</strong>, <strong>Intune</strong>, <strong>SCCM</strong> ou <strong>Ansible</strong> pour les MAJ Windows/Linux</li></ul><ul id="540d9428-fec9-412a-b30a-5a6623f282ef" class="bulleted-list"><li style="list-style-type:disc"><strong>Scripts Ansible/Terraform</strong> pour les MAJ dans le cloud</li></ul><ul id="e23ca82b-0420-46b7-85f9-9eff0e99353f" class="bulleted-list"><li style="list-style-type:disc">Intégration dans CI/CD pour serveurs cloud si possible</li></ul><h3 id="e5a6a331-8aaa-43ae-be41-303545aa168e" class="">b. <strong>Équipements réseau</strong></h3><ul id="a5b1643f-f5fd-47f1-98d2-00ce5c7e3606" class="bulleted-list"><li style="list-style-type:disc">Automatiser via :<ul id="dcc44c64-8957-4d50-b97a-ce3d6ad64786" class="bulleted-list"><li style="list-style-type:circle">API du constructeur (Cisco, Fortinet…)</li></ul><ul id="d3c966dc-320f-4c8f-8e2b-d1fcd5e5b900" class="bulleted-list"><li style="list-style-type:circle">Ansible ou Python (Netmiko, NAPALM)</li></ul><ul id="224d07a9-667f-4c45-b3b4-6ecab498eb3d" class="bulleted-list"><li style="list-style-type:circle">Outils constructeurs : FortiManager, Aruba Central, Meraki Dashboard, etc.</li></ul></li></ul><hr id="123b6518-ca07-4f6b-a8d2-bbcbbc8bfe0b"/><h3 id="0c4950e0-034e-409b-ab32-ad1a8a2641c5" class="">5. 🛡️ <strong>Supervision &amp; reporting</strong></h3><ul id="6dd358ac-2671-413d-95a8-b188a284012c" class="bulleted-list"><li style="list-style-type:disc">Centraliser les logs de MAJ et firmware (ex: via <strong>Syslog</strong> ou <strong>ELK stack</strong>)</li></ul><ul id="17b5584a-5dbb-400b-9e44-52cf8a804970" class="bulleted-list"><li style="list-style-type:disc">Suivi des versions dans un dashboard (Grafana, Power BI…)</li></ul><ul id="a3ee0caf-b041-41d7-9ff4-ee62f1281ed7" class="bulleted-list"><li style="list-style-type:disc">Alertes sur :<ul id="c822e548-edc3-4b27-bd34-5a86133a508c" class="bulleted-list"><li style="list-style-type:circle">Échecs de MAJ</li></ul><ul id="4c0a1cce-91f3-4ea1-ab19-de741246b8e6" class="bulleted-list"><li style="list-style-type:circle">Versions obsolètes</li></ul><ul id="ef024cd2-6574-4924-9158-81f85b7905f6" class="bulleted-list"><li style="list-style-type:circle">Nouveaux CVE liés aux firmwares</li></ul></li></ul><hr id="1eacfa14-ad51-4782-b38b-8faac319a899"/><h3 id="841c5d92-092e-436e-b7e4-a548264920df" class="">6. 🧾 <strong>Documentation &amp; politique écrite</strong></h3><ul id="e76451a5-d2a0-450f-b877-76e8277d52c4" class="bulleted-list"><li style="list-style-type:disc">Définir une <strong>politique écrite de patch management</strong></li></ul><ul id="5e7d2185-9741-4fa4-bb23-836a2c1e2e15" class="bulleted-list"><li style="list-style-type:disc">Ajouter un plan de <strong>rollback</strong> en cas d’échec de mise à jour</li></ul><ul id="40f19368-3a6e-4afb-9188-3ba41931b9f3" class="bulleted-list"><li style="list-style-type:disc">Tracer les opérations (par ticketing ou change log)</li></ul><hr id="eab72247-9aa9-46ca-8da3-a3f923f115f8"/><h3 id="47e144a3-5313-4747-ac7d-cd2021be6239" class="">7. 🔐 <strong>Sécurité &amp; conformité</strong></h3><ul id="0f9f91b8-5fe8-4352-b383-9063a94aa900" class="bulleted-list"><li style="list-style-type:disc">Activer <strong>Secure Boot</strong> sur les équipements</li></ul><ul id="5f37550d-079b-4afb-b62d-a023b70da6bb" class="bulleted-list"><li style="list-style-type:disc">Mettre à jour les <strong>agents ZTNA / EDR</strong></li></ul><ul id="e4f621fe-2688-4ba5-884b-6594a83f43eb" class="bulleted-list"><li style="list-style-type:disc">Vérifier la conformité des firmwares avec des référentiels (ex : ANSSI, NIST)</li></ul><ul id="f393748b-d893-4c15-8f55-bc818694c094" class="bulleted-list"><li style="list-style-type:disc">Appliquer les recommandations <strong>constructeur</strong> et <strong>CIS Benchmark</strong></li></ul><hr id="3e1d8b31-26ec-4824-9e54-884281102afa"/><h3 id="67dd99e0-698f-45c4-9dbb-c2e505f51a5e" class="">8. 🌐 <strong>Cloud (Azure / AWS)</strong></h3><h3 id="40f138f1-972c-4aa0-a057-d50a3484871d" class="">Azure :</h3><ul id="b3446abd-25da-47f3-a43b-7edb0a94f708" class="bulleted-list"><li style="list-style-type:disc">Utiliser <strong>Azure Update Management</strong></li></ul><ul id="cee92448-fd01-44b6-b733-70efefd801be" class="bulleted-list"><li style="list-style-type:disc">Intégrer à <strong>Azure Security Center</strong></li></ul><ul id="417d1d2a-c0c4-4b99-bdf5-0883f6c4b357" class="bulleted-list"><li style="list-style-type:disc">Suivi des MAJ dans <strong>Log Analytics</strong></li></ul><h3 id="a79cb33e-ae4a-46ff-afa1-0c88c4ae22c8" class="">AWS :</h3><ul id="7bb6694e-00a4-457b-92d4-7388c6ec7be5" class="bulleted-list"><li style="list-style-type:disc">Utiliser <strong>AWS Systems Manager Patch Manager</strong></li></ul><ul id="1dba48ac-301b-46ed-ac57-d92bb63b2757" class="bulleted-list"><li style="list-style-type:disc">Intégrer dans <strong>CloudWatch</strong> et <strong>Security Hub</strong></li></ul><ul id="2be44f1c-9346-45fe-aa7a-e6a23d6cd0e7" class="bulleted-list"><li style="list-style-type:disc">Gérer les MAJ via <strong>SSM Agent</strong></li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,684 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Déploiement de solutions IDS/IPS, segmentation Zero Trust, gestion des accès par rôle</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1af94c02-d31e-804f-94c4-f2918233517e" class="page sans"><header><h1 class="page-title">Déploiement de solutions IDS/IPS, segmentation Zero Trust, gestion des accès par rôle</h1><p class="page-description"></p></header><div class="page-body"><p id="1af94c02-d31e-807f-a7fd-c78ae8a43c63" class="">
+</p><h2 id="b9e15668-4af9-4994-a349-e88bf30ecf9d" class="">🧱 1️⃣ Contexte de l’infrastructure</h2><table id="32182f98-afa6-4ef2-89a2-15e49c01a922" class="simple-table"><tbody><tr id="3ff1bb63-96b1-4849-8141-0c59929d43eb"><td id="d?js" class="">Élément</td><td id="\DB{" class="">Description</td></tr><tr id="f3292fe5-4f92-40ca-9dec-db29db7a9ac3"><td id="d?js" class=""><strong>Sites</strong></td><td id="\DB{" class="">2 sites physiques : Paris &amp; Genève</td></tr><tr id="ae6cbe5e-f17e-474a-8fe2-ba85fe1db2ee"><td id="d?js" class=""><strong>Interconnexion</strong></td><td id="\DB{" class="">SD-WAN</td></tr><tr id="a1a1a953-2237-4693-801e-86b4f82a87ff"><td id="d?js" class=""><strong>Accès utilisateur</strong></td><td id="\DB{" class="">ZTNA (Zero Trust Network Access) pour les sédentaires</td></tr><tr id="34366c59-1ade-4fdf-ae67-278e06d5ab37"><td id="d?js" class=""><strong>Cloud</strong></td><td id="\DB{" class="">Azure &amp; AWS (serveurs applicatifs)</td></tr><tr id="35090a3f-f88f-4b70-87e9-69f802140807"><td id="d?js" class=""><strong>Équipements</strong></td><td id="\DB{" class="">Serveurs + postes utilisateurs physiques sur site</td></tr><tr id="706ae877-d2ab-41fa-8ca6-08c58788806f"><td id="d?js" class=""><strong>Sécurité actuelle</strong></td><td id="\DB{" class="">Firewall, authentification forte, sauvegardes cloud/local</td></tr></tbody></table><hr id="44f77592-1b4c-4061-a1a4-962bc481943f"/><h1 id="8e6ff2b1-68fe-4d9f-82b4-967e6306c065" class="">🛡️ 2️⃣ IDS/IPS : Intrusion Detection &amp; Prevention</h1><h3 id="599ee5ba-d236-4d38-bb35-f91e335b78e2" class="">a. 🔍 Objectifs IDS/IPS</h3><ul id="f074bc97-f2bf-4b29-9617-eca4bba58c69" class="bulleted-list"><li style="list-style-type:disc"><strong>Détection en temps réel</strong> des attaques réseau/applicatives</li></ul><ul id="4c0981d5-3eb5-4169-ac8f-799854dcc652" class="bulleted-list"><li style="list-style-type:disc"><strong>Prévention</strong> des intrusions en bloquant les flux malveillants</li></ul><ul id="e63f3c3d-e194-4661-bc3f-fe109f6e4b57" class="bulleted-list"><li style="list-style-type:disc">Visibilité sur :<ul id="e18dcc1b-7ace-4599-aed2-8f43c67aef47" class="bulleted-list"><li style="list-style-type:circle">Attaques réseau (scans, DoS)</li></ul><ul id="88720c94-fe98-4482-9d3f-5122377cf9dc" class="bulleted-list"><li style="list-style-type:circle">Intrusions applicatives (SQLi, XSS)</li></ul><ul id="30d1f4ff-4ed6-4af8-87ab-be3abd980b0a" class="bulleted-list"><li style="list-style-type:circle">Anomalies internes (latence, volumétrie anormale)</li></ul></li></ul><h3 id="ce718d75-2d63-42fe-a7dd-af3cba77c524" class="">b. 🛠️ Déploiement</h3><table id="f2446be3-b122-4a2c-9571-7899534012cf" class="simple-table"><tbody><tr id="ac6076d2-aedb-4340-a4a4-2ab35ebe03be"><td id="WFeo" class="">Zone</td><td id="NGf{" class="">Solution recommandée</td><td id="@R&lt;w" class="">Mode</td><td id="X_aA" class="">Position</td></tr><tr id="c490da74-d45c-493d-b1f0-e9257d90e5fd"><td id="WFeo" class="">SD-WAN</td><td id="NGf{" class="">IDS/IPS intégré (ex. Fortinet, Palo Alto)</td><td id="@R&lt;w" class="">Inline (prévention)</td><td id="X_aA" class="">Entre WAN ↔ LAN</td></tr><tr id="c6eba88a-463e-4d97-afa3-77df0f0953e5"><td id="WFeo" class="">Paris/Genève LAN</td><td id="NGf{" class="">Suricata / Snort (open source)</td><td id="@R&lt;w" class="">Passive (détection)</td><td id="X_aA" class="">SPAN/Mirror port switch</td></tr><tr id="056d8acb-0b37-48ac-b108-cc794cd5198b"><td id="WFeo" class="">Cloud (Azure/AWS)</td><td id="NGf{" class="">- Azure: Microsoft Defender for Cloud- AWS: GuardDuty + IDS partenaire (ex : Trend Micro, Suricata)</td><td id="@R&lt;w" class="">Inline (Azure/AWS Gateway)</td><td id="X_aA" class="">Cloud front-end + réseau interne</td></tr></tbody></table><h3 id="80055834-826f-4904-9462-3b95bf273af0" class="">c. 🔗 Intégration &amp; supervision</h3><ul id="d7ef3a1f-806e-4a02-bd3b-8ee4b4264f29" class="bulleted-list"><li style="list-style-type:disc">Centralisation des logs : <strong>SIEM (Splunk, ELK)</strong></li></ul><ul id="72b4b465-3f7d-4b08-aa23-d5d82ee067af" class="bulleted-list"><li style="list-style-type:disc">Alerting : Zabbix / Grafana + email &amp; SMS</li></ul><ul id="8198c1b6-5e45-45b4-beb0-90a257b2900d" class="bulleted-list"><li style="list-style-type:disc">Corrélation : liaison avec EDR cloud &amp; logs applicatifs</li></ul><h3 id="51b20a72-a13f-49d6-a708-924e6d1d1769" class="">d. 🔄 Maintenance &amp; test</h3><ul id="3e23319f-b0ae-4801-844d-481d537915e3" class="bulleted-list"><li style="list-style-type:disc"><strong>Règles IPS</strong> : mise à jour auto (Suricata, fournisseurs)</li></ul><ul id="2a01c844-b0ba-42ea-bbb6-8de671c9857f" class="bulleted-list"><li style="list-style-type:disc"><strong>Tests d’efficacité</strong> : Metasploit, Kali Linux (trimestriel)</li></ul><ul id="81082fdf-7b27-4acc-99a7-c857302dc758" class="bulleted-list"><li style="list-style-type:disc"><strong>Journalisation</strong> : incidents bloqués, faux positifs, ajustements des règles</li></ul><hr id="d6cd2663-4014-41cd-acf3-844ed4124a1a"/><h1 id="9f22be68-04fc-436a-b218-5f93fb670509" class="">🏗️ 3️⃣ Segmentation Zero Trust (ZTNA + LAN)</h1><h3 id="e15d0517-b34a-45fb-be4d-583e71687862" class="">a. 🔎 Objectifs ZTNA</h3><ul id="8c7a2043-e5e6-4de5-9553-bac090e56e85" class="bulleted-list"><li style="list-style-type:disc">Interdire toute connexion par défaut (&quot;deny all&quot;)</li></ul><ul id="33aa27ff-7e76-4147-8772-3579228b954f" class="bulleted-list"><li style="list-style-type:disc">Autoriser <strong>uniquement les flux strictement nécessaires</strong></li></ul><ul id="c914a895-a0ff-4a86-98d5-044a8a44cab2" class="bulleted-list"><li style="list-style-type:disc">Appliquer une politique : <strong>authentification + évaluation du contexte + politique réseau</strong></li></ul><h3 id="bf727133-1464-41bd-aab6-4076984bb2aa" class="">b. 🖧 Segmentation réseau physique (Paris &amp; Genève)</h3><table id="43bb1c05-7a9b-42b1-81c1-b4699376c913" class="simple-table"><tbody><tr id="696340fe-fec4-4166-9b2c-fa7726f893ce"><td id="`w:J" class="">Zone</td><td id="LFgg" class="">VLAN/Zone</td><td id="}ApN" class="">Exemple</td></tr><tr id="9af934f6-2563-4600-aef2-2a2b77c813cf"><td id="`w:J" class="">VLAN 10</td><td id="LFgg" class="">Administratif</td><td id="}ApN" class="">Serveurs internes</td></tr><tr id="4c6a01b5-0c8f-43e7-8b08-6f3112cd5236"><td id="`w:J" class="">VLAN 20</td><td id="LFgg" class="">Utilisateurs métiers</td><td id="}ApN" class="">Postes utilisateurs</td></tr><tr id="5922a406-e9f7-44b4-98e3-a05b0cb4daca"><td id="`w:J" class="">VLAN 30</td><td id="LFgg" class="">Invités</td><td id="}ApN" class="">Accès Internet uniquement</td></tr><tr id="1f494bb4-f6d0-466a-8a23-62b9e64b6d49"><td id="`w:J" class="">VLAN 40</td><td id="LFgg" class="">IoT / imprimantes</td><td id="}ApN" class="">Pas d&#x27;accès serveur</td></tr><tr id="91fa77c7-095b-4500-92e6-1e028d99135e"><td id="`w:J" class="">VLAN 50</td><td id="LFgg" class="">Sécurité (caméras, alarme)</td><td id="}ApN" class="">Accès isolé</td></tr><tr id="634670c8-580a-491b-9ff0-cfd4644200ae"><td id="`w:J" class="">DMZ</td><td id="LFgg" class="">Services exposés (web, email)</td><td id="}ApN" class="">Isolé du LAN</td></tr></tbody></table><ul id="02b035e6-bbb7-4621-b491-118eada2ecfd" class="bulleted-list"><li style="list-style-type:disc"><strong>Pare-feu inter-VLAN strict</strong> (ex : deny all par défaut + règles fines)</li></ul><ul id="1044336d-d2cf-414e-9f13-087b9813b216" class="bulleted-list"><li style="list-style-type:disc"><strong>Micro-segmentation</strong> : sur les serveurs sensibles (ex : pare-feu local Azure NSG / AWS SG)</li></ul><h3 id="d1f550fe-a22b-4bf7-97ee-e64fe60826ad" class="">c. 🌐 Segmentation cloud (Azure &amp; AWS)</h3><ul id="8ff3d8c1-d9e3-4a79-a4d3-caefe47408ae" class="bulleted-list"><li style="list-style-type:disc">Azure NSG (Network Security Groups)</li></ul><ul id="7bc7eedf-fc34-492a-b0cb-d5420288f973" class="bulleted-list"><li style="list-style-type:disc">AWS Security Groups + ACL réseau</li></ul><ul id="53929e75-cdb3-463f-816f-5f3c2d3fd4c3" class="bulleted-list"><li style="list-style-type:disc">Principes :<ul id="b473908a-de05-444d-903a-677ec74f5fe9" class="bulleted-list"><li style="list-style-type:circle"><strong>Pas d’ouverture globale (0.0.0.0/0)</strong> sauf nécessité contrôlée</li></ul><ul id="6e37bfd5-137f-4cf2-acde-d55ad4e3ffe8" class="bulleted-list"><li style="list-style-type:circle">Segmentation par rôle applicatif (front-end ↔ back-end ↔ DB)</li></ul><ul id="2cd2283b-c643-448e-8cc9-4000304baec6" class="bulleted-list"><li style="list-style-type:circle">Journalisation des accès (logs NSG / VPC Flow Logs)</li></ul></li></ul><h3 id="00051253-f762-48d7-9ae7-921b8dc0b1cf" class="">d. 🔐 ZTNA pour utilisateurs</h3><ul id="c82b545a-f59b-418b-9ed3-d0402eca7a56" class="bulleted-list"><li style="list-style-type:disc">Authentification MFA (Okta, Azure AD)</li></ul><ul id="a9a8b67c-77d1-4a02-a790-2d5533d77987" class="bulleted-list"><li style="list-style-type:disc">Contexte d’accès :<ul id="e44d3e0c-8899-47cb-a936-684e7276a01a" class="bulleted-list"><li style="list-style-type:circle">Postes approuvés uniquement (compliance Intune)</li></ul><ul id="42e282cd-e8ea-4ffb-bada-0c9d901924e7" class="bulleted-list"><li style="list-style-type:circle">Vérification de la géolocalisation / adresse IP</li></ul></li></ul><ul id="c62c9b0a-7544-4994-a1ab-8aec67b5e70c" class="bulleted-list"><li style="list-style-type:disc">Contrôle de session : autorisation dynamique (CSP, inspection TLS)</li></ul><hr id="a2f575e6-497b-451c-83f8-16cd3ea938b7"/><h1 id="0a9e5194-ccc1-46d3-8bb3-84ad07bf5dd4" class="">👥 4️⃣ Gestion des accès par rôle (RBAC)</h1><h3 id="11ef164f-0b5c-4e39-b984-d09b20d8911d" class="">a. 🏛️ Objectifs</h3><ul id="075b3d7e-1e5d-405f-a7a5-7d8a205e020c" class="bulleted-list"><li style="list-style-type:disc">Principe du <strong>moindre privilège</strong></li></ul><ul id="1fd6b505-a387-49f6-b9ac-6ab13d6c7f3d" class="bulleted-list"><li style="list-style-type:disc">Attribution des droits <strong>en fonction des rôles métier</strong></li></ul><ul id="c3a1ba2b-83eb-43ce-9a5c-c50b8f34b30a" class="bulleted-list"><li style="list-style-type:disc">Évolutivité : adaptation des rôles lors des changements</li></ul><h3 id="56cffcff-1548-4ed5-b6de-86672f70fdc3" class="">b. 📋 Définition des rôles</h3><table id="c9f62176-8d18-43ad-a778-dbe0d852b57c" class="simple-table"><tbody><tr id="df366c75-6c91-465f-92d8-fb2f262a2e11"><td id="&gt;OYY" class="">Rôle</td><td id="OqMh" class="">Exemples de droits</td></tr><tr id="b83e2413-c7ba-46c1-8088-2cef7bb84acc"><td id="&gt;OYY" class=""><strong>Admin IT</strong></td><td id="OqMh" class="">Plein accès infra + cloud (root, admin Azure/AWS)</td></tr><tr id="82022979-dd8f-4e72-80a8-235677163a7c"><td id="&gt;OYY" class=""><strong>Support IT</strong></td><td id="OqMh" class="">Accès limité aux outils de support (monitoring, tickets)</td></tr><tr id="c79d13d0-be2e-468d-8b07-0d95cd906709"><td id="&gt;OYY" class=""><strong>Utilisateurs métier</strong></td><td id="OqMh" class="">Accès aux applications métier seulement</td></tr><tr id="cd8eb3be-d437-429f-80fd-c5591cc11884"><td id="&gt;OYY" class=""><strong>Invité / Tiers</strong></td><td id="OqMh" class="">Accès restreint à une ressource spécifique (ex : audit externe)</td></tr></tbody></table><h3 id="3537ac26-466a-4f83-820e-16544450a97b" class="">c. 🔑 Mise en œuvre</h3><table id="9a84c4f3-9185-4210-a09f-72946682845a" class="simple-table"><tbody><tr id="e2949b6b-cb34-48ed-bf0c-a99d7478128e"><td id="eiwp" class="">Zone</td><td id="FStf" class="">Technologie</td><td id="G@|:" class="">Exemple</td></tr><tr id="9f30e81d-98f9-420b-b9d7-8807c587c25a"><td id="eiwp" class="">AD local</td><td id="FStf" class="">Groupes AD</td><td id="G@|:" class="">Utilisateurs ↔ Serveurs ↔ Imprimantes</td></tr><tr id="e94ade14-e9f8-4ffe-9ef6-58e5ce7bcb5c"><td id="eiwp" class="">Cloud Azure</td><td id="FStf" class="">RBAC Azure</td><td id="G@|:" class="">Owner, Contributor, Reader (par ressource)</td></tr><tr id="145a81ce-1f1e-4c35-b875-c66dca10af49"><td id="eiwp" class="">AWS</td><td id="FStf" class="">IAM</td><td id="G@|:" class="">Roles/Policies : ex &quot;EC2ReadOnly&quot;, &quot;S3FullAccess&quot;</td></tr><tr id="a49b0ffd-7138-4d09-ae67-8a6c99123d8b"><td id="eiwp" class="">ZTNA</td><td id="FStf" class="">Policies</td><td id="G@|:" class="">Postes approuvés ↔ Ressources précises</td></tr></tbody></table><h3 id="f28eed1f-b987-4832-a8f8-b17e0f363237" class="">d. 🚦 Contrôles &amp; supervision</h3><ul id="a2a39b29-2376-4152-80b5-2f768700722a" class="bulleted-list"><li style="list-style-type:disc">Revue trimestrielle des droits</li></ul><ul id="9077e484-9af7-4f5e-bd64-9f5d4650f819" class="bulleted-list"><li style="list-style-type:disc">Audit automatique : rapports Azure IAM / AWS IAM</li></ul><ul id="c507ca75-ecee-44cd-b53c-16883b936a13" class="bulleted-list"><li style="list-style-type:disc">Journalisation des accès sensibles (CloudTrail, Azure Logs)</li></ul><hr id="9f5fa004-baef-4ce6-83a8-bd40f44577f8"/><h1 id="37421cfa-887b-4c1d-9e65-2bbe7f5ecd50" class="">📆 5️⃣ Gouvernance &amp; cycle de vie</h1><table id="bc7050ea-764a-4c28-80ce-26bc99af719c" class="simple-table"><tbody><tr id="93ff22d6-420b-473d-af28-46cdee414cf0"><td id="zoMP" class="">Action</td><td id="fCX}" class="">Fréquence</td></tr><tr id="725e9ad1-50f2-425f-8f2c-307af20b48cb"><td id="zoMP" class="">🎯 Analyse risques (IDS/IPS)</td><td id="fCX}" class="">Semestriel</td></tr><tr id="abf6ea5b-0f89-40bd-9a5a-37a4f2ed786d"><td id="zoMP" class="">🔄 Mises à jour règles IDS/IPS</td><td id="fCX}" class="">Hebdomadaire</td></tr><tr id="51a5b447-39af-4ab4-a887-89c81ae93a9d"><td id="zoMP" class="">🔧 Test segmentation Zero Trust</td><td id="fCX}" class="">Trimestriel</td></tr><tr id="a0934f85-8490-49c9-99a3-cbb8ea036fc0"><td id="zoMP" class="">👤 Revue RBAC</td><td id="fCX}" class="">Trimestriel</td></tr><tr id="949c7eb5-45ca-40ee-aecb-49ae4a4f4f4f"><td id="zoMP" class="">🛠️ Simulation attaque (pentest interne)</td><td id="fCX}" class="">Annuel</td></tr></tbody></table><hr id="4a1500a6-a2fd-4664-86ee-acf37eed1016"/><h1 id="4b6d3bf8-4937-478b-8e70-f601d5d527a4" class="">🔗 Exemple de workflow : nouvelle application cloud</h1><p id="030cee2a-e1a8-4cb7-839e-9a76d0d52d5e" class="">1️⃣ Demande projet → fiche de besoins réseau/sécurité</p><p id="a2163e31-01f9-4b87-b72c-4454058b9aa1" class="">2️⃣ RBAC : définition des rôles &amp; accès cloud (IAM + NSG)</p><p id="cbb5291d-86a7-49f8-9b6c-b020ab9c9992" class="">3️⃣ Segmentation : ajout dans la DMZ cloud + règles NSG spécifiques</p><p id="d751d341-69ff-4c12-918d-9818dbfa3373" class="">4️⃣ IDS/IPS : ajout dans la zone surveillée + mise à jour des signatures</p><p id="051e8ff1-2efc-4fff-a6eb-1909e6aef7c3" class="">5️⃣ Test : validation accès uniquement autorisé + simulation attaque</p><p id="03017073-b5d1-4165-af70-343994333431" class="">6️⃣ Mise en production</p><p id="d6765678-69c2-460a-ac20-c627a7102462" class="">7️⃣ Suivi : supervision + rapport mensuel sécurité</p><hr id="7e4c966e-9944-4a9c-8543-ca433508ee4f"/><p id="3a91fc6e-0e77-49f8-8a59-eb48c72e5549" class="">👉 <strong>Complément possible :</strong></p><ul id="b197e8b8-8861-4be1-91a6-99f66f2968e4" class="bulleted-list"><li style="list-style-type:disc">Template de règles firewall/IDS</li></ul><ul id="7627588b-d867-4726-b921-df3bb5be9c31" class="bulleted-list"><li style="list-style-type:disc">Diagramme réseau Zero Trust</li></ul><ul id="f655ebd8-cfd7-4b65-9d66-3da10968bde7" class="bulleted-list"><li style="list-style-type:disc">Script Ansible pour déploiement Suricata ou configuration de VLANs automatiques</li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,735 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Dossier d&#x27;Architecture Technique (DAT) – Partie Réseau</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="20794c02-d31e-80de-aea4-d9ccd5380217" class="page sans"><header><h1 class="page-title">Dossier d&#x27;Architecture Technique (DAT) – Partie Réseau</h1><p class="page-description"></p></header><div class="page-body"><h2 id="d4e0cae4-6949-4de8-a88f-c33935a8faf3" class=""></h2><p id="1dc9ffad-e56a-46a2-833b-e3734555a832" class=""><strong>Projet : Modernisation Infrastructure Réseau de la société Cyna</strong></p><p id="123deb3a-e4c6-4b17-984f-73213f232a76" class=""><strong>Périmètre : Réseau uniquement</strong></p><p id="7ffe572f-eeee-42a8-b962-96ad902102fb" class=""><strong>Auteur : Huron Enzo</strong></p><p id="2492ac46-afd0-4b3c-9275-ee1a746ba455" class=""><strong>Date : 04/06/2025</strong></p><hr id="fa54690a-5694-4e43-83c4-6445fb60e71d"/><h3 id="8d16ba70-a335-44bd-9e8a-41c93590a150" class="">1. Contexte et objectifs</h3><p id="7643284e-efbf-4279-8513-3e590e99a730" class="">La société <strong>Cyna</strong>, disposant de deux sites principaux (Paris et Genève), souhaite moderniser son infrastructure réseau afin d&#x27;assurer :</p><ul id="d2cc3bae-43e7-4d41-bacb-d6acd5659ae3" class="bulleted-list"><li style="list-style-type:disc">Une connectivité sûre, rapide et résiliente entre les sites</li></ul><ul id="a81935d1-0fe0-48d9-a023-4a0816759ac4" class="bulleted-list"><li style="list-style-type:disc">La segmentation des flux réseau par fonction (SOC, équipe, Wi-Fi)</li></ul><ul id="652f867a-32e1-41da-9aaa-dee631aaf840" class="bulleted-list"><li style="list-style-type:disc">L&#x27;intégration d&#x27;une architecture SD-WAN pour une gestion intelligente des liaisons WAN</li></ul><ul id="c36584ef-75dc-4bb0-872b-f42aa096fba8" class="bulleted-list"><li style="list-style-type:disc">Une infrastructure compatible avec les exigences de virtualisation et de déploiement de clusters Kubernetes</li></ul><ul id="f06033bf-b1fc-4efb-9f2a-a2351f0a8b12" class="bulleted-list"><li style="list-style-type:disc">Une supervision efficace et continue</li></ul><hr id="204ebf0b-015a-40ab-8e78-dd64b3018415"/><h3 id="a806a441-bedc-40b4-8c54-85446f36a686" class="">2. Architecture fonctionnelle du réseau</h3><table id="e647b823-62da-445b-8f1e-55869e70c066" class="simple-table"><tbody><tr id="2325bc96-8eee-447a-ac45-281a745c6a3d"><td id="EbAi" class="">Composant</td><td id="KP~|" class="">Localisation</td><td id="mH]z" class="">Rôle principal</td></tr><tr id="65bfb94e-57ce-4bb4-9457-1a40e53532ec"><td id="EbAi" class="">Cisco Catalyst 9500 (x2)</td><td id="KP~|" class="">Paris, Genève</td><td id="mH]z" class="">Cœur de réseau (Layer 3), gestion VLAN, routage inter-VLAN</td></tr><tr id="8c4f913f-ce3d-4de9-b365-525fe7d4958d"><td id="EbAi" class="">Cisco Catalyst 8000 (x4)</td><td id="KP~|" class="">Paris, Genève</td><td id="mH]z" class="">Routeurs WAN/SD-WAN, connectivité inter-sites, routage externe</td></tr><tr id="f174b175-262d-46aa-98ad-bca53578f4ff"><td id="EbAi" class="">Palo Alto PA-3220 (x4)</td><td id="KP~|" class="">Paris, Genève</td><td id="mH]z" class="">Sécurité périmétrique, filtrage, inspection du trafic, IPS/IDS, VPN</td></tr><tr id="00168651-e273-432b-850d-d1398acbc6c3"><td id="EbAi" class="">Cisco Meraki MR56 (x2)</td><td id="KP~|" class="">Paris, Genève</td><td id="mH]z" class="">Accès Wi-Fi 6E, gestion cloud, segmentation via SSID</td></tr><tr id="ee37a70d-4e70-44b0-a360-5d483ee885d0"><td id="EbAi" class="">HAProxy (x2)</td><td id="KP~|" class="">Cluster K8s</td><td id="mH]z" class="">Load balancing L4/L7 pour applications internes</td></tr></tbody></table><hr id="7de94e2e-0411-4fa0-ac95-d2123706fb4f"/><h3 id="63b747fa-9be2-498f-8b99-15c416e53b04" class="">3. Topologie réseau simplifiée</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="cff247b9-f109-4edb-b6de-3fb81509f212" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">                [ Internet / ISP ]
+                       |
+               +-------------------+
+               | Palo Alto PA-3220 |
+               +-------------------+
+                        |
+              Trunk (VLAN 10, 20, 30)
+                        |
+            +-------------------------+
+            | Cisco Catalyst 9500     |
+            +-------------------------+
+              |     |         |      |
+           VLAN10 VLAN20   VLAN30  Uplink
+          (SOC)  (Équipe)   (Wi-Fi) (Routeur)
+</code></pre><ul id="c845837b-5a62-48a1-b1c6-741ded8b04f2" class="bulleted-list"><li style="list-style-type:disc">Interconnexion entre les sites via Catalyst 8000 en mode SD-WAN (liaison sécurisée et optimisée).</li></ul><hr id="c7709077-9fcf-4308-bcc0-eb7c5774bcd7"/><h3 id="abf14e91-6623-4356-a864-f8e91b311922" class="">4. Plan d&#x27;adressage IP</h3><table id="ad9ac2eb-d2c5-44b0-98b6-8ee791a32681" class="simple-table"><tbody><tr id="20ce07f1-5d3d-4cb3-af74-80004cd21392"><td id="`ca:" class="">VLAN</td><td id="uJOd" class="">Nom</td><td id="~=;}" class="">Adresse IP</td><td id="z\&gt;B" class="" style="width:121.5875015258789px">Adresse IP PARIS via VPC</td><td id="lS{F" class="">Gateway</td><td id="eml[" class="">Masque</td><td id="Miun" class="">Utilisation principale</td></tr><tr id="8f39b909-4c8c-443f-b158-09f526bb456f"><td id="`ca:" class="">VLAN 10</td><td id="uJOd" class="">SOC</td><td id="~=;}" class="">172.16.10.0/24</td><td id="z\&gt;B" class="" style="width:121.5875015258789px">192.168.10.0/24</td><td id="lS{F" class="">172.16.10.1</td><td id="eml[" class="">255.255.255.0</td><td id="Miun" class="">Serveurs de supervision et sécurité</td></tr><tr id="fd6d2cf3-ba91-4a87-8600-eaec5cf3fd50"><td id="`ca:" class="">VLAN 20</td><td id="uJOd" class="">Équipe</td><td id="~=;}" class="">172.16.20.0/24</td><td id="z\&gt;B" class="" style="width:121.5875015258789px">192.168.20.0/24</td><td id="lS{F" class="">172.16.20.1</td><td id="eml[" class="">255.255.255.0</td><td id="Miun" class="">Postes utilisateurs, accès LAN</td></tr><tr id="d6494e3e-de10-4b16-8db9-a4eaf7eeb4dd"><td id="`ca:" class="">VLAN 30</td><td id="uJOd" class="">Wi-Fi</td><td id="~=;}" class="">172.16.30.0/24</td><td id="z\&gt;B" class="" style="width:121.5875015258789px">192.168.30.0/24</td><td id="lS{F" class="">192.168.30.1</td><td id="eml[" class="">255.255.255.0</td><td id="Miun" class="">SSID entreprise</td></tr><tr id="b8524805-90ac-4355-8c67-42dea5bcfbf6"><td id="`ca:" class="">WAN</td><td id="uJOd" class="">SD-WAN / ISP</td><td id="~=;}" class="">10.10.x.x/30</td><td id="z\&gt;B" class="" style="width:121.5875015258789px"></td><td id="lS{F" class="">10.10.x.1</td><td id="eml[" class="">255.255.255.252</td><td id="Miun" class="">Lien entre sites</td></tr></tbody></table><hr id="dd0ec0bd-34fe-4ee4-a785-296f02907c5c"/><h3 id="556cdfdc-6818-4ae9-aa0a-fd9451333598" class="">5. Sécurité réseau</h3><ul id="2c173f67-90ad-4648-8109-7ce5949cda4a" class="bulleted-list"><li style="list-style-type:disc"><strong>Pare-feu Palo Alto</strong> : inspection en profondeur des paquets, filtrage applicatif, NAT, VPN IPsec</li></ul><ul id="5b8d32c0-e6e7-456d-b2b7-30304144d5da" class="bulleted-list"><li style="list-style-type:disc"><strong>Segmentation par VLAN</strong> : isoler les flux SOC, utilisateurs et Wi-Fi</li></ul><ul id="cd6da1b3-3a53-4e96-b8c7-c77cd873723c" class="bulleted-list"><li style="list-style-type:disc"><strong>Contrôles d&#x27;accès (ACL)</strong> : définir les flux autorisés entre VLANs (ex : interdiction d&#x27;accès au SOC)</li></ul><ul id="43634119-b8b1-4512-b1af-049db409c23c" class="bulleted-list"><li style="list-style-type:disc"><strong>Routage inter-VLAN</strong> : assuré par le switch Catalyst 9500 ou délégué au pare-feu pour inspection</li></ul><ul id="4aedb427-836a-409f-a0cd-6294f5b76601" class="bulleted-list"><li style="list-style-type:disc"><strong>SD-WAN sécurisé</strong> : cryptage et gestion de priorités des flux entre Paris et Genève</li></ul><hr id="6f418d11-1c8d-427e-a1bd-d10368447e7b"/><h3 id="6f6b17a6-6e9f-4d1e-bd39-b34d18bdfa82" class="">6. Haute disponibilité &amp; redondance</h3><ul id="17e30148-fe5e-4e59-b704-1d95ea6fc1a6" class="bulleted-list"><li style="list-style-type:disc"><strong>Redondance routeur</strong> : Catalyst 8000 en HA (VRRP / HSRP)</li></ul><ul id="41a7bc7c-2fa8-4ab5-b7d6-b3e5f1d14e1c" class="bulleted-list"><li style="list-style-type:disc"><strong>Stacking / VSS</strong> sur Catalyst 9500 pour redondance du coeur</li></ul><ul id="0fb2bdb9-4982-4a66-8271-d8dde7b7e3e3" class="bulleted-list"><li style="list-style-type:disc"><strong>Pare-feu en cluster HA actif/passif</strong></li></ul><ul id="51683f90-bf53-43ee-b7e1-ec3b018f9892" class="bulleted-list"><li style="list-style-type:disc"><strong>Réplication des configurations Meraki via cloud</strong></li></ul><ul id="b95ad215-08fe-4126-9da9-c61959c21052" class="bulleted-list"><li style="list-style-type:disc"><strong>Supervision active des liens uplinks / downlinks</strong></li></ul><hr id="fc9b225b-51d4-45f5-b5cf-a8d7b00856a0"/><h3 id="7b3a3ebf-ba2e-4ad1-a2b9-8a17208de9c1" class="">7. Supervision &amp; monitoring</h3><table id="237d49c8-1647-4a17-86a3-d16cf334c968" class="simple-table"><tbody><tr id="619a40da-ae72-4be4-bfe6-6a3cefcc341c"><td id="hPlw" class="">Composant</td><td id="^\\g" class="">Outil de surveillance</td><td id="WoLX" class="">Métriques surveillées</td></tr><tr id="879c7afe-25bc-41a4-84b4-b5d7cfa56d36"><td id="hPlw" class="">Routeurs/Switches</td><td id="^\\g" class="">Zabbix + SNMP</td><td id="WoLX" class="">Latence, bande passante, uptime, CPU, erreurs</td></tr><tr id="14175328-69a8-4f65-8a72-90b4b3670a32"><td id="hPlw" class="">Pare-feux</td><td id="^\\g" class="">Palo Alto Panorama</td><td id="WoLX" class="">Logs de trafic, alertes IPS/IDS, statut VPN</td></tr><tr id="0b0beb8c-ae90-4889-b1e0-c5731283847c"><td id="hPlw" class="">Wi-Fi Meraki</td><td id="^\\g" class="">Meraki Dashboard Cloud</td><td id="WoLX" class="">Qualité SSID, clients connectés, performances</td></tr><tr id="8a108158-2237-435e-80e5-d38091034e30"><td id="hPlw" class="">Cluster Kubernetes</td><td id="^\\g" class="">Prometheus + Grafana</td><td id="WoLX" class="">Charges pods, latence inter-pods, requêtes</td></tr></tbody></table><hr id="47e97188-c72a-4923-ab91-fca940db59ed"/><h3 id="10e0602f-6dea-4d41-9343-c4998ab57204" class="">8. Justification des choix techniques</h3><table id="197c8457-14cf-4e1f-ac51-ef58080726da" class="simple-table"><tbody><tr id="978ea959-c127-4eb7-816c-b2a6d3deaefd"><td id="so?Y" class="">Équipement</td><td id="UyKI" class="">Marque/Modèle</td><td id="]kfh" class="">Raisons du choix</td></tr><tr id="9551c1c8-246d-4a59-9766-7195bacfaeb6"><td id="so?Y" class="">Switch Catalyst 9500</td><td id="UyKI" class="">Cisco</td><td id="]kfh" class="">Cœur réseau L3, performance, support stacking/VSS</td></tr><tr id="dd1afbcc-90e2-4c54-b65d-67c2af8e8347"><td id="so?Y" class="">Routeur Catalyst 8000</td><td id="UyKI" class="">Cisco</td><td id="]kfh" class="">SD-WAN, résilience WAN, haut débit</td></tr><tr id="51e158c5-a8c6-4e00-a017-8a161b2b0d82"><td id="so?Y" class="">Pare-feu PA-3220</td><td id="UyKI" class="">Palo Alto</td><td id="]kfh" class="">Inspection avancée, réputation sécurité, VPN fiable</td></tr><tr id="996ebf21-7d8f-44a2-a312-1a35748a81dd"><td id="so?Y" class="">Borne Meraki MR56</td><td id="UyKI" class="">Cisco Meraki</td><td id="]kfh" class="">Wi-Fi 6E, gestion cloud centralisée, SSID segmenté</td></tr><tr id="72317736-16a9-4a33-8b16-9cccf1ff7d43"><td id="so?Y" class="">HAProxy</td><td id="UyKI" class="">Open source</td><td id="]kfh" class="">Load balancing efficace, flexible, compatible K8s</td></tr></tbody></table><hr id="1918b6d5-3593-4bb1-83a9-01ac0d8a7b68"/><h3 id="5819d365-bced-4751-a659-6b0d43177b69" class="">9. Contraintes identifiées</h3><ul id="70e77110-0f50-43d6-90d8-47246f5601ba" class="bulleted-list"><li style="list-style-type:disc">Délais d’approvisionnement des équipements</li></ul><ul id="0becf827-62c2-412e-af64-1ed052c77c50" class="bulleted-list"><li style="list-style-type:disc">Compétence technique nécessaire pour SD-WAN et sécurité avancée</li></ul><ul id="64a189db-2ad3-46e0-a590-6ffcf4a24b02" class="bulleted-list"><li style="list-style-type:disc">Coûts élevés des licences et contrats de support</li></ul><ul id="f3969262-065f-4cba-bac0-eab2df6956bb" class="bulleted-list"><li style="list-style-type:disc">Surveillance et maintenance à automatiser pour réduire la charge</li></ul><hr id="9c2f1a7e-a9ec-4cf1-a5bd-57c693d60640"/><h3 id="ea16dab4-bb1b-4db7-9393-96da84ba220b" class="">10. Annexes recommandées</h3><ul id="5a332b22-086e-46d7-acd2-761832d368a9" class="bulleted-list"><li style="list-style-type:disc">Plan d’adressage IP détaillé</li></ul><ul id="9de11218-f39c-4a83-86b2-aba777425840" class="bulleted-list"><li style="list-style-type:disc">Schéma de topologie réseau étendu (Visio / Lucidchart)</li></ul><ul id="057efe27-af64-46d9-b6c4-1a9aae534be5" class="bulleted-list"><li style="list-style-type:disc">Fiches techniques des équipements</li></ul><ul id="ad918afb-1cac-4ed0-ae58-bd047f2dfa46" class="bulleted-list"><li style="list-style-type:disc">Politique de sauvegarde / PRA/PCA</li></ul><ul id="55d05728-f028-475c-a43d-d5c4aea18de8" class="bulleted-list"><li style="list-style-type:disc">Procédure de supervision / journalisation</li></ul><hr id="932ad89f-4bdf-4ef9-9927-6255808b6b0a"/><p id="20894c02-d31e-8030-9d06-d4c7eac5c360" class="">
+</p><p id="20894c02-d31e-8087-982a-dc33cde74a10" class=""><strong>REFAIRE UN POINT IP</strong><div class="indented"><p id="20994c02-d31e-8094-a849-d710bbdbd940" class=""><strong>PARIS FULL CLOUD<br/>CONF VLAN GENEVE<br/>CONF SD WAN + ROUTAGE INTERVLAN <br/></strong><br/><br/></p></div></p><hr id="20994c02-d31e-80a9-9aa2-e0b1857f035a"/><hr id="20994c02-d31e-8047-819d-e362cce352b5"/><hr id="20994c02-d31e-8050-8e50-cefdd545d127"/><hr id="20994c02-d31e-80e3-94b8-c60861341b05"/><hr id="20994c02-d31e-80dd-a069-f7360ecfc9a0"/><hr id="20994c02-d31e-809b-a0cb-c4e19eaabe13"/><hr id="20994c02-d31e-807f-a4ab-e2686a6c5173"/><h2 id="cbd9588e-0dad-43ca-803b-009bba5a7e96" class="">Dossier d&#x27;Architecture Technique (DAT) – Partie Réseau</h2><p id="8f3d9954-dfa4-4148-a295-645366f00689" class=""><strong>Projet : Modernisation Infrastructure Réseau de la société Cyna</strong></p><p id="103c2cdc-005d-44d6-b5a1-62aeb04f2637" class=""><strong>Périmètre : Réseau uniquement</strong></p><p id="52a4501b-a004-4db7-b076-8499560b9607" class=""><strong>Auteur : Huron Enzo</strong></p><p id="882c6c63-8286-4683-a382-2671f410b7bb" class=""><strong>Date : 05/06/2024</strong></p><hr id="ec8dac7b-3c13-4653-a748-5fe1a74957bb"/><h3 id="a09f53f6-74a8-44a5-b7ad-25326ed9283b" class="">1. Contexte général</h3><p id="898e9a38-f411-42c4-a830-b02a286bd70c" class="">La société Cyna possède deux sites géographiques : Genève (infrastructure physique) et Paris (infrastructure 100 % cloud). Dans le cadre de sa modernisation IT, Cyna a lancé un projet d&#x27;architecture réseau sécurisé, résilient et scalable, incluant l&#x27;intégration d’un SD-WAN, la segmentation par VLAN, la virtualisation applicative (clusters Kubernetes) et un monitoring complet. Ce DAT décrit en détail l&#x27;architecture réseau retenue.</p><hr id="723ef957-5a07-4383-b3f7-250295697d35"/><h3 id="abf72528-ac80-4c98-9aa4-701973eac3b2" class="">2. Objectifs de l’architecture réseau</h3><ul id="8c595f03-088c-4c55-8ddc-223ad385f61a" class="bulleted-list"><li style="list-style-type:disc">Séparation des flux réseau : SOC, utilisateurs, Wi-Fi</li></ul><ul id="08a3e661-e912-47ea-ba17-9650876adc5d" class="bulleted-list"><li style="list-style-type:disc">Communication inter-VLAN sécurisée</li></ul><ul id="ac2e7ce9-6706-4c8c-b858-ec4156056f0a" class="bulleted-list"><li style="list-style-type:disc">Interconnexion Paris ↔ Genève via SD-WAN sécurisé</li></ul><ul id="4242fee0-f796-4f3f-9394-c81a2f5c7a5c" class="bulleted-list"><li style="list-style-type:disc">Supervision en temps réel de la santé réseau</li></ul><ul id="8af38130-b769-44ee-923c-9dc13ba7511b" class="bulleted-list"><li style="list-style-type:disc">Support d’environnements cloud et conteneurisés (Kubernetes)</li></ul><ul id="ff6dcf6a-442e-493c-b024-2fe46d4195bd" class="bulleted-list"><li style="list-style-type:disc">Tolérance aux pannes et haute disponibilité</li></ul><hr id="81412320-57d6-418c-977d-4685b80d7983"/><h3 id="76ff5019-c1e2-4b0c-ab0a-244a8e2886cb" class="">3. Architecture fonctionnelle</h3><table id="2725dec5-7a42-4d70-b0fb-7dd6a6696366" class="simple-table"><tbody><tr id="d9390b55-f5c0-4fb8-bc6b-a3fc18106c48"><td id="Ipb?" class="">Composant</td><td id="enIn" class="">Localisation</td><td id="xVY:" class="">Fonction principale</td></tr><tr id="6e5c7d0d-75e8-4e64-aa89-009e726db693"><td id="Ipb?" class="">Cisco Catalyst 9500 (x2)</td><td id="enIn" class="">Genève</td><td id="xVY:" class="">Core switch Layer 3, gestion VLAN, routage inter-VLAN</td></tr><tr id="a63e9263-61a9-40b8-b815-68e4bbdc534f"><td id="Ipb?" class="">Cisco Catalyst 8000 (x4)</td><td id="enIn" class="">Paris (cloud) / Genève</td><td id="xVY:" class="">Routeur SD-WAN, connectivité multi-sites, support VPN et BGP</td></tr><tr id="a43c2818-77b2-409e-8bad-04bb2c53337a"><td id="Ipb?" class="">Palo Alto PA-3220 (x4)</td><td id="enIn" class="">Paris / Genève</td><td id="xVY:" class="">Pare-feux nouvelle génération, IPS/IDS, filtrage applicatif, tunnels VPN</td></tr><tr id="c3ed806d-ea7c-4fbb-96f9-76db51b791e1"><td id="Ipb?" class="">Cisco Meraki MR56 (x2)</td><td id="enIn" class="">Paris / Genève</td><td id="xVY:" class="">Point d&#x27;accès Wi-Fi 6, segmentation SSID, gestion cloud</td></tr><tr id="a7f6450b-b9d7-4290-a4ce-19f8e63b446b"><td id="Ipb?" class="">HAProxy (x2)</td><td id="enIn" class="">Cluster K8s</td><td id="xVY:" class="">Load balancer applicatif L4/L7, support SSL termination, monitoring intégré</td></tr></tbody></table><hr id="3a68a611-095c-40dc-9986-cda828d65092"/><h3 id="990ce5b1-caeb-40be-b4b2-000ae7be03d3" class="">4. Schéma de l’architecture réseau</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="a6aec43e-a251-4783-bdb4-f725797f570d" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">            [ Internet / Fournisseur d&#x27;accès ]
+                        |
+               +------------------------+
+               |    Palo Alto PA-3220   |
+               +------------------------+
+                        |
+             Trunk VLANs 10 / 20 / 30
+                        |
+              +------------------------+
+              |  Cisco Catalyst 9500    |
+              +------------------------+
+            /      |         |          \
+     VLAN 10   VLAN 20    VLAN 30     Uplink WAN
+     (SOC)     (Équipe)    (Wi-Fi)     (SD-WAN)
+</code></pre><hr id="5e2271f8-adcf-4eb2-8cee-69d2d62b9471"/><h3 id="daaa4102-dd0e-423a-9499-c9e27976d32a" class="">5. Plan d’adressage IP</h3><table id="1bf19cbf-512f-44be-87b1-b741a6a8ff6d" class="simple-table"><tbody><tr id="8d7aaef6-c792-41f7-a51d-20110bd73e0c"><td id="=xM&gt;" class="">VLAN</td><td id="s{\N" class="">Nom</td><td id="|H~y" class="">Adresse IP</td><td id="&lt;vs=" class="">Adresse IP PARIS via VPC</td><td id="o|Al" class="">Gateway</td><td id="SGWf" class="">Masque</td></tr><tr id="f1d08dca-9429-4e32-a58d-772b29534ba2"><td id="=xM&gt;" class="">VLAN 10</td><td id="s{\N" class="">SOC</td><td id="|H~y" class="">172.16.10.0/24</td><td id="&lt;vs=" class="">192.168.10.0/24</td><td id="o|Al" class="">172.16.10.1</td><td id="SGWf" class="">255.255.255.0</td></tr><tr id="abc3faf9-e18c-4b07-a825-9c6393751f7f"><td id="=xM&gt;" class="">VLAN 20</td><td id="s{\N" class="">Équipe</td><td id="|H~y" class="">172.16.20.0/24</td><td id="&lt;vs=" class="">192.168.20.0/24</td><td id="o|Al" class="">172.16.20.1</td><td id="SGWf" class="">255.255.255.0</td></tr><tr id="f4cdaa88-0111-42ae-ba9d-234387f050bf"><td id="=xM&gt;" class="">VLAN 30</td><td id="s{\N" class="">Wi-Fi</td><td id="|H~y" class="">172.16.30.0/24</td><td id="&lt;vs=" class="">192.168.30.0/24</td><td id="o|Al" class="">192.168.30.1</td><td id="SGWf" class="">255.255.255.0</td></tr><tr id="f80d407e-6aca-4227-994e-c21e53c65605"><td id="=xM&gt;" class="">WAN</td><td id="s{\N" class="">SD-WAN / ISP</td><td id="|H~y" class="">10.10.x.x/30</td><td id="&lt;vs=" class=""></td><td id="o|Al" class="">10.10.x.1</td><td id="SGWf" class="">255.255.255.252</td></tr></tbody></table><hr id="ee65f279-913d-4079-b8ef-5dd243b0e0e8"/><h3 id="9abadb25-8d65-4783-a11e-4ebc57b2753b" class="">6. Routage inter-VLAN (Catalyst 9500)</h3><p id="92c62bf8-84ca-4df5-bd80-2571e93f8adb" class="">Le switch Catalyst 9500 gère le routage local des VLANs. Exemple de configuration :</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="525bd447-db3e-420e-94a0-b01174ddc5a3" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">ip routing
+
+vlan 10
+ name SOC_SERVERS
+vlan 20
+ name EQUIPE_SUBNET
+vlan 30
+ name WIFI_SUBNET
+
+interface Vlan10
+ description SVI - VLAN SOC
+ ip address 172.16.10.1 255.255.255.0
+ no shutdown
+!
+interface Vlan20
+ description SVI - VLAN Équipe
+ ip address 172.16.20.1 255.255.255.0
+ no shutdown
+!
+interface Vlan30
+ description SVI - VLAN Wi-Fi
+ ip address 172.16.30.1 255.255.255.0
+ no shutdown
+</code></pre><hr id="6c8d86ad-b432-48c9-ab53-2836857a4984"/><h3 id="00b89c65-90ae-4a41-8540-4512d341e3dd" class="">7. Sécurité réseau</h3><ul id="3889d8b9-8dae-41f3-b1ce-82fb3a669325" class="bulleted-list"><li style="list-style-type:disc"><strong>Palo Alto PA-3220</strong> : inspection du trafic, IDS/IPS, segmentation applicative, antivirus, filtrage URL</li></ul><ul id="6baa5075-afe1-43fa-8fae-264040662e87" class="bulleted-list"><li style="list-style-type:disc"><strong>ACL inter-VLAN</strong> : restrictions entre VLAN 20 (équipe) et VLAN 10 (SOC)</li></ul><ul id="3a7129c4-08f5-438b-aa44-dd9ad952e1de" class="bulleted-list"><li style="list-style-type:disc"><strong>Wi-Fi isolé par SSID</strong> : SSID entreprise (accès au VLAN 30 uniquement)</li></ul><ul id="47e81145-1c90-4790-a855-f48c14301d71" class="bulleted-list"><li style="list-style-type:disc"><strong>Zero Trust Architecture</strong> : contrôle par utilisateur et appareil (via NAC possible)</li></ul><ul id="70639fef-e564-4aec-9acd-de7e976c9642" class="bulleted-list"><li style="list-style-type:disc"><strong>VPN IPsec site-à-site</strong> : tunnel sécurisé Genève ↔ Paris</li></ul><hr id="d6c7d1f7-0765-4f3a-aa99-ce8899ce5dbd"/><h3 id="3f1c0d1f-f923-4c54-a702-581b8e59bfa3" class="">8. Résilience et disponibilité</h3><ul id="7a248535-d084-49e8-b4d1-d6a0cf9245bd" class="bulleted-list"><li style="list-style-type:disc">Stacking Catalyst 9500 + double alimentation</li></ul><ul id="60b7ce4a-a3b9-461e-b6f5-7599e77fb897" class="bulleted-list"><li style="list-style-type:disc">VRRP sur Catalyst 8000 pour la haute dispo WAN</li></ul><ul id="1833650f-a2ad-436d-a072-b4992f2fb367" class="bulleted-list"><li style="list-style-type:disc">HA actif/passif pour les pare-feux</li></ul><ul id="562e37ce-36f1-45d8-8101-1877c78801c1" class="bulleted-list"><li style="list-style-type:disc">SD-WAN avec multiple links (failover automatique)</li></ul><ul id="925e850f-904d-44a6-82b2-ef99e24b5d81" class="bulleted-list"><li style="list-style-type:disc">Configuration sauvegardée dans Git / automatisation Ansible</li></ul><hr id="965d1391-b8cc-41d6-8d52-b52fa4c0ff6f"/><h3 id="fc332e55-3d89-4775-8b14-df89c570f1f2" class="">9. Outils de supervision et alertes</h3><table id="5faa1f4c-a6ea-4450-ab2d-b2d93a0ede3a" class="simple-table"><tbody><tr id="98670491-bc53-4bcd-81be-e3d66708913e"><td id="pA[H" class="">Outil</td><td id="PBo?" class="">Cible</td><td id="Lol]" class="">Objectifs principaux</td></tr><tr id="0352bef7-77d7-4d13-8532-d80865b24083"><td id="pA[H" class="">Zabbix</td><td id="PBo?" class="">Switches, routeurs, serveurs</td><td id="Lol]" class="">Uptime, bande passante, CPU, alertes</td></tr><tr id="9d1e4c2a-be4a-4944-81d6-e562314e2ec3"><td id="pA[H" class="">Meraki Dashboard</td><td id="PBo?" class="">Bornes Wi-Fi MR56</td><td id="Lol]" class="">Connexions clients, qualité SSID, erreurs radio</td></tr><tr id="3462c927-b7c8-4091-9364-e4ea7d564328"><td id="pA[H" class="">Palo Alto Panorama</td><td id="PBo?" class="">PA-3220</td><td id="Lol]" class="">Journaux de flux, état VPN, menaces détectées</td></tr><tr id="2a0a96ad-44cc-4b44-8df2-725570186788"><td id="pA[H" class="">Grafana/Prometheus</td><td id="PBo?" class="">Clusters Kubernetes + HAProxy</td><td id="Lol]" class="">Métriques système, latence, charge applicative</td></tr></tbody></table><hr id="be9a94a1-d97f-49f0-b0a0-9d500c543f7f"/><h3 id="2eaaabda-a1ad-4d05-b9e2-241c043585c8" class="">10. Indicateurs (KPIs) réseau suivis</h3><table id="307aff2f-3c3b-48fd-bdf6-f010fafe1652" class="simple-table"><tbody><tr id="ffceef53-6890-4d5b-8cae-c2c69a4532ad"><td id="U;sP" class="">KPI</td><td id="lQ~^" class="">Description</td><td id="whRJ" class="">Seuils</td><td id="dIqV" class="">Actions possibles</td></tr><tr id="e7837273-4211-4ccf-9b6b-15e173870c0f"><td id="U;sP" class="">Latence inter-site</td><td id="lQ~^" class="">RTT entre Genève ↔ Paris</td><td id="whRJ" class="">&gt; 100ms</td><td id="dIqV" class="">Alerte Zabbix, reroutage via second lien SDWAN</td></tr><tr id="2009c084-1247-47ca-bf39-653525a1eca5"><td id="U;sP" class="">Utilisation bande passante</td><td id="lQ~^" class="">Débit sur interfaces WAN &amp; VLANs</td><td id="whRJ" class="">&gt; 80 %</td><td id="dIqV" class="">Analyse NetFlow, équilibrage</td></tr><tr id="d82f7349-515a-469b-a7a1-15adb4981860"><td id="U;sP" class="">Charge CPU équipements</td><td id="lQ~^" class="">Switches, routeurs, firewalls</td><td id="whRJ" class="">&gt; 70 %</td><td id="dIqV" class="">Repartition, analyse SNMP</td></tr><tr id="8a6ed7d4-742d-486d-bbfb-878aa7565f93"><td id="U;sP" class="">Taux de perte</td><td id="lQ~^" class="">Perte de paquets réseau</td><td id="whRJ" class="">&gt; 1 %</td><td id="dIqV" class="">Vérification câblage / QoS</td></tr><tr id="5821903b-451e-46cf-8475-2959d8c61c3e"><td id="U;sP" class="">Connectivité Wi-Fi</td><td id="lQ~^" class="">Taux d’accessibilité SSID</td><td id="whRJ" class="">&lt; 98 %</td><td id="dIqV" class="">Redémarrage automatique, analyse client</td></tr></tbody></table><hr id="e2e2d4ea-22bd-4a5c-89b4-ca0ebce5caaa"/><h3 id="0dfcd3ed-31c5-4ff2-8d80-a530b158151a" class="">11. Risques et contraintes</h3><ul id="5a54289f-a5f8-4139-90d1-0c196f17ae9b" class="bulleted-list"><li style="list-style-type:disc">Disponibilité WAN critique → mise en place de redondance SD-WAN</li></ul><ul id="ec31ec2c-aa84-431f-8dc0-4941c6fdfa29" class="bulleted-list"><li style="list-style-type:disc">Délai d’intégration inter-VLAN avec sécurité → tests sur maquette avant prod</li></ul><ul id="c86c10f1-9314-4a99-8396-9ef440dce00e" class="bulleted-list"><li style="list-style-type:disc">Formations requises pour les équipes → documentation interne et wiki</li></ul><ul id="f348b5ad-aa9b-4d28-ae08-ef5b8b83bc61" class="bulleted-list"><li style="list-style-type:disc">Dépendance aux licences Palo Alto / Cisco pour support</li></ul><hr id="b12f9fa2-d8c5-4cb7-a770-7f02caa05366"/><h3 id="629e5e17-8a8b-4ed5-a251-d45d0952328a" class="">12. Annexes</h3><ul id="3380c869-82b6-4594-b9e6-93211c9ea52c" class="bulleted-list"><li style="list-style-type:disc">Schéma Visio réseau haute définition</li></ul><ul id="23936584-0bd0-46a6-a21c-8774768434f3" class="bulleted-list"><li style="list-style-type:disc">Table de routage IP complète</li></ul><ul id="2c602761-f434-4b20-bb0e-51c8ee67b721" class="bulleted-list"><li style="list-style-type:disc">Politique de nommage VLANs</li></ul><ul id="897966b3-0737-4213-94ec-3c22e081cc65" class="bulleted-list"><li style="list-style-type:disc">ACLs standards appliquées aux VLANs</li></ul><ul id="2e63dea5-e05e-42f6-8ce2-159aff11567c" class="bulleted-list"><li style="list-style-type:disc">Scripts de supervision Zabbix / Prometheus</li></ul><hr id="57a5fd27-d264-4eaa-8af9-480f373e9139"/><p id="2c42a0ee-03d6-4362-874e-8933cda7dbaf" class=""><strong>Fin du Dossier d’Architecture Technique (DAT) – Partie Réseau – Projet Cyna</strong></p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

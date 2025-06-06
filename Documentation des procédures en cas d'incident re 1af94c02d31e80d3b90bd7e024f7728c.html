@@ -1,0 +1,734 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Documentation des procédures en cas d&#x27;incident réseau ou d&#x27;intrusion (PRA/PCA)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1af94c02-d31e-80d3-b90b-d7e024f7728c" class="page sans"><header><h1 class="page-title">Documentation des procédures en cas d&#x27;incident réseau ou d&#x27;intrusion (PRA/PCA)</h1><p class="page-description"></p></header><div class="page-body"><p id="1af94c02-d31e-801a-bd88-ec0c61529490" class="">
+</p><p id="4ae8d06f-2968-4d6a-96e1-b8c3db90075b" class=""><strong>PRA/PCA structuré</strong>, avec un focus sur la <strong>traçabilité, la réactivité</strong> et la <strong>conformité</strong>.</p><hr id="12363eef-f3f6-4bc8-b95a-603c54375606"/><h2 id="82487e4a-ce7f-4d6c-bdaf-45ae3e30c2bd" class="">🎯 Objectif</h2><p id="233f3595-ce26-4137-85d7-81e19e99e3f6" class="">Mettre en place une <strong>documentation claire, accessible et maintenue à jour</strong> pour répondre efficacement aux <strong>incidents réseau</strong> et <strong>intrusions</strong>, avec intégration dans le <strong>PRA (Plan de Reprise d’Activité)</strong> et le <strong>PCA (Plan de Continuité d’Activité)</strong>.</p><hr id="1e2a0f8e-d0d2-4390-a510-0dcbb68ca388"/><h2 id="7931d20a-065b-423d-bc10-a0ca38b9bc7f" class="">🧱 Contexte de l’infrastructure</h2><ul id="bc1fb237-26f8-49c1-a7ec-8b168c9ff8f4" class="bulleted-list"><li style="list-style-type:disc">Sites de <strong>Paris</strong> et <strong>Genève</strong> reliés par <strong>SD-WAN</strong></li></ul><ul id="4c88f7b8-24ae-4e05-b343-a6d2432a8c97" class="bulleted-list"><li style="list-style-type:disc">Utilisation de <strong>ZTNA</strong></li></ul><ul id="eda8f044-aed0-4b31-a025-f95b7b6c97a1" class="bulleted-list"><li style="list-style-type:disc">Environnement hybride <strong>Azure / AWS / On-Prem</strong></li></ul><ul id="aae6c499-9a18-481c-8a09-ac938952af90" class="bulleted-list"><li style="list-style-type:disc">Données critiques et utilisateurs répartis</li></ul><ul id="c312f9d3-64e2-4dc5-b568-3a5999f19649" class="bulleted-list"><li style="list-style-type:disc">Besoin de garantir <strong>disponibilité</strong>, <strong>intégrité</strong> et <strong>confidentialité</strong></li></ul><hr id="7b4b694e-0cc8-4573-82e8-84e45a0921ef"/><h2 id="20cd7f3f-5435-48ad-ade3-aa1ba52df976" class="">🧠 1. Principes de documentation</h2><table id="2fe19b8f-7e2f-46ac-9999-be3dbf1fd5f0" class="simple-table"><tbody><tr id="78e576a8-484f-4e5c-81df-40b08dd9e2f4"><td id="t}U@" class="">Principe</td><td id="vwdN" class="">Objectif</td></tr><tr id="5be411e5-80a4-4623-b717-4cec6376ac73"><td id="t}U@" class=""><strong>Clarté</strong></td><td id="vwdN" class="">Compréhension immédiate en cas de stress ou d’urgence</td></tr><tr id="c1049367-e77a-4d47-82f3-0a5c33ceb7b6"><td id="t}U@" class=""><strong>Centralisation</strong></td><td id="vwdN" class="">Regroupement dans un espace sécurisé partagé</td></tr><tr id="e5c22807-de69-4ccd-8b18-54198e7426bc"><td id="t}U@" class=""><strong>Mise à jour régulière</strong></td><td id="vwdN" class="">Conformité avec l’infra réelle et les outils</td></tr><tr id="94ebd6ed-bb0b-4f2a-a164-6a865da48759"><td id="t}U@" class=""><strong>Accessibilité contrôlée</strong></td><td id="vwdN" class="">Accès restreint à l&#x27;équipe IT/Sécurité uniquement</td></tr></tbody></table><hr id="689d416a-d727-44c7-ad86-fb8bb9fe48a3"/><h2 id="f0a74b90-1ee1-420d-9d02-8dfd4d1a21f1" class="">📚 2. Types de documents à créer</h2><h3 id="91f554b5-65ff-46b5-80f7-a93da703a567" class="">a. 📄 <strong>Procédures d’incident réseau</strong></h3><p id="c0d679dd-b75a-40c4-9c7f-f095aa3c5c32" class="">Exemples de scénarios :</p><ul id="de90b236-8636-4957-b797-317db8a0fdb6" class="bulleted-list"><li style="list-style-type:disc">Perte d’un lien SD-WAN</li></ul><ul id="c1435920-52bf-4dca-b6cb-a1cdb58b097a" class="bulleted-list"><li style="list-style-type:disc">Saturation de bande passante</li></ul><ul id="ce6e2912-cc60-4f0f-b40a-07b76295519f" class="bulleted-list"><li style="list-style-type:disc">Déconnexion VPN / ZTNA</li></ul><ul id="3cc89ea2-a206-406e-bdd0-f9907ca71efa" class="bulleted-list"><li style="list-style-type:disc">Panne de switch/firewall</li></ul><ul id="9b57e3ab-5fb5-408f-a64d-86ad72822dbe" class="bulleted-list"><li style="list-style-type:disc">Boucle réseau</li></ul><p id="e8d16c24-26f6-4942-9714-e4b18b33852a" class=""><strong>Structure recommandée</strong> :</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="5bbbc9cf-ef87-4873-8f55-b97f548f73e1" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">markdown
+CopierModifier
+Titre : Incident [Type]
+But : Identifier, isoler, corriger
+Étapes :
+  1. Détection (supervision, logs, ticket)
+  2. Diagnostic (ping, traceroute, SNMP, dashboard)
+  3. Contournement temporaire (bascule WAN, reroutage)
+  4. Résolution
+  5. Communication interne
+  6. Enregistrement de l’incident
+Responsable : Admin réseau / Infra
+Dernière mise à jour : JJ/MM/AAAA
+
+</code></pre><hr id="bc640762-911f-4b58-9232-324430d70141"/><h3 id="21061e54-6bb5-4f5f-9158-57b56e268a56" class="">b. 🔐 <strong>Procédures en cas d’intrusion / cyberattaque</strong></h3><p id="535b4eee-c3bc-49d2-a5e1-bd6b3e930b98" class="">Types :</p><ul id="5e665506-0481-4b97-8405-aeca22c5e29d" class="bulleted-list"><li style="list-style-type:disc">Ransomware</li></ul><ul id="78c8411b-07a9-45f9-b421-7d6b2d0b558b" class="bulleted-list"><li style="list-style-type:disc">Tentative de phishing réussie</li></ul><ul id="7978580e-ded9-4d2e-af4d-e9159cbef32f" class="bulleted-list"><li style="list-style-type:disc">Compromission de compte</li></ul><ul id="91624ecd-675c-4ed9-9ddb-66fddf594030" class="bulleted-list"><li style="list-style-type:disc">Malware sur poste</li></ul><ul id="efa6708f-83ba-4272-b255-eee9f49768e3" class="bulleted-list"><li style="list-style-type:disc">Mouvements latéraux internes</li></ul><p id="24b97993-8648-4c4e-9f3e-f9f9ddd1b1f0" class=""><strong>Structure recommandée</strong> :</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="abf1c8cb-6525-472f-948a-387f0cb6659c" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">markdown
+CopierModifier
+Titre : Réponse à une tentative d’intrusion [Scénario]
+Objectif : Contenir et éradiquer la menace
+Étapes :
+  1. Détection (EDR, SIEM, alerte ZTNA)
+  2. Isolement de l’équipement (NAC, VLAN, coupure WiFi)
+  3. Analyse des logs
+  4. Remédiation (scan, reimaging, patch)
+  5. Notification interne (RSSI, DSI, juridique)
+  6. Documentation de l&#x27;incident
+  7. Déclaration CNIL / ANSSI (si données sensibles)
+Responsable : Équipe Sécurité
+Dernière mise à jour : JJ/MM/AAAA
+
+</code></pre><hr id="80e89df5-fad1-480c-b6d2-4fa1c2d15eda"/><h2 id="9237ecab-a4a6-4fb2-9b81-4cba0df5e816" class="">🔐 3. Intégration PRA/PCA</h2><h3 id="d816b1a6-7640-415e-bb25-16e7d1461659" class="">a. Lien avec PRA</h3><ul id="1eacb970-fdbb-4086-ae0f-16781b51c703" class="bulleted-list"><li style="list-style-type:disc">Chaque procédure d’incident → rattachement au scénario PRA concerné<ul id="7e18e334-5ca0-47da-9c29-069675116b62" class="bulleted-list"><li style="list-style-type:circle">Ex : &quot;Perte de lien SD-WAN Paris ↔ Genève&quot; → Scénario PRA #2</li></ul></li></ul><ul id="be9294e5-3311-40a8-ac74-a8831ab83f05" class="bulleted-list"><li style="list-style-type:disc"><strong>Checklist PRA</strong> incluse à la fin de chaque procédure</li></ul><ul id="927c87fa-aff2-496e-a577-5be042cd5260" class="bulleted-list"><li style="list-style-type:disc">Intégration dans le <strong>runbook PRA</strong></li></ul><h3 id="8b9bfbe5-f9fb-44ad-a2f6-e54d7fc40ca2" class="">b. Lien avec PCA</h3><ul id="29c87c82-3ca2-4001-97e2-5401acdfc211" class="bulleted-list"><li style="list-style-type:disc">Pour incidents n&#x27;interrompant pas les services, mais impactant leur qualité<ul id="948e19b0-9e2a-4253-8a69-fe635afdb2bb" class="bulleted-list"><li style="list-style-type:circle">Ex : perte de redondance, hausse de latence</li></ul></li></ul><ul id="c6dc6572-3c5f-4130-924a-4cba1bbb4711" class="bulleted-list"><li style="list-style-type:disc">Triggers pour activer PCA partiel</li></ul><hr id="389da892-a383-4b9a-9746-65084ffb3933"/><h2 id="aa5619d3-0d7d-4a37-ae80-b1b0a3e244ca" class="">🗂️ 4. Stockage et format</h2><table id="cc15b429-ce4f-4897-94c8-4658bc7d5445" class="simple-table"><tbody><tr id="d19824e6-11a0-4274-9e31-3e9ea44bf925"><td id="oRId" class="">Format</td><td id="dVw&lt;" class="">Usage</td></tr><tr id="ca884206-f306-428a-98fb-d1aaa9aadabd"><td id="oRId" class=""><code>.docx</code> ou <code>.md</code></td><td id="dVw&lt;" class="">Documentation lisible par l’équipe IT</td></tr><tr id="5286666c-5fd3-49c7-9f1d-397c6f6234dc"><td id="oRId" class="">Wiki interne (Confluence, Wiki.js…)</td><td id="dVw&lt;" class="">Consultation rapide et versionnée</td></tr><tr id="b8c7cf64-8078-40d1-8828-ab171a856c75"><td id="oRId" class="">Dossier partagé sécurisé (Nextcloud, OneDrive Entreprise)</td><td id="dVw&lt;" class="">Accès rapide, sauvegardé</td></tr></tbody></table><p id="e46aa1e0-561c-4b86-851e-353674db7140" class=""><strong>Bonnes pratiques</strong> :</p><ul id="44dbd832-b2b6-406a-9d41-94615c4c9d34" class="bulleted-list"><li style="list-style-type:disc">Versionner chaque procédure</li></ul><ul id="340d380b-6451-4353-917c-8297c0fc9ade" class="bulleted-list"><li style="list-style-type:disc">Horodatage de la dernière révision</li></ul><ul id="e015da55-282e-4071-afc7-03a1de082996" class="bulleted-list"><li style="list-style-type:disc">Ajout d’un auteur/responsable référent</li></ul><ul id="00732497-dc0a-424c-b39a-238f69523e73" class="bulleted-list"><li style="list-style-type:disc">Lier avec des tickets JIRA / ServiceNow / GLPI</li></ul><hr id="27613ff5-dec5-459f-92ec-565bc11b3da2"/><h2 id="4bd918a6-f417-4d30-89f4-84bea7400f9e" class="">🧪 5. Maintenance &amp; test</h2><ul id="ecc2ec16-24c3-4222-b3d5-3314e6ba6c18" class="bulleted-list"><li style="list-style-type:disc"><strong>Audit documentaire</strong> chaque semestre</li></ul><ul id="34d07a6f-af50-47a5-880e-194ef05a2617" class="bulleted-list"><li style="list-style-type:disc">Simulation d’incidents tous les 6 mois (phishing, panne SD-WAN simulée…)</li></ul><ul id="5814a953-371b-4853-aa53-467754b82503" class="bulleted-list"><li style="list-style-type:disc">Post-mortem obligatoire avec mise à jour de la procédure</li></ul><ul id="b89e9e02-3824-46bf-94ca-c4708073d44b" class="bulleted-list"><li style="list-style-type:disc">Checklist d’amélioration continue</li></ul><hr id="48993ffd-aefb-4436-b0a1-4933f0422eab"/><h2 id="963e9d9a-f938-46ab-b4c8-44b50837f78e" class="">🔧 6. Modèle de procédure à répliquer</h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="5fed9628-4c20-4318-b08d-d5171807b4d1" class="code"><code class="language-Markdown" style="white-space:pre-wrap;word-break:break-all">markdown
+CopierModifier
+# 🚨 Procédure : Intrusion détectée sur un poste utilisateur
+
+**But** : Isoler rapidement le poste, limiter les dégâts, identifier l&#x27;origine.
+
+**Déclencheur** : Alerte CrowdStrike / SentinelOne sur comportement anormal
+
+### Étapes
+1. Alerte reçue sur [outil de SIEM] → vérification de l’alerte
+2. Isolement du poste via [NAC / ZTNA / VLAN]
+3. Analyse des journaux (dernier login, connexions sortantes, mouvements latéraux)
+4. Restauration image propre si compromise
+5. Notification du RSSI / DSI
+6. Rapport incident envoyé dans les 24h
+
+**RTO associé** : 1h
+**Lien PRA** : Scénario #4
+**Dernière révision** : 05/04/2025
+**Responsable** : Référent Sécurité / IT Ops
+</code></pre><p id="1d294c02-d31e-80c2-91dd-f9707a515bc2" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

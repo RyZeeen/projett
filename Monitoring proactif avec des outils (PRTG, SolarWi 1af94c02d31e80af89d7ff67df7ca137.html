@@ -1,0 +1,684 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Monitoring proactif avec des outils (PRTG, SolarWinds), intégration d’alertes automatiques.</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1af94c02-d31e-80af-89d7-ff67df7ca137" class="page sans"><header><h1 class="page-title">Monitoring proactif avec des outils (PRTG, SolarWinds), intégration d’alertes automatiques.</h1><p class="page-description"></p></header><div class="page-body"><p id="1af94c02-d31e-80cf-9c0f-c5a8eee457aa" class="">
+</p><h2 id="1e9d2d36-e380-44d1-a13d-dc1974080c64" class="">🧱 1️⃣ Contexte de l’infrastructure</h2><table id="1d0dd83a-6496-459e-bd3b-c2cf89c5b7d8" class="simple-table"><tbody><tr id="be421af6-282c-42ae-b872-75d3d7edfbf6"><td id="YouD" class="">Élément</td><td id="KudL" class="">Description</td></tr><tr id="291fe735-f017-4d29-bd54-112b9239556d"><td id="YouD" class=""><strong>Sites</strong></td><td id="KudL" class="">2 sites physiques : Paris &amp; Genève</td></tr><tr id="f8d6b688-caab-483b-8ff7-cfc4dd1bb7da"><td id="YouD" class=""><strong>Interconnexion</strong></td><td id="KudL" class="">SD-WAN</td></tr><tr id="a6147d3a-a0d8-42d5-83ee-5a7a61d5352d"><td id="YouD" class=""><strong>Accès utilisateur</strong></td><td id="KudL" class="">ZTNA (Zero Trust Network Access) pour les sédentaires</td></tr><tr id="f8cc87e5-f80b-47dc-bb9f-de4aa74f645f"><td id="YouD" class=""><strong>Cloud</strong></td><td id="KudL" class="">Azure &amp; AWS (serveurs applicatifs)</td></tr><tr id="53936622-bb12-48d4-8cd0-6848244dd37c"><td id="YouD" class=""><strong>Équipements</strong></td><td id="KudL" class="">Serveurs + postes utilisateurs physiques sur site</td></tr><tr id="e7d002c0-d011-4c0d-bb5b-efa1888a8a11"><td id="YouD" class=""><strong>Sécurité actuelle</strong></td><td id="KudL" class="">Firewall, authentification forte, sauvegardes cloud/local</td></tr></tbody></table><hr id="24de678f-ed21-4110-8f4a-f400367b0353"/><h1 id="7d56ed88-00e1-41ac-a00d-df2dfc997dbb" class="">🛡️ 2️⃣ IDS/IPS : Intrusion Detection &amp; Prevention</h1><h3 id="492296ab-0ad7-47f0-9f24-9dedf5dc3f9c" class="">a. 🔍 Objectifs IDS/IPS</h3><ul id="4cc003c3-8e41-44eb-8bf5-ff49463726fc" class="bulleted-list"><li style="list-style-type:disc"><strong>Détection en temps réel</strong> des attaques réseau/applicatives</li></ul><ul id="12a78bcc-47ff-4ef8-a3e3-90e1b0a5eb50" class="bulleted-list"><li style="list-style-type:disc"><strong>Prévention</strong> des intrusions en bloquant les flux malveillants</li></ul><ul id="271f40ad-2379-4e9f-a586-192297342fa9" class="bulleted-list"><li style="list-style-type:disc">Visibilité sur :<ul id="f1c214bd-7093-406f-9faa-4d120325135b" class="bulleted-list"><li style="list-style-type:circle">Attaques réseau (scans, DoS)</li></ul><ul id="0abe4d80-843b-4f4d-b250-1fb2b97fd15d" class="bulleted-list"><li style="list-style-type:circle">Intrusions applicatives (SQLi, XSS)</li></ul><ul id="1d9e0f86-aff4-4426-9565-56d8b554891a" class="bulleted-list"><li style="list-style-type:circle">Anomalies internes (latence, volumétrie anormale)</li></ul></li></ul><h3 id="b0cddbe6-3606-4366-a363-214757742dc9" class="">b. 🛠️ Déploiement</h3><table id="a763846c-7b3b-49bb-a7e8-b1fa355e01ac" class="simple-table"><tbody><tr id="20251439-fbfb-4a95-931d-0028170f551c"><td id="]LsV" class="">Zone</td><td id="vxMb" class="">Solution recommandée</td><td id="_esp" class="">Mode</td><td id="|`Ut" class="">Position</td></tr><tr id="234ee4f5-b852-4299-8389-c4729b898712"><td id="]LsV" class="">SD-WAN</td><td id="vxMb" class="">IDS/IPS intégré (ex. Fortinet, Palo Alto)</td><td id="_esp" class="">Inline (prévention)</td><td id="|`Ut" class="">Entre WAN ↔ LAN</td></tr><tr id="ef933230-8ff7-4395-b8b9-0bc0926984dc"><td id="]LsV" class="">Paris/Genève LAN</td><td id="vxMb" class="">Suricata / Snort (open source)</td><td id="_esp" class="">Passive (détection)</td><td id="|`Ut" class="">SPAN/Mirror port switch</td></tr><tr id="bce9160f-4973-4c35-8846-b881ee584316"><td id="]LsV" class="">Cloud (Azure/AWS)</td><td id="vxMb" class="">- Azure: Microsoft Defender for Cloud- AWS: GuardDuty + IDS partenaire (ex : Trend Micro, Suricata)</td><td id="_esp" class="">Inline (Azure/AWS Gateway)</td><td id="|`Ut" class="">Cloud front-end + réseau interne</td></tr></tbody></table><h3 id="c458ef95-2e78-4e35-9d00-c465020b9a6c" class="">c. 🔗 Intégration &amp; supervision</h3><ul id="ff915a13-7013-4095-a537-d322e6b7bc2f" class="bulleted-list"><li style="list-style-type:disc">Centralisation des logs : <strong>SIEM (Splunk, ELK)</strong></li></ul><ul id="022f996c-cb8f-4e6e-97ec-7c974abcb90f" class="bulleted-list"><li style="list-style-type:disc">Alerting : Zabbix / Grafana + email &amp; SMS</li></ul><ul id="709bf39f-dc5d-4534-98df-cb7e5838d9f8" class="bulleted-list"><li style="list-style-type:disc">Corrélation : liaison avec EDR cloud &amp; logs applicatifs</li></ul><h3 id="03c7df82-4ec6-49c8-addd-91970c3672ca" class="">d. 🔄 Maintenance &amp; test</h3><ul id="a4bcac41-beec-4f41-97de-e129b4d5dc0c" class="bulleted-list"><li style="list-style-type:disc"><strong>Règles IPS</strong> : mise à jour auto (Suricata, fournisseurs)</li></ul><ul id="a5c6916d-09dc-47f3-881e-0216bdc9c867" class="bulleted-list"><li style="list-style-type:disc"><strong>Tests d’efficacité</strong> : Metasploit, Kali Linux (trimestriel)</li></ul><ul id="20404116-9237-4b5c-9dc8-977e9c1c6633" class="bulleted-list"><li style="list-style-type:disc"><strong>Journalisation</strong> : incidents bloqués, faux positifs, ajustements des règles</li></ul><hr id="e22ad32d-36c8-4d32-a8c0-f41e4f7b5f15"/><h1 id="2be9b2ee-9257-44c9-88a2-4d5d789e59dd" class="">🏗️ 3️⃣ Segmentation Zero Trust (ZTNA + LAN)</h1><h3 id="72462464-7da0-44be-bfdb-49a104f1618d" class="">a. 🔎 Objectifs ZTNA</h3><ul id="65708795-3564-4235-a155-c2db00c7a48d" class="bulleted-list"><li style="list-style-type:disc">Interdire toute connexion par défaut (&quot;deny all&quot;)</li></ul><ul id="71fae39a-186c-4204-a193-383f905d519c" class="bulleted-list"><li style="list-style-type:disc">Autoriser <strong>uniquement les flux strictement nécessaires</strong></li></ul><ul id="702c19cd-15ae-45f8-a4d4-e93210d02096" class="bulleted-list"><li style="list-style-type:disc">Appliquer une politique : <strong>authentification + évaluation du contexte + politique réseau</strong></li></ul><h3 id="3a92e91c-7f4c-4bde-9225-d25769c04907" class="">b. 🖧 Segmentation réseau physique (Paris &amp; Genève)</h3><table id="3ca264cc-a6fe-47a2-8ca8-c9ba6a614a6f" class="simple-table"><tbody><tr id="9efa2f81-c28c-4aec-bd38-8f236c329474"><td id="\&lt;\:" class="">Zone</td><td id="GX^\" class="">VLAN/Zone</td><td id="Nb{A" class="">Exemple</td></tr><tr id="dfc0ee2c-27b5-4c68-a54e-dc581edf7891"><td id="\&lt;\:" class="">VLAN 10</td><td id="GX^\" class="">Administratif</td><td id="Nb{A" class="">Serveurs internes</td></tr><tr id="13c3609a-d5e8-44c8-a20b-70a00fb049ec"><td id="\&lt;\:" class="">VLAN 20</td><td id="GX^\" class="">Utilisateurs métiers</td><td id="Nb{A" class="">Postes utilisateurs</td></tr><tr id="beb6f7b7-576f-4952-ad96-b5cdc8557269"><td id="\&lt;\:" class="">VLAN 30</td><td id="GX^\" class="">Invités</td><td id="Nb{A" class="">Accès Internet uniquement</td></tr><tr id="a1ef3934-0b8d-4be2-837b-f6146c329456"><td id="\&lt;\:" class="">VLAN 40</td><td id="GX^\" class="">IoT / imprimantes</td><td id="Nb{A" class="">Pas d&#x27;accès serveur</td></tr><tr id="63bce4dc-dfd6-4dd5-b21f-11dd1ba18687"><td id="\&lt;\:" class="">VLAN 50</td><td id="GX^\" class="">Sécurité (caméras, alarme)</td><td id="Nb{A" class="">Accès isolé</td></tr><tr id="de290a94-bd43-4e5a-b11b-2ef188f5f8b2"><td id="\&lt;\:" class="">DMZ</td><td id="GX^\" class="">Services exposés (web, email)</td><td id="Nb{A" class="">Isolé du LAN</td></tr></tbody></table><ul id="fa3cd411-4dbd-4870-8baf-a856dce69719" class="bulleted-list"><li style="list-style-type:disc"><strong>Pare-feu inter-VLAN strict</strong> (ex : deny all par défaut + règles fines)</li></ul><ul id="6601ce4f-c94b-4423-b0e0-5a2c49ed6360" class="bulleted-list"><li style="list-style-type:disc"><strong>Micro-segmentation</strong> : sur les serveurs sensibles (ex : pare-feu local Azure NSG / AWS SG)</li></ul><h3 id="077a7822-7022-4a58-83e1-78624e03a160" class="">c. 🌐 Segmentation cloud (Azure &amp; AWS)</h3><ul id="42b73856-b00d-4844-857e-5c6972358f07" class="bulleted-list"><li style="list-style-type:disc">Azure NSG (Network Security Groups)</li></ul><ul id="3bece1b5-a3ba-409d-a053-fd8f0fc2fc75" class="bulleted-list"><li style="list-style-type:disc">AWS Security Groups + ACL réseau</li></ul><ul id="d1f13d0c-4ff5-4925-add3-a554d1d3c0db" class="bulleted-list"><li style="list-style-type:disc">Principes :<ul id="580a1eae-ba99-47df-8d21-fe1ce9d6d0a4" class="bulleted-list"><li style="list-style-type:circle"><strong>Pas d’ouverture globale (0.0.0.0/0)</strong> sauf nécessité contrôlée</li></ul><ul id="d36fb55f-22de-47fd-9ff7-b0678f2306bf" class="bulleted-list"><li style="list-style-type:circle">Segmentation par rôle applicatif (front-end ↔ back-end ↔ DB)</li></ul><ul id="52fd7d4c-a2b0-41ed-990e-db7094c8330d" class="bulleted-list"><li style="list-style-type:circle">Journalisation des accès (logs NSG / VPC Flow Logs)</li></ul></li></ul><h3 id="c8979b4d-a0bd-4569-98c6-8e3e91c0844f" class="">d. 🔐 ZTNA pour utilisateurs</h3><ul id="100b7b96-66d3-4b26-b399-174e66b688d8" class="bulleted-list"><li style="list-style-type:disc">Authentification MFA (Okta, Azure AD)</li></ul><ul id="75a7908f-9fed-4e2f-9bf0-88d799166a9a" class="bulleted-list"><li style="list-style-type:disc">Contexte d’accès :<ul id="c96fc48b-3c3c-46c5-b3b0-1d1cc31f471c" class="bulleted-list"><li style="list-style-type:circle">Postes approuvés uniquement (compliance Intune)</li></ul><ul id="aaa03917-48f1-410d-8b52-d579a3e9f99f" class="bulleted-list"><li style="list-style-type:circle">Vérification de la géolocalisation / adresse IP</li></ul></li></ul><ul id="6949e43c-3141-4274-93dc-df8afacf74a0" class="bulleted-list"><li style="list-style-type:disc">Contrôle de session : autorisation dynamique (CSP, inspection TLS)</li></ul><hr id="705be246-367b-4bf0-9474-87b973a6f7a6"/><h1 id="05325c34-3abc-4387-a264-acb50d3157e5" class="">👥 4️⃣ Gestion des accès par rôle (RBAC)</h1><h3 id="29e7634d-54c5-473b-b823-1f266f3279fa" class="">a. 🏛️ Objectifs</h3><ul id="041dfee7-4945-49bd-ba88-36be32d37be7" class="bulleted-list"><li style="list-style-type:disc">Principe du <strong>moindre privilège</strong></li></ul><ul id="b1daafec-55ea-47c6-b517-63cc266bd0c2" class="bulleted-list"><li style="list-style-type:disc">Attribution des droits <strong>en fonction des rôles métier</strong></li></ul><ul id="9d86eedd-5a1b-4e0a-b876-91699dc65c7b" class="bulleted-list"><li style="list-style-type:disc">Évolutivité : adaptation des rôles lors des changements</li></ul><h3 id="76820b62-46c4-48ea-af38-1ce99bf1bfa3" class="">b. 📋 Définition des rôles</h3><table id="30ec8a8e-986e-4fe4-87ef-7c93fa5da480" class="simple-table"><tbody><tr id="32a8c11c-8262-4407-b916-42347a6d00e3"><td id="JmbM" class="">Rôle</td><td id="}=sY" class="">Exemples de droits</td></tr><tr id="1be7674e-c5c1-4cdc-b293-f22f1b05c264"><td id="JmbM" class=""><strong>Admin IT</strong></td><td id="}=sY" class="">Plein accès infra + cloud (root, admin Azure/AWS)</td></tr><tr id="8f036c76-e52a-4d7f-9236-a1546a11bed2"><td id="JmbM" class=""><strong>Support IT</strong></td><td id="}=sY" class="">Accès limité aux outils de support (monitoring, tickets)</td></tr><tr id="be157fbb-fa92-44d9-a41a-7821fda88acb"><td id="JmbM" class=""><strong>Utilisateurs métier</strong></td><td id="}=sY" class="">Accès aux applications métier seulement</td></tr><tr id="808aaf6b-1d9b-4b0c-81e9-2b4ae2fdcfee"><td id="JmbM" class=""><strong>Invité / Tiers</strong></td><td id="}=sY" class="">Accès restreint à une ressource spécifique (ex : audit externe)</td></tr></tbody></table><h3 id="36379db3-989f-4986-9948-37170062e4cc" class="">c. 🔑 Mise en œuvre</h3><table id="1bf2a7a0-9c82-4ead-b6ce-850511f7180d" class="simple-table"><tbody><tr id="078adf7d-d216-49e3-8f21-7aa0ec49bf9b"><td id="x~zz" class="">Zone</td><td id="wIpo" class="">Technologie</td><td id="K@cW" class="">Exemple</td></tr><tr id="bc0c2fcd-30ea-4550-a299-863226c31643"><td id="x~zz" class="">AD local</td><td id="wIpo" class="">Groupes AD</td><td id="K@cW" class="">Utilisateurs ↔ Serveurs ↔ Imprimantes</td></tr><tr id="ce99cd26-2350-47f0-be0f-6442a35a6456"><td id="x~zz" class="">Cloud Azure</td><td id="wIpo" class="">RBAC Azure</td><td id="K@cW" class="">Owner, Contributor, Reader (par ressource)</td></tr><tr id="d5936cbc-6073-402e-a29e-95bfcf140219"><td id="x~zz" class="">AWS</td><td id="wIpo" class="">IAM</td><td id="K@cW" class="">Roles/Policies : ex &quot;EC2ReadOnly&quot;, &quot;S3FullAccess&quot;</td></tr><tr id="25833877-c4cb-4e8f-b7ea-121ac35f4114"><td id="x~zz" class="">ZTNA</td><td id="wIpo" class="">Policies</td><td id="K@cW" class="">Postes approuvés ↔ Ressources précises</td></tr></tbody></table><h3 id="e05d93df-f37c-42c3-9619-89d238811ca6" class="">d. 🚦 Contrôles &amp; supervision</h3><ul id="f373fc57-bd26-4b02-a9c9-37b8de04b3df" class="bulleted-list"><li style="list-style-type:disc">Revue trimestrielle des droits</li></ul><ul id="4197f38a-f088-43f4-ac09-97317b128f81" class="bulleted-list"><li style="list-style-type:disc">Audit automatique : rapports Azure IAM / AWS IAM</li></ul><ul id="229baab3-cbca-4bd1-9861-5707acc700d9" class="bulleted-list"><li style="list-style-type:disc">Journalisation des accès sensibles (CloudTrail, Azure Logs)</li></ul><hr id="61eeb586-b98d-4a58-8bec-3a04fb00ccee"/><h1 id="aad0b2c8-7fa7-4f07-8c89-83e0733c64a8" class="">📆 5️⃣ Gouvernance &amp; cycle de vie</h1><table id="d3b4eb69-34b9-4a57-bd21-5b7429d701d6" class="simple-table"><tbody><tr id="0729798d-137f-46c9-9132-15764c8deaed"><td id="nOlQ" class="">Action</td><td id="=cIQ" class="">Fréquence</td></tr><tr id="cabdef6b-5ef9-42df-9b77-c16ab10418fb"><td id="nOlQ" class="">🎯 Analyse risques (IDS/IPS)</td><td id="=cIQ" class="">Semestriel</td></tr><tr id="6573ed9a-7a1c-415a-b54d-4c9d017689ac"><td id="nOlQ" class="">🔄 Mises à jour règles IDS/IPS</td><td id="=cIQ" class="">Hebdomadaire</td></tr><tr id="9dfe45b5-f875-4bb2-960e-a16f8b317a0e"><td id="nOlQ" class="">🔧 Test segmentation Zero Trust</td><td id="=cIQ" class="">Trimestriel</td></tr><tr id="d17c8c1a-4809-48cb-a2b8-f4ee2165c454"><td id="nOlQ" class="">👤 Revue RBAC</td><td id="=cIQ" class="">Trimestriel</td></tr><tr id="934d6c50-057b-42ac-bdbc-9adf43a7bfef"><td id="nOlQ" class="">🛠️ Simulation attaque (pentest interne)</td><td id="=cIQ" class="">Annuel</td></tr></tbody></table><hr id="fbf4fdcd-eb2c-4b78-9771-fc96a097ad6a"/><h1 id="b0ce6af7-3290-4f15-b753-1361cf03bba7" class="">🔗 Exemple de workflow : nouvelle application cloud</h1><p id="3a4fa1cc-89d1-4e96-b1ca-62d86c847c66" class="">1️⃣ Demande projet → fiche de besoins réseau/sécurité</p><p id="39112185-607b-4fbe-97c4-b1954da68685" class="">2️⃣ RBAC : définition des rôles &amp; accès cloud (IAM + NSG)</p><p id="68975cd1-d36b-407c-a714-8cd0e11146c0" class="">3️⃣ Segmentation : ajout dans la DMZ cloud + règles NSG spécifiques</p><p id="0dd9d9ae-bcec-41cc-a7a6-d83195c3ba4d" class="">4️⃣ IDS/IPS : ajout dans la zone surveillée + mise à jour des signatures</p><p id="5945c486-04e0-4f81-8f27-e9e6a50e693d" class="">5️⃣ Test : validation accès uniquement autorisé + simulation attaque</p><p id="9cfc0c6f-2fc2-4946-9f8e-7afb635964ed" class="">6️⃣ Mise en production</p><p id="d64d10c3-d588-4c77-8bde-55c08e2be17a" class="">7️⃣ Suivi : supervision + rapport mensuel sécurité</p><hr id="e2ec5576-c7d9-46d0-9660-8e4484b0bb62"/><p id="29c3c37a-5464-46f6-a3ca-f2aa91c92cfe" class="">👉 <strong>Complément possible :</strong></p><ul id="b3852875-54a1-439a-80d3-2874a817bcc9" class="bulleted-list"><li style="list-style-type:disc">Template de règles firewall/IDS</li></ul><ul id="a296bf0d-7f09-4072-a5e9-d00ba056b161" class="bulleted-list"><li style="list-style-type:disc">Diagramme réseau Zero Trust</li></ul><ul id="389dac8c-b27c-4584-be18-d89403f677f0" class="bulleted-list"><li style="list-style-type:disc">Script Ansible pour déploiement Suricata ou configuration de VLANs automatiques</li></ul><p id="b97dc425-45e2-4020-9e14-5902ea05b596" class="">Tu veux approfondir une partie en particulier (ex : playbook ZTNA, exemple détaillé de policy IAM, ou schéma réseau) ?</p><p id="a4590e50-313b-436f-ae23-6c3ffe47005a" class="">4o</p><h3 id="f9d765b4-f59b-4d46-ac1e-eda6effe7bb0" class="">Vous avez dit :</h3><p id="025fad1c-64b6-4253-abd4-4bebc0552faa" class="">Peux-tu me faire la même chose avec cela : <br/>Monitoring proactif avec des outils (PRTG, SolarWinds), intégration d’alertes automatiques.<br/></p><h3 id="98fbb200-64bf-4d1b-a3fe-cf5c6882beb8" class="">ChatGPT a dit :</h3><p id="5389b17f-d593-4ded-9e22-1611ba8ad7e9" class="">Excellent sujet ! Voici un <strong>plan détaillé et structuré</strong> pour mettre en place un <strong>monitoring proactif</strong> avec des outils comme <strong>PRTG</strong> ou <strong>SolarWinds</strong>, ainsi que l’<strong>intégration d’alertes automatiques</strong>, adapté à <strong>ton infrastructure hybride</strong> (Paris, Genève, SD-WAN, ZTNA, cloud Azure et AWS).</p><hr id="38c236f7-12b8-4821-b159-ab6c1366f802"/><h2 id="6671d7a7-3ca2-4ab9-82c6-04d22b3a9f84" class="">🧱 1️⃣ Contexte de ton infrastructure</h2><table id="98d74c99-09fb-4602-bc0e-73f548edb1c9" class="simple-table"><tbody><tr id="04aad5c2-0f7f-45ba-aeab-63a4679f2e96"><td id="aDR~" class="">Élément</td><td id="oeLQ" class="">Détail</td></tr><tr id="2bf4715f-5283-4bdb-a3a2-7a246bab6b11"><td id="aDR~" class=""><strong>Sites physiques</strong></td><td id="oeLQ" class="">Paris &amp; Genève</td></tr><tr id="28701325-28e7-43aa-8649-4b1fac9d7742"><td id="aDR~" class=""><strong>Réseau</strong></td><td id="oeLQ" class="">SD-WAN avec failover</td></tr><tr id="18aaed36-49e5-407e-a51e-ec01dc3ba6d2"><td id="aDR~" class=""><strong>Utilisateurs</strong></td><td id="oeLQ" class="">ZTNA (Zero Trust) pour accès distant</td></tr><tr id="32a26466-4863-4ac4-b1b9-b4f2bed30570"><td id="aDR~" class=""><strong>Cloud</strong></td><td id="oeLQ" class="">Azure &amp; AWS (VMs, applications web)</td></tr><tr id="f971a69a-b0aa-4f48-ab33-d5ab1c02eebc"><td id="aDR~" class=""><strong>Équipements</strong></td><td id="oeLQ" class="">Serveurs locaux, équipements réseau (switch, firewall), postes utilisateurs</td></tr></tbody></table><hr id="70245e41-9bc9-4cca-8886-b5efcede6b1a"/><h1 id="6ee9f012-84ff-481b-b2db-c17dc3d87c9a" class="">🖥️ 2️⃣ Outils de monitoring recommandés</h1><table id="b5a64b27-bcc1-439a-b487-8d9f32a40f66" class="simple-table"><tbody><tr id="d4b6a56c-bbef-4883-8fe4-3295d97c1936"><td id=":yOz" class="">Outil</td><td id="qMoJ" class="">Points forts</td></tr><tr id="d58bd907-0946-4b6c-9d39-f993cf64eac2"><td id=":yOz" class=""><strong>PRTG Network Monitor</strong></td><td id="qMoJ" class="">Très graphique, facile à déployer, SNMP, WMI, NetFlow, monitoring cloud</td></tr><tr id="c12853c7-f073-436b-b77e-312df5c00f5d"><td id=":yOz" class=""><strong>SolarWinds NPM / SAM</strong></td><td id="qMoJ" class="">Ultra complet, dashboards avancés, APM (Application Performance Monitoring), intégration cloud Azure/AWS</td></tr><tr id="dafaf1ce-0e71-47fb-8ab2-c11ae059c9fe"><td id=":yOz" class=""><strong>Azure Monitor / AWS CloudWatch</strong></td><td id="qMoJ" class="">Monitoring natif cloud, alertes automatiques</td></tr><tr id="ea8632c8-bf98-4b68-abbd-bac6aa1aba07"><td id=":yOz" class=""><strong>Zabbix / Grafana (complément)</strong></td><td id="qMoJ" class="">Open source, très flexible (pour ceux qui veulent éviter les licences lourdes)</td></tr></tbody></table><hr id="8d1dfe97-e61e-48d4-bbe6-b0bc8c7592e1"/><h1 id="44dc2504-48da-4019-b5dd-8a97a6ee5928" class="">🎯 3️⃣ Objectifs du monitoring</h1><ul id="a86972c0-794c-4ee3-93db-fb2e8e35bc2b" class="bulleted-list"><li style="list-style-type:disc">Surveillance <strong>temps réel</strong> des infrastructures réseau, cloud, applicatives</li></ul><ul id="d0ce5c8b-e0d0-4596-8983-247250808d9b" class="bulleted-list"><li style="list-style-type:disc">Détection proactive des anomalies <strong>avant impact utilisateur</strong></li></ul><ul id="f7b38ed9-2d7b-448b-b449-e3b83233e87c" class="bulleted-list"><li style="list-style-type:disc">Visualisation centralisée (tableaux de bord live)</li></ul><ul id="88f574d2-0d0a-4533-a147-0e63b5275bd9" class="bulleted-list"><li style="list-style-type:disc"><strong>Alertes automatiques</strong> : email, SMS, Teams/Slack</li></ul><ul id="8e0c386a-0a06-41b1-90c9-36dc7e8c1bc3" class="bulleted-list"><li style="list-style-type:disc">Historisation pour l’analyse des performances &amp; capacity planning</li></ul><hr id="80344341-31e0-48fe-8866-a130a9971cf5"/><h1 id="2eae30b7-e3e3-4c2f-bf00-1029d5086dd4" class="">🛠️ 4️⃣ Déploiement détaillé</h1><h3 id="7412da35-706e-452a-9fe5-1292e77ddf69" class="">a. 🏢 Infrastructure physique (Paris &amp; Genève)</h3><table id="c2c72928-f007-4d03-8030-3747d1f6ca74" class="simple-table"><tbody><tr id="8d6f5e55-1f35-4029-8c2d-c3068a7ef2a7"><td id="Sw&lt;|" class="">Type d’équipement</td><td id="`Vbk" class="">Métriques clés</td><td id="@Ye|" class="">Méthode de collecte</td></tr><tr id="3939c55f-86db-4952-8a36-a5a317e45e67"><td id="Sw&lt;|" class="">Switch / Routeur</td><td id="`Vbk" class="">Uptime, charge CPU/RAM, erreurs interfaces</td><td id="@Ye|" class="">SNMP v3</td></tr><tr id="de24694d-d549-49a4-b6fd-88266fd6acba"><td id="Sw&lt;|" class="">Firewall / SD-WAN</td><td id="`Vbk" class="">Latence, perte de paquets, sessions, failover</td><td id="@Ye|" class="">SNMP + API</td></tr><tr id="e2dff6c9-b4e2-4a01-9966-068ceda42f3f"><td id="Sw&lt;|" class="">Serveurs</td><td id="`Vbk" class="">CPU, RAM, disque, services Windows/Linux, logs</td><td id="@Ye|" class="">WMI (Windows) / SSH (Linux) / SNMP</td></tr><tr id="0e73451e-a630-4aa0-986c-23a90fceeca7"><td id="Sw&lt;|" class="">Postes critiques</td><td id="`Vbk" class="">Temps réponse, usage CPU, statut antivirus</td><td id="@Ye|" class="">WMI / Agent local</td></tr></tbody></table><h3 id="bcd2bdb4-21fe-42ff-aba7-eacb81079974" class="">b. 🌐 Cloud (Azure &amp; AWS)</h3><table id="1cf1edf5-97c0-40a1-a80f-b0fde63fa292" class="simple-table"><tbody><tr id="b02e859d-f5a9-4e39-9c48-274ffead12e6"><td id="Z|s&lt;" class="">Service</td><td id="?Cwy" class="">Métriques clés</td><td id="RS[E" class="">Méthode</td></tr><tr id="db2e04d0-c828-455c-bef8-5ef3f1cf3645"><td id="Z|s&lt;" class="">Azure VMs</td><td id="?Cwy" class="">CPU, disque, réseau</td><td id="RS[E" class="">Azure Monitor / API</td></tr><tr id="878006bd-3a4b-4f46-8dda-9fce0ff8a171"><td id="Z|s&lt;" class="">Azure DB</td><td id="?Cwy" class="">Query performance, temps réponse</td><td id="RS[E" class="">Azure SQL Insights</td></tr><tr id="3bd72709-ddaa-4977-903a-ca0e2daf7b91"><td id="Z|s&lt;" class="">AWS EC2</td><td id="?Cwy" class="">CPU, NetworkIn/Out</td><td id="RS[E" class="">CloudWatch</td></tr><tr id="b53df249-91b4-4595-903c-0d5212378f09"><td id="Z|s&lt;" class="">S3 / Lambda</td><td id="?Cwy" class="">Latence, erreurs</td><td id="RS[E" class="">CloudWatch</td></tr><tr id="956b485a-3164-46ee-8ed2-c46b7fb5d4da"><td id="Z|s&lt;" class="">VPN/Access Logs</td><td id="?Cwy" class="">Connexions, échecs</td><td id="RS[E" class="">Cloud logs + PRTG HTTP/API sensor</td></tr></tbody></table><h3 id="30defeb5-e474-43a6-be3f-0dac5e70e271" class="">c. 🔗 Supervision sécurité</h3><table id="b530cb79-28e9-444b-b8c9-4b4415f64e1d" class="simple-table"><tbody><tr id="036d87b6-f043-447b-a22d-6c4dd874a36d"><td id=";sMt" class="">Outil</td><td id="=HDr" class="">Points surveillés</td></tr><tr id="079cd916-2d2e-4b5b-913f-3e0b8adc8e7a"><td id=";sMt" class="">IDS/IPS (Suricata, Fortinet)</td><td id="=HDr" class="">Détection d’intrusion, volumétrie anormale</td></tr><tr id="09c0cf92-130b-4bea-ad4c-1209eb4a9942"><td id=";sMt" class="">Antivirus/EDR</td><td id="=HDr" class="">Statut agents, alertes infections</td></tr><tr id="f94e08d5-ca96-483c-a285-a9299b503c6a"><td id=";sMt" class="">ZTNA</td><td id="=HDr" class="">Sessions actives, échecs auth</td></tr></tbody></table><hr id="2a19b8b2-e643-4bc1-826f-86594f99e8b7"/><h1 id="e06e020d-55e8-4f9d-bfbe-6c7b5cd9844b" class="">📈 5️⃣ Dashboards &amp; visualisation</h1><ul id="bee3a8c7-64e9-4c18-aed9-5300c7abeb31" class="bulleted-list"><li style="list-style-type:disc"><strong>Topologies réseau live</strong> (cartes dynamiques PRTG/SolarWinds)</li></ul><ul id="852e3d6c-0221-46c5-a639-e6f45843bfce" class="bulleted-list"><li style="list-style-type:disc"><strong>Tableaux de bord par site</strong> (Paris / Genève / Cloud)</li></ul><ul id="a0b7994c-2b69-4290-b7af-2ee6a242963b" class="bulleted-list"><li style="list-style-type:disc"><strong>Vue applicative</strong> (applications critiques : disponibilité + temps de réponse)</li></ul><ul id="551f66af-602b-4c35-8f2f-3e653061e98f" class="bulleted-list"><li style="list-style-type:disc"><strong>Vue sécurité</strong> (incidents IDS/IPS + antivirus)</li></ul><ul id="7c43e93c-c777-4d8b-b36a-759d96fef709" class="bulleted-list"><li style="list-style-type:disc"><strong>Vue performance cloud</strong> (CPU/disques + logs d’accès)</li></ul><hr id="eebabdfd-2701-4c80-808c-066fdcdb176a"/><h1 id="ad80aac9-c49c-4660-a79d-1252e9132b3f" class="">🚨 6️⃣ Alerting automatique</h1><h3 id="6bfdc22e-24ef-4f4e-9dfc-722765f9fccf" class="">a. 🔔 Seuils d’alerte</h3><table id="32b92fca-01a6-45ef-801a-7cce33e78afb" class="simple-table"><tbody><tr id="2ea6f3a0-6737-416e-bde6-f20609a6fcb9"><td id="&lt;RuU" class="">Métrique</td><td id="Ymj^" class="">Seuil d’alerte</td></tr><tr id="26500265-76cd-4014-a682-370432c0cc9a"><td id="&lt;RuU" class="">CPU serveur</td><td id="Ymj^" class="">&gt;85% sur 5 minutes</td></tr><tr id="3119f055-df0e-40d1-8824-eb71c111cda0"><td id="&lt;RuU" class="">Espace disque</td><td id="Ymj^" class="">&lt;15% libre</td></tr><tr id="31987648-20c8-4d01-a427-3a161b4f2a05"><td id="&lt;RuU" class="">Perte WAN</td><td id="Ymj^" class="">&gt;5% perte sur 2 minutes</td></tr><tr id="0c47a650-5394-43f7-91ad-5e598f1a1942"><td id="&lt;RuU" class="">Latence WAN</td><td id="Ymj^" class="">&gt;100ms</td></tr><tr id="09a4507f-b4b6-432c-84ef-f03f95babcdc"><td id="&lt;RuU" class="">IDS/IPS</td><td id="Ymj^" class="">Détection critique immédiate</td></tr><tr id="f9e89759-b178-48ee-960d-6bf8af84515f"><td id="&lt;RuU" class="">Cloud (VM down)</td><td id="Ymj^" class="">Immédiate</td></tr></tbody></table><h3 id="c4cfcc07-6771-488c-81e5-e329e79e53ef" class="">b. 📤 Canaux d’alerte</h3><ul id="8e2aa00a-ccbe-4fc8-b2da-1cfca6c07a6d" class="bulleted-list"><li style="list-style-type:disc"><strong>Email</strong> : équipe IT</li></ul><ul id="5489a7fe-f86e-414b-aa09-4519975347ed" class="bulleted-list"><li style="list-style-type:disc"><strong>SMS</strong> : astreinte H24</li></ul><ul id="3b05312f-e6c8-44fa-ad64-6998a5d4c1bd" class="bulleted-list"><li style="list-style-type:disc"><strong>Teams/Slack</strong> : webhook direct sur canal d’incident</li></ul><ul id="493608f2-3392-4a3d-a307-a4870b61bc9e" class="bulleted-list"><li style="list-style-type:disc"><strong>Ticket auto</strong> : via ServiceNow ou autre ITSM</li></ul><h3 id="6951c330-07c7-4793-bacd-d67b43cb9393" class="">c. 🛑 Gestion des fausses alertes</h3><ul id="d16e46b2-ac09-4d71-9dbe-28abfe7fa89d" class="bulleted-list"><li style="list-style-type:disc">Seuils ajustés après 1 mois d’observation</li></ul><ul id="3e61e7a8-fca7-4d51-b99f-1e096237b2b0" class="bulleted-list"><li style="list-style-type:disc">Escalade progressive :<ul id="323927b4-6672-4c45-b903-9d63478f0c0a" class="bulleted-list"><li style="list-style-type:circle">Alerte 1 : mail uniquement</li></ul><ul id="4741a80b-ee46-464e-924d-04bd70bd88a7" class="bulleted-list"><li style="list-style-type:circle">Alerte 2 (si non résolue 10 min) : SMS + ticket</li></ul></li></ul><ul id="36bfa3dc-4c4d-4944-9b4c-d397c26038fa" class="bulleted-list"><li style="list-style-type:disc">Mode maintenance : éviter les faux positifs pendant les MAJ</li></ul><hr id="30361c10-8942-49cb-a32a-e1a32507e78b"/><h1 id="07f21aa6-cf51-4368-ab38-08149a35d6a2" class="">🔄 7️⃣ Vérifications et tests</h1><table id="a06734e0-7842-49d1-b5b6-6b9f9b41e403" class="simple-table"><tbody><tr id="6117ac5a-0589-40be-ace8-1d39dd11f037"><td id="oB~K" class="">Action</td><td id="@KRp" class="">Fréquence</td></tr><tr id="9a69ae55-edee-4fc6-815a-b67b24656643"><td id="oB~K" class="">🛠️ Test alerte (fausse panne)</td><td id="@KRp" class="">Mensuel</td></tr><tr id="843d99f0-9747-4430-bf6a-4b0ef203543d"><td id="oB~K" class="">🔄 Mise à jour agents / sensors</td><td id="@KRp" class="">Mensuel</td></tr><tr id="c32a0cc2-f612-48c1-a614-714bfd46bde5"><td id="oB~K" class="">📈 Analyse tendance / capacity planning</td><td id="@KRp" class="">Trimestriel</td></tr><tr id="06dde457-c42a-47cb-a987-e460fe811d35"><td id="oB~K" class="">📝 Revue alertes &amp; seuils</td><td id="@KRp" class="">Semestriel</td></tr></tbody></table><hr id="d8dd12c8-7b0a-4c6c-8573-e9c298bc8979"/><h1 id="a7b95728-bb8f-46c5-9fc9-62077bdfc039" class="">🗂️ 8️⃣ Gouvernance &amp; documentation</h1><ul id="dc91bf0e-e8ab-4703-82e8-58a38a45c614" class="bulleted-list"><li style="list-style-type:disc"><strong>Livret supervision :</strong><ul id="0fcb463e-4b20-4059-8e78-3848d4b898e7" class="bulleted-list"><li style="list-style-type:circle">Schéma complet des sondes déployées</li></ul><ul id="a2cf3e2f-ad7e-4d0e-9aa0-2f5ca5405d58" class="bulleted-list"><li style="list-style-type:circle">Liste des seuils configurés</li></ul><ul id="d25ffba1-cf7a-4ee2-a4cc-d8859fdedf2d" class="bulleted-list"><li style="list-style-type:circle">Procédures en cas d’alerte</li></ul><ul id="c78fb827-c819-4384-a9e0-7ea57ed136c4" class="bulleted-list"><li style="list-style-type:circle">Contacts astreinte + escalade</li></ul></li></ul><ul id="b326173a-2825-444a-b785-efcedfb6a985" class="bulleted-list"><li style="list-style-type:disc"><strong>Documentation utilisateurs :</strong><ul id="6ad4a1dd-1d4b-4494-886b-4d0e48636780" class="bulleted-list"><li style="list-style-type:circle">Modèles email/SMS</li></ul><ul id="3303ea94-c213-413b-b800-89842360e3c9" class="bulleted-list"><li style="list-style-type:circle">Tableau des causes/résolutions connues</li></ul></li></ul><hr id="ded3166b-dca8-40ac-853b-3a5db9522348"/><h1 id="f327ad21-2dd1-4988-bc9f-1c336c1c4e11" class="">🚀 Exemple de workflow : détection panne WAN Paris</h1><p id="3c8b4f8a-f0f9-4a33-a2b7-b1d5c809dff9" class="">1️⃣ SD-WAN détecte &gt;5% perte → PRTG déclenche alerte</p><p id="58e7df58-545a-478b-af87-3a85ed0ec3d2" class="">2️⃣ Email + Teams envoyés au canal incident</p><p id="398fff5c-0165-45fc-8c50-498c4b87406b" class="">3️⃣ Si non résolu sous 10 min → SMS + ticket ITSM</p><p id="0d4e6e49-cb3d-48a5-8b46-c3d4891ab69e" class="">4️⃣ Technicien bascule temporairement le WAN sur le backup</p><p id="eb69f279-874a-40c9-bea4-ad9f22a79142" class="">5️⃣ Rapport automatique post-incident (root cause + mesures)</p><hr id="87569f53-e734-4464-9f20-23215a99ec94"/><h2 id="922e8b2f-21c7-4f89-ade7-df873d1a7201" class="">🔧 Bonus : automatisation</h2><ul id="1aacec67-1e09-4823-949b-c09cccc4f23b" class="bulleted-list"><li style="list-style-type:disc"><strong>PRTG :</strong><ul id="876d55c8-208c-4fee-8195-52d124895971" class="bulleted-list"><li style="list-style-type:circle">Auto-détection des nouveaux équipements (Network Auto-Discovery)</li></ul><ul id="4568868f-59e9-4f2e-ae3f-e6ecb5395da5" class="bulleted-list"><li style="list-style-type:circle">Script PowerShell/Ansible : ajout auto des nouvelles VMs cloud dans PRTG</li></ul></li></ul><ul id="0d09b9ea-611a-4c53-b999-a3fef1459dc5" class="bulleted-list"><li style="list-style-type:disc"><strong>SolarWinds :</strong><ul id="83d42900-0048-487f-8fdf-29b945c12e70" class="bulleted-list"><li style="list-style-type:circle">Alerte avancée : script de remédiation automatique (ex. reboot service si crash)</li></ul><ul id="e7a1e112-1f1b-443d-a0cb-32f8d506effb" class="bulleted-list"><li style="list-style-type:circle">Intégration API avec ITSM (ServiceNow, Jira)</li></ul></li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

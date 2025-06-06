@@ -1,0 +1,684 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Documentation des outils de surveillance des vulnérabilités (Snyk, Checkmarx).</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1ef94c02-d31e-8001-840f-f7801bace0c9" class="page sans"><header><h1 class="page-title">Documentation des outils de surveillance des vulnérabilités (Snyk, Checkmarx).</h1><p class="page-description"></p></header><div class="page-body"><p id="1ef94c02-d31e-809e-929e-ce039f04c753" class="">
+</p><h2 id="38e2bc7b-75be-46e2-ac09-cb6ca6867079" class="">🧱 1️⃣ Contexte &amp; objectifs</h2><table id="05f3b5ed-d54e-49f3-9187-768c303dd84b" class="simple-table"><tbody><tr id="09fbfe66-c9cd-46ed-83a6-e229d86a95eb"><td id="IUf&lt;" class="">Élément</td><td id="jDz[" class="">Détail</td></tr><tr id="23d43f5b-72d8-4ebe-8b98-8eb709bd507a"><td id="IUf&lt;" class=""><strong>Infrastructure</strong></td><td id="jDz[" class="">Paris &amp; Genève (serveurs physiques), SD-WAN, cloud Azure &amp; AWS</td></tr><tr id="96c90f80-4e2a-44eb-a7a7-672b58fb35ff"><td id="IUf&lt;" class=""><strong>Applications</strong></td><td id="jDz[" class="">Applications internes + applicatifs déployés sur cloud</td></tr><tr id="3e1d602a-8759-418c-88d1-220b3fe6fceb"><td id="IUf&lt;" class=""><strong>Objectif</strong></td><td id="jDz[" class="">Identifier &amp; corriger les vulnérabilités dans le code, les dépendances, les conteneurs et l&#x27;infrastructure</td></tr></tbody></table><hr id="7263e10a-1e8f-40f2-9445-5468f43d8bf3"/><h1 id="7bd6030a-80a5-4813-8db8-375558991821" class="">🛠️ 2️⃣ Outils sélectionnés</h1><table id="c54264ad-291f-44e0-97da-205a290b9b0a" class="simple-table"><tbody><tr id="ce7b7707-c762-4182-8b4d-d220e9d00bde"><td id="]vsJ" class="">Outil</td><td id="[GJ&gt;" class="">Fonction principale</td></tr><tr id="7b26be4b-0a7c-45b8-99d9-2b3f5f13af00"><td id="]vsJ" class=""><strong>Snyk</strong></td><td id="[GJ&gt;" class="">Scan du code source, dépendances, conteneurs &amp; IaC (Infrastructure as Code)</td></tr><tr id="92cd96c8-3bec-4346-a556-465516f928c8"><td id="]vsJ" class=""><strong>Checkmarx</strong></td><td id="[GJ&gt;" class="">Analyse SAST (Static Application Security Testing) + complément DAST possible</td></tr><tr id="c55d2316-3ab3-491b-a8a4-06d85f551d7d"><td id="]vsJ" class=""><strong>Complémentaire :</strong></td><td id="[GJ&gt;" class="">- <strong>Trivy</strong> (open source rapide pour Docker, IaC)- <strong>OWASP ZAP</strong> (tests dynamiques basiques)</td></tr></tbody></table><hr id="387b2096-f426-40bb-a58a-2a92e862df29"/><h1 id="3b9d8a29-b974-4ebd-88ee-fbae71b77bd3" class="">📈 3️⃣ Zones de surveillance</h1><table id="97d33e2b-24b4-4681-ba7f-7a7fbc58f9ee" class="simple-table"><tbody><tr id="61ddb38c-b2ba-4325-bea1-79aa3de8a35b"><td id="&gt;`Q&lt;" class="">Cible</td><td id="vPZL" class="">Outil(s)</td><td id="{doT" class="">Méthodologie</td></tr><tr id="43606044-15e9-4b84-b047-cd4317f2b0ba"><td id="&gt;`Q&lt;" class="">📦 Code source (GitLab/GitHub)</td><td id="vPZL" class="">Snyk + Checkmarx</td><td id="{doT" class="">Analyse continue (push/merge)</td></tr><tr id="3b96db11-d129-454b-a629-ce5e4173221e"><td id="&gt;`Q&lt;" class="">🐳 Conteneurs Docker (Azure/AWS)</td><td id="vPZL" class="">Snyk Container / Trivy</td><td id="{doT" class="">Scan pipeline CI/CD + scan runtime</td></tr><tr id="745d18d8-d8e4-447e-8bed-9f2e504433bb"><td id="&gt;`Q&lt;" class="">⚙️ Infra as Code (Terraform, ARM)</td><td id="vPZL" class="">Snyk IaC / Checkmarx IaC</td><td id="{doT" class="">Scan à chaque commit + pré-prod</td></tr><tr id="5d77c002-420d-4b96-84b7-2b8f123fa22b"><td id="&gt;`Q&lt;" class="">🖥️ VM &amp; OS (Paris/Genève + Cloud)</td><td id="vPZL" class="">Trivy / Snyk</td><td id="{doT" class="">Scan périodique des images systèmes</td></tr><tr id="92561a05-ed29-44e3-81c3-636eb0e7827d"><td id="&gt;`Q&lt;" class="">🌐 Applications web déployées</td><td id="vPZL" class="">Checkmarx DAST / OWASP ZAP</td><td id="{doT" class="">Tests dynamiques post-déploiement</td></tr></tbody></table><hr id="4ac5831b-cbbb-445e-80fc-1675551b8c1a"/><h1 id="98358555-a25f-40ca-91e8-fe69d7070bb8" class="">🔗 4️⃣ Intégration &amp; automatisation</h1><h3 id="e847c1bd-5295-4f91-9163-1d0039df1c57" class="">a. 🔄 Pipelines CI/CD (GitLab / GitHub)</h3><ul id="e104f18e-d93f-4ce7-b2f6-20f749239e1a" class="bulleted-list"><li style="list-style-type:disc"><strong>Snyk :</strong><ul id="d62731d5-2bad-4aa4-b87f-17e6ecda1a2e" class="bulleted-list"><li style="list-style-type:circle">Plugin Snyk dans le pipeline (ex: <code>.gitlab-ci.yml</code>)</li></ul><ul id="a7586504-fbbc-4042-80ac-a4524b7dc695" class="bulleted-list"><li style="list-style-type:circle">Scan au moment des merge requests &amp; builds</li></ul><ul id="5b6bb98f-a903-4dbe-8eb6-fa719b01169a" class="bulleted-list"><li style="list-style-type:circle">Blocage automatique si vulnérabilités critiques</li></ul></li></ul><ul id="22a4af4d-c4f0-4240-b10a-a58f7ff4a131" class="bulleted-list"><li style="list-style-type:disc"><strong>Checkmarx :</strong><ul id="cc675af9-ef6a-44e2-a21c-f1e97bbc6557" class="bulleted-list"><li style="list-style-type:circle">Intégration webhook : déclenchement analyse SAST après chaque push</li></ul><ul id="481f5b5f-a4fd-4276-8743-2fc0106c822f" class="bulleted-list"><li style="list-style-type:circle">Rapport directement disponible dans l’interface GitLab/GitHub</li></ul><ul id="44fbd051-e52d-451a-9fb2-ad664a77c3e4" class="bulleted-list"><li style="list-style-type:circle">Export vers SIEM si critique</li></ul></li></ul><h3 id="d3fb0a14-1c86-4733-9297-cfe7f7d4f17a" class="">b. ☁️ Cloud &amp; VM</h3><ul id="23eeba63-272d-42a7-aed6-d84313fd0345" class="bulleted-list"><li style="list-style-type:disc"><strong>Snyk CLI / API</strong> : planification via cron/Ansible pour les VMs locales &amp; cloud</li></ul><ul id="b38d8083-7dc3-4364-b285-4660a3bbf013" class="bulleted-list"><li style="list-style-type:disc"><strong>Checkmarx</strong> : intégration avec Azure DevOps / AWS CodePipeline</li></ul><h3 id="d59a2a67-b3e5-475c-8def-4368642acc1a" class="">c. 🔔 Alerte &amp; ticketing</h3><ul id="87973399-4a9c-4726-a6b0-2adde93ae346" class="bulleted-list"><li style="list-style-type:disc"><strong>Slack / Teams webhook</strong> : notifications en cas de vulnérabilité critique</li></ul><ul id="53bcac06-8b06-41be-afcc-41fea87540fb" class="bulleted-list"><li style="list-style-type:disc"><strong>ServiceNow/Jira</strong> : création auto de ticket à partir d’un rapport de vulnérabilité</li></ul><ul id="d3ed9955-83a8-43ee-88f7-9c301ee916e4" class="bulleted-list"><li style="list-style-type:disc"><strong>SIEM (ex : Splunk)</strong> : centralisation des vulnérabilités pour corrélation</li></ul><hr id="63ace9a5-b43f-409a-af5f-5ba140689d4e"/><h1 id="b8bfbbd9-6075-42aa-bf79-52e6aaff09eb" class="">📊 5️⃣ Dashboards &amp; reporting</h1><table id="4abdcc25-971b-4f15-b35b-f36e638cdaa6" class="simple-table"><tbody><tr id="0389eb45-ce15-4ca4-bbe8-28e4c28f5802"><td id="Ijza" class="">Vue</td><td id="^qNA" class="">Contenu</td></tr><tr id="89c91c80-78ea-4fde-bd0e-a3345ffe7839"><td id="Ijza" class="">🔍 <strong>Vue sécurité globale</strong></td><td id="^qNA" class="">Vulnérabilités par projet, par gravité</td></tr><tr id="dc1aacf2-9edb-4726-addd-fd14322602a6"><td id="Ijza" class="">🛠️ <strong>Vue DevOps</strong></td><td id="^qNA" class="">État des scans CI/CD, pipelines bloqués</td></tr><tr id="fb996990-99ad-43ff-8ab7-440538a77e7e"><td id="Ijza" class="">🐳 <strong>Vue conteneur</strong></td><td id="^qNA" class="">Vulnérabilités dans images Docker</td></tr><tr id="686b5526-7535-4313-828f-061514fd5a54"><td id="Ijza" class="">⚠️ <strong>Vue remédiation</strong></td><td id="^qNA" class="">Vulnérabilités en attente de correction, SLA</td></tr></tbody></table><ul id="101de596-b1a9-45cb-ac97-b01a60914971" class="bulleted-list"><li style="list-style-type:disc">Snyk propose des <strong>rapports automatiques PDF</strong></li></ul><ul id="4c153fb1-3453-4fff-bcad-ad872f5dc1e2" class="bulleted-list"><li style="list-style-type:disc">Checkmarx permet des <strong>exports CSV + tableaux de bord live</strong></li></ul><hr id="ab8276b7-1798-4c53-acf0-ae2b38b73f18"/><h1 id="3df45d76-d467-4a7d-941b-8c671ece8c6b" class="">🚨 6️⃣ Politique d’alerte &amp; gestion des vulnérabilités</h1><table id="4238fbfe-24af-48e1-8553-d5647bb1d629" class="simple-table"><tbody><tr id="04aff29c-2e57-45d9-9f4b-3c03f9e8d8d4"><td id="LFe[" class="">Gravité</td><td id="bPGe" class="">Action</td></tr><tr id="27db7e65-6cd3-4600-8fbb-9bb63a4e7d53"><td id="LFe[" class="">🔴 <strong>Critique</strong></td><td id="bPGe" class="">Blocage pipeline / patch immédiat</td></tr><tr id="8b52ddd5-f506-49d0-bebe-5593018b9a06"><td id="LFe[" class="">🟠 <strong>Haute</strong></td><td id="bPGe" class="">Correction sous 15 jours</td></tr><tr id="42b2328b-cc6c-4962-842d-e9cfedd342d8"><td id="LFe[" class="">🟡 <strong>Moyenne</strong></td><td id="bPGe" class="">Correction sous 30 jours</td></tr><tr id="14f53e68-43b8-4fae-98af-7c77e50d18f4"><td id="LFe[" class="">🟢 <strong>Faible / Info</strong></td><td id="bPGe" class="">Suivi trimestriel</td></tr></tbody></table><ul id="661b720e-eafc-4d1c-b46e-06e9eb1803ed" class="bulleted-list"><li style="list-style-type:disc"><strong>Revue mensuelle</strong> avec équipe de dev + sécurité</li></ul><ul id="0bc4ce2d-d75a-4e65-9035-d81f565d3382" class="bulleted-list"><li style="list-style-type:disc"><strong>Vulnérabilités résiduelles</strong> documentées + justifiées (ex: false positive, exception temporaire)</li></ul><hr id="7b804c33-ac43-40ac-a751-7a5aae12de9b"/><h1 id="9676fec3-29ed-4f21-8981-44680ac191e3" class="">🔄 7️⃣ Maintenance &amp; mises à jour</h1><table id="90d8c5dd-6818-480f-9d76-da589440897f" class="simple-table"><tbody><tr id="8e2c6b74-cd3c-4f85-b5d9-395ec8f4dcdb"><td id="@TyI" class="">Action</td><td id="J;~[" class="">Fréquence</td></tr><tr id="751994a3-02b9-4f80-9f19-45ed4cedc17d"><td id="@TyI" class="">🔄 Mise à jour des outils (CLI, plugin)</td><td id="J;~[" class="">Mensuel</td></tr><tr id="5cadab4a-739a-4f94-a5c6-5247112cd2de"><td id="@TyI" class="">📝 Revue des règles / exclusions</td><td id="J;~[" class="">Trimestriel</td></tr><tr id="fa2d7230-6c2a-440f-b9bd-9a5a9df3dda8"><td id="@TyI" class="">🛠️ Test d&#x27;efficacité des outils (scan simulé)</td><td id="J;~[" class="">Annuel</td></tr></tbody></table><hr id="f8487e84-b6ba-43c4-8a78-160673c43061"/><h1 id="cc2857ce-e9e8-4a84-9eca-e04f0a9cd784" class="">🗂️ 8️⃣ Documentation à prévoir</h1><ul id="c39a1821-1774-433c-a76f-9feada34236d" class="bulleted-list"><li style="list-style-type:disc"><strong>Fiches outils</strong> :<ul id="f872522a-7736-48c1-9f83-8799951882f1" class="bulleted-list"><li style="list-style-type:circle">📄 Installation &amp; configuration Snyk &amp; Checkmarx</li></ul><ul id="5e7f1585-6b3f-4211-8791-53d6d7f280d4" class="bulleted-list"><li style="list-style-type:circle">🚀 Intégration pipeline (ex : <code>.gitlab-ci.yml</code> exemple)</li></ul><ul id="f7a6ad90-af2e-480e-9966-ca666574386a" class="bulleted-list"><li style="list-style-type:circle">📊 Accès &amp; navigation tableau de bord</li></ul></li></ul><ul id="0f33d63a-5764-4043-9308-cf9a20cfd1fd" class="bulleted-list"><li style="list-style-type:disc"><strong>Procédures</strong> :<ul id="72ea1c93-62e4-4ed1-b623-2477030ac6a2" class="bulleted-list"><li style="list-style-type:circle">📝 Interprétation des résultats (exemple : CVSS, CWE)</li></ul><ul id="37a1b80c-4597-47bc-8342-ecb079dbe784" class="bulleted-list"><li style="list-style-type:circle">🚨 Escalade &amp; remédiation</li></ul><ul id="3caa6865-a9e9-405d-aaba-43edfea6ccea" class="bulleted-list"><li style="list-style-type:circle">⛔ Exclusion &amp; fausse alerte (politique)</li></ul></li></ul><ul id="c849fa32-660f-4a8d-8035-647312b201d1" class="bulleted-list"><li style="list-style-type:disc"><strong>Modèles</strong> :<ul id="bc96ec4b-15a6-4b52-a19d-e4525adc909c" class="bulleted-list"><li style="list-style-type:circle">✉️ Modèle d’alerte email/Slack</li></ul><ul id="46357506-ddf2-4aa0-b819-53f013c34547" class="bulleted-list"><li style="list-style-type:circle">🗂️ Modèle de rapport mensuel (exemple : top vulnérabilités, état remédiation)</li></ul></li></ul><hr id="0eb5b9c7-53bc-42c9-aebe-0ec9a9f974a1"/><h1 id="d27e8d18-31c0-4c69-b5fb-977c3a1358a3" class="">🚀 Exemple de workflow : Déploiement d’une nouvelle feature</h1><p id="69611462-e909-4491-a93a-0253f3c9a61c" class="">1️⃣ Développeur push le code → pipeline GitLab s&#x27;exécute</p><p id="eb23d5e4-408f-4477-a0a6-1667ddd7dd35" class="">2️⃣ <strong>Snyk</strong> &amp; <strong>Checkmarx</strong> analysent automatiquement</p><p id="933dd395-a4da-47bd-aa6d-6d23695d4aa0" class="">3️⃣ Vulnérabilité critique détectée → pipeline bloqué, ticket auto dans Jira</p><p id="3be2d1f7-8a86-4f4b-b919-9885ec9cc6ab" class="">4️⃣ Notification Slack envoyée à l’équipe dev + sécurité</p><p id="5282966e-cd07-46f1-905f-a861e8a546d9" class="">5️⃣ Correction réalisée → nouveau push → pipeline passe OK</p><p id="84d63bf3-d211-4627-8541-cf98e67bd07c" class="">6️⃣ Déploiement autorisé après validation</p><p id="9149c008-8bbb-4d58-b4ff-a2c75c7a8290" class="">7️⃣ Rapport mensuel mis à jour</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,684 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Stratégie de réponse en cas de panne majeure et plan de reprise d’activité (inclus backup réseau).</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1af94c02-d31e-80c2-9fbe-c228b260cda7" class="page sans"><header><h1 class="page-title">Stratégie de réponse en cas de panne majeure et plan de reprise d’activité (inclus backup réseau).</h1><p class="page-description"></p></header><div class="page-body"><p id="1af94c02-d31e-8020-9e25-e55ce4d0e6ef" class="">
+</p><p id="ddb1503a-c444-4c07-9b64-2e1627c6714a" class="">Bien sûr ! Voici une stratégie complète pour la <strong>réponse en cas de panne majeure</strong> et le <strong>plan de reprise d’activité (PRA)</strong>, avec prise en compte du <strong>backup réseau</strong>, le tout adapté à <strong>ton infrastructure multisite (Paris/Genève), SD-WAN, ZTNA et cloud Azure/AWS</strong>.</p><hr id="5ca9e5b3-1729-415a-9815-fa43dbb44888"/><h2 id="0564adf6-22e9-47c2-ae41-5bd22fe44e40" class="">🎯 Objectif</h2><p id="665ad21e-2355-4b17-968a-4bee3bd58fcd" class="">Assurer la <strong>continuité d’activité</strong> en cas de panne majeure, cyberattaque ou défaillance matérielle, en <strong>minimisant l’interruption des services</strong> et la <strong>perte de données</strong>.</p><hr id="17631a84-1278-4dcb-82c9-a94dbc320630"/><h2 id="90997ab3-35cc-4356-9b18-e0463cdf675b" class="">🧱 Contexte de l’infrastructure</h2><ul id="717720ca-69bf-455b-abf4-6ecc998e1a96" class="bulleted-list"><li style="list-style-type:disc">2 sites physiques (Paris &amp; Genève) interconnectés en <strong>SD-WAN</strong></li></ul><ul id="8bb1a4a9-01b6-4683-a754-afa522c6de0f" class="bulleted-list"><li style="list-style-type:disc">Utilisation de <strong>ZTNA</strong> pour les utilisateurs sédentaires</li></ul><ul id="aaa9c45c-47db-45eb-be6c-4beb6c7acc97" class="bulleted-list"><li style="list-style-type:disc">Serveurs applicatifs <strong>hybrides</strong> : Cloud (Azure, AWS) + On-Premises</li></ul><ul id="6620b45b-dc03-48ac-8bf6-8d82d62d2db4" class="bulleted-list"><li style="list-style-type:disc">Postes utilisateurs, serveurs locaux, équipements réseaux physiques sur les deux sites</li></ul><hr id="91b0347c-3d97-44e3-ad26-6b3cbe7cf7a7"/><h2 id="e029e4b9-9ecf-4bdc-b280-0981b7d51018" class="">🧠 1. Analyse de risques &amp; identification des pannes majeures possibles</h2><table id="c12790a4-7edb-418c-8ea0-755dc3eaf1b4" class="simple-table"><tbody><tr id="a9a18a53-5aca-4121-89bc-6ac6045aa280"><td id="gQ[g" class="">Risque</td><td id="tq&lt;T" class="">Impact potentiel</td></tr><tr id="8c352256-62fd-4093-ab2f-997b9ff61e4c"><td id="gQ[g" class="">Panne d’équipement réseau (routeur, firewall)</td><td id="tq&lt;T" class="">Perte de connectivité / isolement d’un site</td></tr><tr id="b32eb5e4-401c-41ad-b078-66991a7055cf"><td id="gQ[g" class="">Panne de serveur critique</td><td id="tq&lt;T" class="">Interruption applicative</td></tr><tr id="402f5a5f-0981-4aee-a19a-045a5d863cac"><td id="gQ[g" class="">Cyberattaque (ransomware, DDoS, etc.)</td><td id="tq&lt;T" class="">Perte de données / indisponibilité</td></tr><tr id="48041635-7ff2-4e70-a8ba-5b7c29558257"><td id="gQ[g" class="">Perte de connectivité Cloud</td><td id="tq&lt;T" class="">Services SaaS/IaaS indisponibles</td></tr><tr id="33e0119c-3230-440a-839e-a9e39a21d436"><td id="gQ[g" class="">Sinistre physique (incendie, inondation)</td><td id="tq&lt;T" class="">Perte totale d’un site</td></tr><tr id="170cefe1-12e4-4206-af87-1fead8254ef8"><td id="gQ[g" class="">Défaillance SD-WAN</td><td id="tq&lt;T" class="">Rupture de communication intersite</td></tr></tbody></table><hr id="3a111437-b2c1-4384-ad1f-8bc5edaa95c8"/><h2 id="5cec0303-36da-4511-b2a6-1917816e2539" class="">🚨 2. Stratégie de réponse immédiate (Incident Response)</h2><h3 id="db86fa8a-8e6d-41aa-beeb-d859b9d9691c" class="">a. 🔔 Détection &amp; alerte</h3><ul id="80e12b00-4e86-4d3e-a734-f495fac44a27" class="bulleted-list"><li style="list-style-type:disc">Supervision centralisée (Zabbix, Prometheus, Nagios, CloudWatch, SentinelOne, etc.)</li></ul><ul id="3ce46282-20e7-4b6e-acd6-01a4f320212b" class="bulleted-list"><li style="list-style-type:disc">Journalisation et corrélation d’événements (SIEM : Splunk / Sentinel)</li></ul><ul id="3cfc817a-569c-4e84-8f0c-1779418a56a2" class="bulleted-list"><li style="list-style-type:disc">Alerte automatisée par mail/SMS/MS Teams en cas de :<ul id="df7cc721-a8d6-4dba-bd3b-03d179938418" class="bulleted-list"><li style="list-style-type:circle">Latence SD-WAN anormale</li></ul><ul id="334ca289-27f4-42c0-b1fc-cd77dfa82ffd" class="bulleted-list"><li style="list-style-type:circle">Perte de connectivité site</li></ul><ul id="329971df-2612-436e-9f32-4eb1d92edc04" class="bulleted-list"><li style="list-style-type:circle">Défaillance serveur</li></ul><ul id="9b6bd6b5-62a0-4023-b87c-0f1b99be5bea" class="bulleted-list"><li style="list-style-type:circle">Tentative d’intrusion</li></ul></li></ul><h3 id="dbcd9c41-fff8-4cde-a7f0-c3c7ba582e45" class="">b. 👷‍♂️ Équipe d’intervention</h3><ul id="edd54859-3e77-48b0-93c0-5aa2dce114c9" class="bulleted-list"><li style="list-style-type:disc">Équipe IT dédiée avec astreinte si besoin</li></ul><ul id="bd46c113-7027-45a3-b49b-26d621437be1" class="bulleted-list"><li style="list-style-type:disc">Escalade claire (Responsable infra &gt; RSSI &gt; Direction)</li></ul><ul id="2a94bbeb-5d51-46c8-8dfa-a7fa085dd696" class="bulleted-list"><li style="list-style-type:disc">Procédures &quot;runbook&quot; prédéfinies par type d’incident</li></ul><hr id="425d92f3-c061-4f33-84bc-ed695556de48"/><h2 id="0d1258b5-933f-43f8-8f07-390e76958737" class="">💾 3. Backup &amp; sauvegardes réseau</h2><h3 id="479a9d7c-d054-4c8d-92df-07bf1eecbcaa" class="">a. Serveurs (On-Prem &amp; Cloud)</h3><ul id="04b5f548-82fe-4a27-b0b6-26ff224d6fc2" class="bulleted-list"><li style="list-style-type:disc">Sauvegardes régulières via <strong>Veeam</strong>, <strong>Azure Backup</strong>, <strong>AWS Backup</strong></li></ul><ul id="63ca8279-33bf-41e5-8f35-77e047f94be9" class="bulleted-list"><li style="list-style-type:disc">Stockage des snapshots dans une autre <strong>zone de disponibilité / région</strong></li></ul><ul id="25d9aeee-6fab-42c8-b360-f8e213f23c8a" class="bulleted-list"><li style="list-style-type:disc">Rotation &amp; rétention (GFS : Grand-père / Père / Fils)</li></ul><h3 id="900618ed-61ba-44c2-b3c4-51d5a89c2e21" class="">b. Configurations réseau</h3><ul id="a2628812-2227-4135-b779-242936534564" class="bulleted-list"><li style="list-style-type:disc">Export automatisé des configs :<ul id="fa69414d-a93f-4582-acee-7ea52469e670" class="bulleted-list"><li style="list-style-type:circle">Firewalls, switches, APs, routeurs SD-WAN (via Ansible, scripts Python ou outils constructeurs)</li></ul></li></ul><ul id="6d609a0e-e7a3-4093-97cc-6bb15b6d6c2a" class="bulleted-list"><li style="list-style-type:disc">Stockage chiffré dans un dépôt Git privé ou un coffre-fort numérique</li></ul><h3 id="c8abaacc-7ed2-414d-837e-cfc5529703ee" class="">c. Postes utilisateurs</h3><ul id="d589198a-a9b2-4325-b3af-650f42a0c001" class="bulleted-list"><li style="list-style-type:disc">Redirection des documents vers OneDrive / SharePoint / Amazon WorkDocs</li></ul><ul id="2752eb7b-15ca-42c4-92c3-2af0a7047c49" class="bulleted-list"><li style="list-style-type:disc">Politique de sauvegarde/restauration uniquement pour certains profils (VIP, compta, IT…)</li></ul><hr id="70953cae-eaf3-454e-a3ce-95d4743fb3ab"/><h2 id="abb2f5ab-bb2f-4abf-a86c-6c56e235da51" class="">🧯 4. Plan de Reprise d’Activité (PRA)</h2><h3 id="bb6957b0-da78-4bac-af03-0bdf492600a5" class="">a. Objectifs</h3><table id="af44ad79-28a7-4145-97fd-21317ce30b56" class="simple-table"><tbody><tr id="31231f19-6647-401a-a356-3b6ba175d6fc"><td id="~Mxe" class="">Objectif</td><td id="ZM^?" class="">Définition</td></tr><tr id="61d7bb16-bcf4-46c3-884b-6c1160d070cb"><td id="~Mxe" class=""><strong>RTO</strong> (Recovery Time Objective)</td><td id="ZM^?" class="">Temps max acceptable pour restaurer le service</td></tr><tr id="925ad2c0-f37b-4f89-a7c7-f3dd48f180d8"><td id="~Mxe" class=""><strong>RPO</strong> (Recovery Point Objective)</td><td id="ZM^?" class="">Perte de données max acceptable</td></tr></tbody></table><blockquote id="6a7b6a7a-b735-4876-a44a-77e972c03dbd" class="">Ex : Serveurs AD : RTO 1h, RPO 15min / Serveur de fichier : RTO 4h, RPO 1h</blockquote><hr id="fae6ef77-327f-452c-91a3-a051dc01e4ce"/><h3 id="3a2ba4a5-c116-4b94-8a19-cf3141fa16d2" class="">b. Scénarios PRA prioritaires</h3><ol type="1" id="e19cc0c7-561f-4218-9b77-f4c2e6b786b7" class="numbered-list" start="1"><li><strong>Perte d’un site entier (sinistre Paris ou Genève)</strong><ul id="6e2d0384-cc33-4e6f-800f-2c92fc14856a" class="bulleted-list"><li style="list-style-type:disc">Bascule manuelle/automatique sur site miroir</li></ul><ul id="d7a69808-face-48fc-82fa-f0734ddc30e0" class="bulleted-list"><li style="list-style-type:disc">DNS failover + ZTNA redirigé</li></ul></li></ol><ol type="1" id="8efb0b34-2c63-44fa-9ad8-39fd954865bf" class="numbered-list" start="2"><li><strong>Panne SD-WAN ou interconnexion</strong><ul id="660ebca3-c9d4-4176-b673-1196b5e57f80" class="bulleted-list"><li style="list-style-type:disc">Backup LTE/4G/5G ou double WAN</li></ul><ul id="d5d65e2f-0532-4c78-bed2-18d9dd2f0d32" class="bulleted-list"><li style="list-style-type:disc">Routage local + continuité sur services cloud</li></ul></li></ol><ol type="1" id="72e81294-347e-4b81-a0cb-5fa869587498" class="numbered-list" start="3"><li><strong>Crash serveur applicatif</strong><ul id="b31d9360-04cd-4786-a51e-aaf426ba6352" class="bulleted-list"><li style="list-style-type:disc">Redeploiement via VM template ou Infra-as-Code</li></ul><ul id="86666f33-63a7-4208-ab23-55ce9aa5ad9b" class="bulleted-list"><li style="list-style-type:disc">Restauration des données depuis dernière sauvegarde</li></ul></li></ol><ol type="1" id="449b6b74-4b75-4c72-a56a-36ce800f42a0" class="numbered-list" start="4"><li><strong>Cyberattaque ou chiffrement</strong><ul id="19e3bd67-3021-42b0-a194-24621ada7fc9" class="bulleted-list"><li style="list-style-type:disc">Isolation réseau (NAC, VLAN)</li></ul><ul id="8eedaca2-8b53-4082-8a3f-633a42c04213" class="bulleted-list"><li style="list-style-type:disc">Restauration intégrale depuis sauvegarde saine</li></ul><ul id="69a7fc5b-e881-41d5-ab20-65ed7d6dbc63" class="bulleted-list"><li style="list-style-type:disc">Procédure de déclaration RGPD &amp; ANSSI si besoin</li></ul></li></ol><hr id="e28e16bc-df86-4246-a21f-1ddfb24c8c58"/><h3 id="e412998e-68f2-480a-a76a-1ab93841c470" class="">c. Outils et automatisation</h3><ul id="0bec8e11-1509-4fbc-9e43-9eb7729c1c44" class="bulleted-list"><li style="list-style-type:disc"><strong>Azure Site Recovery</strong>, <strong>AWS Elastic Disaster Recovery</strong> pour cloud</li></ul><ul id="09e86d98-8511-4ec4-a09c-f11dc478d538" class="bulleted-list"><li style="list-style-type:disc"><strong>Ansible / Terraform</strong> pour redéploiement rapide d&#x27;infra</li></ul><ul id="5d660245-a5c0-407a-a4bd-70c2934cf3cf" class="bulleted-list"><li style="list-style-type:disc"><strong>DNS failover</strong> (Route53, Azure Traffic Manager)</li></ul><ul id="d2037448-b408-4c96-8bb7-340bf9335487" class="bulleted-list"><li style="list-style-type:disc"><strong>ZTNA dynamique</strong> : bascule automatique vers applications redondées en cas d’indisponibilité d’un segment</li></ul><hr id="ce38bfd1-1441-45c6-afa5-324ec011f29b"/><h3 id="4b9a478e-4fb4-445c-a13f-28c995b48750" class="">d. Procédures de test du PRA</h3><ul id="84a7ac4a-f56a-4b10-826b-cb687730ccaf" class="bulleted-list"><li style="list-style-type:disc">Test partiel tous les <strong>6 mois</strong>, test complet <strong>annuel</strong></li></ul><ul id="d6c6dbcc-c8dd-45f5-9a84-7487e934607b" class="bulleted-list"><li style="list-style-type:disc">Journalisation du test : durée, succès, écarts vs RTO/RPO</li></ul><ul id="70ae0632-12ad-4244-826e-108e6c2bce65" class="bulleted-list"><li style="list-style-type:disc">Rapports transmis à la direction + actions correctrices</li></ul><hr id="67cafc43-1508-4ed8-96c3-81cfc6e518cd"/><h2 id="f8b95388-948c-46c0-9827-e091052d4904" class="">🧾 5. Documentation &amp; sensibilisation</h2><ul id="6c0fc44f-8b95-4536-870f-32b0dfb8174a" class="bulleted-list"><li style="list-style-type:disc">Création d’un <strong>livret PRA/PCA</strong></li></ul><ul id="c9ddd2c9-38fd-417f-aa53-3ff763e8a4fd" class="bulleted-list"><li style="list-style-type:disc">Mise à jour à chaque modification majeure de l’infrastructure</li></ul><ul id="bf6e2aa4-4b8d-45e9-a014-063819b9a969" class="bulleted-list"><li style="list-style-type:disc"><strong>Sensibilisation</strong> des utilisateurs (phishing, consignes en cas de panne)</li></ul><ul id="7ea371be-3af3-4964-b4a9-17512baa2103" class="bulleted-list"><li style="list-style-type:disc">Documentation stockée sur site + sur cloud sécurisé + export papier</li></ul><hr id="7c27abcc-5bfb-4790-a10c-4193d10f9c67"/><h2 id="32a1a875-add8-4aac-8c1d-863dadc21f38" class="">📋 Exemple de tableau de suivi PRA</h2><table id="754b619a-7e66-49e4-a5b0-fdf9dd445d31" class="simple-table"><tbody><tr id="af16cc37-fa80-41d1-a4bd-3033162dfccc"><td id="UiQl" class="">Composant</td><td id="OijC" class="">Criticité</td><td id="tBmY" class="">RTO</td><td id="]piA" class="">RPO</td><td id=":bKo" class="">Site de secours</td><td id="bbpy" class="">Procédure testée ?</td></tr><tr id="64828dcd-bf6f-43db-968b-68ca77ff3422"><td id="UiQl" class="">AD DC</td><td id="OijC" class="">Critique</td><td id="tBmY" class="">1h</td><td id="]piA" class="">15 min</td><td id=":bKo" class="">Azure (VM)</td><td id="bbpy" class="">✅ 02/2025</td></tr><tr id="3a0003a0-f5e0-457b-aae6-a235b7d27aa4"><td id="UiQl" class="">Serveur fichiers</td><td id="OijC" class="">Haute</td><td id="tBmY" class="">4h</td><td id="]piA" class="">1h</td><td id=":bKo" class="">Genève</td><td id="bbpy" class="">⬜</td></tr><tr id="5380a419-4c44-4a79-9951-204f2150acce"><td id="UiQl" class="">ZTNA Controller</td><td id="OijC" class="">Critique</td><td id="tBmY" class="">2h</td><td id="]piA" class="">30 min</td><td id=":bKo" class="">Cloud</td><td id="bbpy" class="">✅ 01/2025</td></tr><tr id="f2420250-e218-4e51-881c-4edbba446918"><td id="UiQl" class="">SD-WAN Router</td><td id="OijC" class="">Critique</td><td id="tBmY" class="">30 min</td><td id="]piA" class="">0</td><td id=":bKo" class="">Backup WAN 4G</td><td id="bbpy" class="">✅ 03/2025</td></tr></tbody></table></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

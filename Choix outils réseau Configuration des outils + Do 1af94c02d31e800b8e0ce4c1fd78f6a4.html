@@ -1,0 +1,906 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Choix outils réseau / Configuration des outils + Documentation</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1af94c02-d31e-800b-8e0c-e4c1fd78f6a4" class="page sans"><header><div class="page-header-icon undefined"><img class="icon" src="https://www.notion.so/icons/server_gray.svg"/></div><h1 class="page-title">Choix outils réseau / Configuration des outils + Documentation</h1><p class="page-description"></p></header><div class="page-body"><p id="8fab5f43-bf1a-465f-b47b-7236228bb9b1" class=""><strong>1. Routeur &amp; SD-WAN</strong></p><p id="b90d3c5b-2ef7-4742-9397-036bd45e4595" class=""><em><strong>Choix : Cisco Catalyst 8000 Series (ex : C8500-12X) </strong></em></p><p id="bec2b249-e9cf-4693-92e4-2b5348ae9140" class=""><strong>Justification :</strong></p><ul id="ebfb0720-0456-440b-98b8-5cfee090f007" class="bulleted-list"><li style="list-style-type:disc"><strong>SD-WAN natif</strong> : Permet une gestion intelligente du trafic et une connectivité multi-sites sécurisée.</li></ul><ul id="f5ec05dc-4307-4139-9973-1f87893399fb" class="bulleted-list"><li style="list-style-type:disc"><strong>Haute disponibilité</strong> : Supporte des protocoles comme VRRP/HSRP pour la redondance.</li></ul><ul id="0a566af8-41b5-4b08-9757-1cfd90e25fd6" class="bulleted-list"><li style="list-style-type:disc"><strong>Sécurité avancée</strong> : Inspection du trafic, pare-feu et protection contre les menaces.</li></ul><ul id="8d9a8f2d-5d51-439c-9be2-425895fa4025" class="bulleted-list"><li style="list-style-type:disc"><strong>Performance</strong> : Débit suffisant pour supporter des connexions 10G+ avec routage optimisé.</li></ul><p id="1af94c02-d31e-808c-8761-c90f12702263" class="">
+</p><p id="ddd9bb62-7255-41fb-be05-9241a218d362" class=""><strong>2. Switchs (Core &amp; Access)</strong></p><p id="cd8265d8-ca37-4534-8ea5-92fd582fd6d5" class=""><em><strong>Choix pour le cœur de réseau : Cisco Catalyst 9500 Series</strong></em></p><p id="0e582a41-eaeb-4954-9308-263820a18397" class=""><strong>Justification :</strong></p><ul id="37a43d4a-a99d-4b8f-a428-772249bbfcc4" class="bulleted-list"><li style="list-style-type:disc"><strong>Capacité 10G/40G/100G</strong> pour répondre aux besoins des clusters Kubernetes.</li></ul><ul id="b49ad2c3-faf2-4466-b4a4-e62bbf89e64a" class="bulleted-list"><li style="list-style-type:disc"><strong>Fonctions avancées de VLAN et VXLAN</strong> pour une segmentation flexible du réseau.</li></ul><ul id="5b8cea62-29f7-4c94-87e2-6ea752bc43c0" class="bulleted-list"><li style="list-style-type:disc"><strong>Haute disponibilité</strong> avec stacking et redondance.</li></ul><p id="1af94c02-d31e-80d3-936a-c234e5a82a65" class="">
+</p><p id="4701411a-2b8e-40f8-a06c-c3b684e7bf30" class=""><em><strong>Choix pour l&#x27;accès : Cisco Catalyst 9300 </strong></em></p><p id="386909b3-2165-452e-b783-564e7d89a24f" class=""><strong>Justification :</strong></p><ul id="b1bfd5dc-354d-4109-b5c4-ed0db284d1a6" class="bulleted-list"><li style="list-style-type:disc"><strong>Support des VLANs pour isoler les différents services et équipes</strong>.</li></ul><ul id="51230784-d649-40fa-91ca-4ec481b68e22" class="bulleted-list"><li style="list-style-type:disc"><strong>PoE+ (Power over Ethernet) pour alimenter les AP Wi-Fi et autres équipements</strong>.</li></ul><ul id="82221c37-1574-4017-af88-dc4d03ff253c" class="bulleted-list"><li style="list-style-type:disc"><strong>Gestion centralisée avec SDN (ex : Cisco DNA Center, Aruba Central)</strong>.</li></ul><p id="1af94c02-d31e-808b-8e09-c7cc667007df" class="">
+</p><p id="c1a2b923-bd3d-45fd-a638-df372502f31c" class=""><strong>3. Pare-feu &amp; Sécurité</strong></p><p id="afb91698-48d6-48aa-9821-b6bba0b5dbae" class=""><em><strong>Choix : Palo Alto PA-3220 </strong></em></p><p id="a2a79c45-05b4-4c2c-9424-d6250626cfa2" class=""><strong>Justification :</strong></p><ul id="b225ab29-d825-4cdb-b08b-4b25a1fbfc46" class="bulleted-list"><li style="list-style-type:disc"><strong>Filtrage avancé</strong> du trafic avec IDS/IPS et contrôle applicatif.</li></ul><ul id="dec0a4ca-cc58-40b0-9eeb-47f598577d88" class="bulleted-list"><li style="list-style-type:disc"><strong>Intégration avec SD-WAN</strong> pour une sécurité cohérente sur l’ensemble de l’infrastructure.</li></ul><ul id="55618e15-06e5-4c95-a650-9e9a1ea11366" class="bulleted-list"><li style="list-style-type:disc"><strong>Zero Trust Network Access (ZTNA)</strong> pour renforcer la sécurité sur les clusters Kubernetes.</li></ul><p id="1af94c02-d31e-80e7-81ef-f9c5226e3928" class="">
+</p><p id="02409d74-d4b4-4ab6-8e54-6a4d185fb6db" class=""><strong>4. Wi-Fi &amp; Réseau sans fil</strong></p><p id="4eb41c07-d60e-46b6-b5c2-16cfbacf8e2c" class=""><em><strong>Choix : Cisco Meraki MR56 </strong></em></p><p id="b23c3d91-0fde-409a-80e4-b6dbf5a23d59" class=""><strong>Justification :</strong></p><ul id="53e3ad14-bf46-413b-a3c1-09776c98d861" class="bulleted-list"><li style="list-style-type:disc"><strong>Wi-Fi 6E pour une meilleure densité et latence réduite</strong>.</li></ul><ul id="c8332ae7-cbf9-4746-a3bc-6ed9f52b1ecf" class="bulleted-list"><li style="list-style-type:disc"><strong>Gestion centralisée cloud-native</strong> avec Meraki ou Aruba Central.</li></ul><ul id="e010b2dd-60a1-4794-a41e-c91c43f8103e" class="bulleted-list"><li style="list-style-type:disc"><strong>Segmentation et sécurité avec SSID dédiés et politiques VLAN</strong>.</li></ul><p id="1af94c02-d31e-807b-ab8b-fc9904ec5ea7" class="">
+</p><p id="40ad921f-bc43-4837-96b4-cc3c54da21cc" class=""><strong>5. Load Balancer pour Kubernetes</strong></p><p id="38cc08d1-5a19-4367-8975-7fb07d5c786c" class=""><em><strong>Choix : HAProxy</strong></em></p><p id="08bbe056-597f-4877-a104-851041a57764" class=""><strong>Justification :</strong></p><ul id="c61457bf-b22c-4e26-ac96-2dfbc7120e25" class="bulleted-list"><li style="list-style-type:disc"><strong>Distribution intelligente du trafic entre les nœuds Kubernetes</strong>.</li></ul><ul id="1189046a-be29-4abb-8f88-cf4d8d51a47a" class="bulleted-list"><li style="list-style-type:disc"><strong>SSL/TLS offloading</strong> pour réduire la charge sur les serveurs applicatifs.</li></ul><ul id="425bddb5-848c-4805-8e28-622c9c3f4de3" class="bulleted-list"><li style="list-style-type:disc"><strong>Scalabilité et haute disponibilité</strong> pour les services critiques.</li></ul><p id="1af94c02-d31e-806c-9605-ef2b13746a42" class="">
+</p><p id="9c111242-f2a3-4932-b870-d075f672ea2a" class=""><strong>6. Orchestration &amp; Monitoring</strong></p><ul id="056fec52-d834-44e6-bc9a-b15c14b4e3cb" class="bulleted-list"><li style="list-style-type:disc"><strong>Monitoring Réseau</strong> : Zabbix, PRTG, ou Cisco DNA Assurance.</li></ul><ul id="ecad2297-3b1d-451d-815d-b73f5e832d6e" class="bulleted-list"><li style="list-style-type:disc"><strong>Observabilité Kubernetes</strong> : Prometheus + Grafana.</li></ul><ul id="9d424791-1033-4bda-9a6b-e8113ac77390" class="bulleted-list"><li style="list-style-type:disc"><strong>Gestion des logs</strong> : Elastic Stack (ELK) ou Splunk.</li></ul><p id="1af94c02-d31e-80de-bdb8-f7161803bc60" class="">
+</p><p id="1af94c02-d31e-80b3-ae21-ca6287323d15" class="">
+</p><h2 id="1af94c02-d31e-80b4-81cc-f8e7c953bdea" class=""><strong>Configuration des outils </strong></h2><p id="1af94c02-d31e-80be-8004-c213031e6c52" class="">
+</p><table id="01f4263d-5af1-4501-9e7f-c8e650b5ab15" class="simple-table"><tbody><tr id="0f21886a-e757-4f5f-b432-3a9ecbe078bc"><td id="]KD[" class="">Interface</td><td id="WAFg" class="">Site</td><td id="HNwG" class="">Adresse IP</td><td id="vM=l" class="">Rôle</td></tr><tr id="9b470b46-822c-458f-908d-2b55a17cd872"><td id="]KD[" class=""><code>ethernet1/1</code></td><td id="WAFg" class="">Paris</td><td id="HNwG" class="">192.168.1.1/24</td><td id="vM=l" class=""></td></tr><tr id="b4b58194-e280-4c2e-865d-a3180ffd5570"><td id="]KD[" class=""><code>ethernet1/2</code></td><td id="WAFg" class="">Paris</td><td id="HNwG" class="">192.168.10.1/24</td><td id="vM=l" class=""></td></tr><tr id="09f1e457-35ed-48c5-9df4-eaa33f8ce1ec"><td id="]KD[" class=""><code>ethernet1/3</code></td><td id="WAFg" class="">Genève</td><td id="HNwG" class="">10.10.10.1/24</td><td id="vM=l" class=""></td></tr><tr id="557b3daf-5394-489a-a91e-497797c720a4"><td id="]KD[" class=""><code>ethernet1/4</code></td><td id="WAFg" class="">Genève</td><td id="HNwG" class="">172.16.1.1/24</td><td id="vM=l" class=""></td></tr></tbody></table><p id="1af94c02-d31e-80b0-985f-cc31dbf88181" class="">
+</p><p id="1af94c02-d31e-801e-87c9-cc6912eb4541" class="">
+</p><p id="1af94c02-d31e-805f-b0b7-d4a3449b2540" class="">Configuration du SD-WAN :</p><ul id="1af94c02-d31e-809a-8b9f-ec41c247be94" class="bulleted-list"><li style="list-style-type:disc"><strong>Configuration des interfaces </strong><table id="1af94c02-d31e-807e-a57b-d29352c880e7" class="simple-table"><tbody><tr id="72baaa48-6efa-496f-a7cf-e3d103452b2c"><td id="BIVT" class="">Interface</td><td id="kz?\" class="">Type</td><td id="t&lt;^\" class="" style="width:142px">Adresse IP</td><td id="\lUv" class="" style="width:158px">Rôle</td></tr><tr id="670e4a66-fbf7-406b-936a-008f55fe7695"><td id="BIVT" class=""><code>ethernet1/1</code></td><td id="kz?\" class="">Layer 3</td><td id="t&lt;^\" class="" style="width:142px">192.168.1.1/24</td><td id="\lUv" class="" style="width:158px">WAN 1 (Bouygues)</td></tr><tr id="1af94c02-d31e-804c-8498-fda82ccc4848"><td id="BIVT" class=""><code>ethernet1/2</code></td><td id="kz?\" class="">Layer 3</td><td id="t&lt;^\" class="" style="width:142px">192.168.10.1/24</td><td id="\lUv" class="" style="width:158px">WAN 2 (Orange)</td></tr><tr id="2bbf4a8c-f36c-4ec4-9402-3ac465cec678"><td id="BIVT" class=""><code>ethernet1/3</code></td><td id="kz?\" class="">Layer 3</td><td id="t&lt;^\" class="" style="width:142px">10.10.10.1/24</td><td id="\lUv" class="" style="width:158px">WAN 3 (4G)</td></tr><tr id="1af94c02-d31e-804b-9590-db41cae5cd22"><td id="BIVT" class=""><code>ethernet1/4</code></td><td id="kz?\" class="">Layer 3</td><td id="t&lt;^\" class="" style="width:142px">172.16.1.1/24</td><td id="\lUv" class="" style="width:158px">LAN</td></tr></tbody></table></li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1af94c02-d31e-803f-bc16-ff6d6e640bba" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">set network interface ethernet ethernet1/1 layer3 ip 192.168.1.1/24
+set network interface ethernet ethernet1/1 layer3 zone WAN1
+
+set network interface ethernet ethernet1/2 layer3 ip 192.168.10.1/24
+set network interface ethernet ethernet1/2 layer3 zone WAN2
+
+set network interface ethernet ethernet1/3 layer3 ip 10.10.10.1/24
+set network interface ethernet ethernet1/3 layer3 zone WAN3
+
+set network interface ethernet ethernet1/4 layer3 ip 172.16.1.1/24
+set network interface ethernet ethernet1/4 layer3 zone LAN</code></pre><p id="1af94c02-d31e-8004-a9c4-c726d76e46c6" class="">
+</p><ul id="1af94c02-d31e-805b-a797-ccffb0a8fc92" class="bulleted-list"><li style="list-style-type:disc"><strong>Configuration du VPN SD-WAN (IPsec)</strong><ul id="1af94c02-d31e-80aa-8b9a-fd8e8545241a" class="bulleted-list"><li style="list-style-type:circle">Configuration d’un tunnel IPsec<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1af94c02-d31e-80f1-89b1-e199e6874492" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">set network tunnel ipsec name &quot;SDWAN-Tunnel1&quot;
+set network tunnel ipsec name &quot;SDWAN-Tunnel1&quot; local-address 192.168.1.1
+set network tunnel ipsec name &quot;SDWAN-Tunnel1&quot; peer-address 203.0.113.1
+set network tunnel ipsec name &quot;SDWAN-Tunnel1&quot; ike-gateway &quot;SDWAN-GW&quot;
+set network tunnel ipsec name &quot;SDWAN-Tunnel1&quot; tunnel-interface &quot;tunnel.1&quot;</code></pre></li></ul><ul id="1af94c02-d31e-8084-8b68-c51ab58dc52b" class="bulleted-list"><li style="list-style-type:circle">Création du profil IKE (défini <strong>comment</strong> le pare-feu établit une connexion sécurisée avec un <strong>pair VPN)</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1af94c02-d31e-8065-926e-ed8cb0cedce3" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">set network ike crypto-profiles ike-crypto-profiles &quot;SDWAN-IKE&quot; dh-group group14
+set network ike crypto-profiles ike-crypto-profiles &quot;SDWAN-IKE&quot; authentication sha256
+set network ike crypto-profiles ike-crypto-profiles &quot;SDWAN-IKE&quot; encryption aes-256-cbc
+set network ike crypto-profiles ike-crypto-profiles &quot;SDWAN-IKE&quot; lifetime seconds 28800</code></pre></li></ul><ul id="1af94c02-d31e-8049-b5f4-e2df7128027f" class="bulleted-list"><li style="list-style-type:circle">Création du profil IPsec<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1af94c02-d31e-80e3-81a1-e9fca7942fa6" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">set network ipsec crypto-profiles ipsec-crypto-profiles &quot;SDWAN-IPsec&quot; esp authentication sha256
+set network ipsec crypto-profiles ipsec-crypto-profiles &quot;SDWAN-IPsec&quot; esp encryption aes-256-cbc
+set network ipsec crypto-profiles ipsec-crypto-profiles &quot;SDWAN-IPsec&quot; lifetime seconds 3600</code></pre></li></ul></li></ul><p id="1af94c02-d31e-807b-a00c-ced0f94d5b74" class="">
+</p><ul id="1af94c02-d31e-802b-b223-d3b8135583c0" class="bulleted-list"><li style="list-style-type:disc"><strong>Configuration des routes SD-WAN</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1af94c02-d31e-80e6-8bda-cf8c162ea795" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">set network virtual-router &quot;default&quot; routing-table ip static-route &quot;SDWAN-Route1&quot; destination 10.0.0.0/24 next-hop &quot;tunnel.1&quot;
+set network virtual-router &quot;default&quot; routing-table ip static-route &quot;Backup-WAN&quot; destination 0.0.0.0/0 next-hop 10.10.10.2</code></pre></li></ul><p id="1af94c02-d31e-807c-8a08-cb1c7bf9fa37" class="">
+</p><ul id="1af94c02-d31e-8057-8af5-ccf07071809c" class="bulleted-list"><li style="list-style-type:disc"><strong>Configuration du Policy-Based Forwarding (PBF)</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1af94c02-d31e-809c-a179-d14a0faa82ae" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">set rulebase pbf rules &quot;SDWAN-Traffic&quot; from trust
+set rulebase pbf rules &quot;SDWAN-Traffic&quot; source any
+set rulebase pbf rules &quot;SDWAN-Traffic&quot; destination any
+set rulebase pbf rules &quot;SDWAN-Traffic&quot; action forward egress-interface tunnel.1</code></pre></li></ul><p id="1af94c02-d31e-8030-ba36-dd1ee833d15a" class="">
+</p><ul id="1af94c02-d31e-804d-b1f1-d66228234335" class="bulleted-list"><li style="list-style-type:disc"><strong>Activation SD-WAN Path Monitoring</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1af94c02-d31e-80bb-8e0f-caf98b33c281" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">set network sdwan path-monitor &quot;Monitor-WAN1&quot; source 192.168.1.1 destination 8.8.8.8
+set network sdwan path-monitor &quot;Monitor-WAN1&quot; probe frequency 5
+set network sdwan path-monitor &quot;Monitor-WAN1&quot; action failover threshold 3
+
+set network sdwan path-monitor &quot;Monitor-WAN2&quot; source 192.168.10.1 destination 1.1.1.1
+set network sdwan path-monitor &quot;Monitor-WAN2&quot; probe frequency 5
+set network sdwan path-monitor &quot;Monitor-WAN2&quot; action failover threshold 3
+
+set network sdwan path-monitor &quot;Monitor-WAN3&quot; source 10.10.10.1 destination 208.67.222.222
+set network sdwan path-monitor &quot;Monitor-WAN3&quot; probe frequency 5
+set network sdwan path-monitor &quot;Monitor-WAN3&quot; action failover threshold 3
+
+set network interface ethernet1/1 monitor &quot;Monitor-WAN1&quot;
+set network interface ethernet1/2 monitor &quot;Monitor-WAN2&quot;
+set network interface ethernet1/3 monitor &quot;Monitor-WAN3&quot;
+
+set network virtual-router &quot;default&quot; routing-table ip static-route &quot;SDWAN-Route1&quot; destination 10.0.0.0/24 next-hop &quot;tunnel.1&quot; monitor &quot;Monitor-WAN1&quot;
+set network virtual-router &quot;default&quot; routing-table ip static-route &quot;SDWAN-Route2&quot; destination 10.0.0.0/24 next-hop &quot;tunnel.2&quot; monitor &quot;Monitor-WAN2&quot;
+set network virtual-router &quot;default&quot; routing-table ip static-route &quot;SDWAN-Route3&quot; destination 10.0.0.0/24 next-hop &quot;tunnel.3&quot; monitor &quot;Monitor-WAN3&quot;
+
+set network sdwan traffic-distribution policy &quot;SDWAN-Policy&quot; mode &quot;session-load-balancing&quot;
+set network sdwan traffic-distribution policy &quot;SDWAN-Policy&quot; interfaces &quot;ethernet1/1&quot; &quot;ethernet1/2&quot; &quot;ethernet1/3&quot;</code></pre></li></ul><p id="1af94c02-d31e-8011-b9a2-f51fc89d194d" class="">
+</p><ul id="1af94c02-d31e-8002-ac05-c598d1797ef4" class="bulleted-list"><li style="list-style-type:disc"><strong>Règles de pare-feu</strong> <ul id="1af94c02-d31e-806d-a2a8-f15dfc1f1bb2" class="bulleted-list"><li style="list-style-type:circle"><strong>Règle 1 : Autoriser les flux de négociation VPN</strong><p id="1af94c02-d31e-8062-8182-ed4558e8de7d" class="">Permettre IKE (UDP 500/4500) et ESP pour l’établissement des tunnels IPsec</p><table id="1af94c02-d31e-8069-bcec-c6c2ad93fb4f" class="simple-table"><thead class="simple-table-header"><tr id="a81b0a86-e9a5-4911-a699-2f5206a5dd91"><th id=":Zdp" class="simple-table-header-color simple-table-header">Nom</th><th id="cr^G" class="simple-table-header-color simple-table-header">Source Zone</th><th id="yzy@" class="simple-table-header-color simple-table-header">Destination Zone</th><th id="&lt;wWT" class="simple-table-header-color simple-table-header">Application</th><th id="@DTk" class="simple-table-header-color simple-table-header">Action</th></tr></thead><tbody><tr id="abbe9819-6364-459c-909b-77c1d0d05c22"><td id=":Zdp" class="">Allow-VPN</td><td id="cr^G" class="">Untrust</td><td id="yzy@" class="">Untrust</td><td id="&lt;wWT" class="">IKE, IPSEC-ESP, IPSEC-AH</td><td id="@DTk" class="">Allow</td></tr></tbody></table><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1af94c02-d31e-8002-b3a1-d09b07c6d5ab" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">set rulebase security rules &quot;Allow-VPN&quot; source-zone &quot;Untrust&quot;
+set rulebase security rules &quot;Allow-VPN&quot; destination-zone &quot;Untrust&quot;
+set rulebase security rules &quot;Allow-VPN&quot; application &quot;ike&quot; &quot;ipsec-esp&quot; &quot;ipsec-ah&quot;
+set rulebase security rules &quot;Allow-VPN&quot; action allow</code></pre></li></ul><ul id="1af94c02-d31e-800b-aadb-ca2d8a6dbd5a" class="bulleted-list"><li style="list-style-type:circle"> <strong>Règle 2 : Autoriser le trafic inter-sites via le tunnel SD-WAN</strong><p id="1af94c02-d31e-8080-964c-f58da37892a4" class="">Permettre aux sites distants de communiquer via SD-WAN (ex. LAN → Tunnel)</p><table id="1af94c02-d31e-800f-8826-fd4cbe4818b3" class="simple-table"><thead class="simple-table-header"><tr id="128ee253-24d8-42e5-a153-801d3b22ff42"><th id=":Zdp" class="simple-table-header-color simple-table-header">Nom</th><th id="cr^G" class="simple-table-header-color simple-table-header">Source Zone</th><th id="yzy@" class="simple-table-header-color simple-table-header">Destination Zone</th><th id="&lt;wWT" class="simple-table-header-color simple-table-header">Application</th><th id="@DTk" class="simple-table-header-color simple-table-header">Action</th></tr></thead><tbody><tr id="64f8ccd7-16a3-4233-83de-20c5b4a192ae"><td id=":Zdp" class="">Allow-SDWAN</td><td id="cr^G" class="">Trust</td><td id="yzy@" class="">VPN</td><td id="&lt;wWT" class="">Any</td><td id="@DTk" class="">Allow</td></tr></tbody></table><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1af94c02-d31e-802d-9598-ee5755b8d473" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">set rulebase security rules &quot;Allow-SDWAN&quot; source-zone &quot;Trust&quot;
+set rulebase security rules &quot;Allow-SDWAN&quot; destination-zone &quot;VPN&quot;
+set rulebase security rules &quot;Allow-SDWAN&quot; application any
+set rulebase security rules &quot;Allow-SDWAN&quot; action allow</code></pre></li></ul><ul id="1af94c02-d31e-80e8-87f4-f946e631a81d" class="bulleted-list"><li style="list-style-type:circle">Règle 3 : Autoriser le trafic de management si nécessaire<p id="1af94c02-d31e-8092-80cb-de92ed79ebeb" class="">Permettre SSH, HTTPS, et SNMP si la gestion du firewall se fait à distance.</p><table id="eaea4134-6254-46d4-9a8b-b76632607671" class="simple-table"><tbody><tr id="e4d444fe-f94f-4cc5-8a1e-8da60f83f28c"><td id="Y&gt;zn" class="">Nom</td><td id="fo&gt;p" class="">Source Zone</td><td id="E:DL" class="">Destination Zone</td><td id="Lj&gt;X" class="">Application</td><td id="eRQg" class="">Action</td></tr><tr id="7fc10ca9-22b5-4eb3-a5f8-7364f1af9700"><td id="Y&gt;zn" class="">Allow-Admin</td><td id="fo&gt;p" class="">Management</td><td id="E:DL" class="">Trust</td><td id="Lj&gt;X" class="">SSH, HTTPS, SNMP</td><td id="eRQg" class="">Allow</td></tr></tbody></table><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1af94c02-d31e-8031-aae9-c2e42858153c" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">set rulebase security rules &quot;Allow-Admin&quot; source-zone &quot;Management&quot;
+set rulebase security rules &quot;Allow-Admin&quot; destination-zone &quot;Trust&quot;
+set rulebase security rules &quot;Allow-Admin&quot; application &quot;ssh&quot; &quot;web-browsing&quot; &quot;snmp&quot;
+set rulebase security rules &quot;Allow-Admin&quot; action allow</code></pre></li></ul></li></ul><p id="1af94c02-d31e-80c9-8025-d3d8e51dfac2" class="">
+</p><p id="1af94c02-d31e-8062-9e0e-c4007056731a" class="">Configuration switchs :</p><ul id="1af94c02-d31e-8065-840a-cdb66123ffb1" class="bulleted-list"><li style="list-style-type:disc"><strong>Schéma Genève</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="748bebe7-9d17-44f4-a2a8-df6d0db4a28d" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">                +-----------------+
+                |  Pare-feu (FW)   |
+                +-----------------+
+                        |
+                        | (Trunk)
+                        |
+                +-------------------+
+                |  Cisco Catalyst 9500  |
+                +-------------------+
+                 |          |        |
+                 |          |        |
+               VLAN 10    VLAN 20   AP Wi-Fi
+           (Serveurs SOC) (Équipe)  (SSID VLAN 20)
+</code></pre></li></ul><p id="1af94c02-d31e-80d1-a1ce-fb7ca7e26ebe" class="">
+</p><ul id="1af94c02-d31e-80dd-9589-c0d5c6a3c9ee" class="bulleted-list"><li style="list-style-type:disc"><strong>Configuration du switch Genève</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="37d6e05b-b854-4302-bd96-dabe11a438d1" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">!------------------------------------------------------------
+! Configuration de base du Catalyst 9500
+!------------------------------------------------------------
+
+! 0. Activation du routage IP (nécessaire pour l&#x27;inter-VLAN)
+ip routing
+
+!------------------------------------------------------------
+! 1. Création des VLANs
+vlan 10
+ name SOC_SERVERS
+!
+vlan 20
+ name EQUIPE_SUBNET
+!
+
+!------------------------------------------------------------
+! 2. Configuration des interfaces VLAN (SVI)
+interface Vlan10
+ description &quot;SVI VLAN 10 - Serveurs SOC&quot;
+ ip address 172.16.10.1 255.255.255.0
+ no shutdown
+!
+interface Vlan20
+ description &quot;SVI VLAN 20 - Équipe Subnet&quot;
+ ip address 172.16.20.1 255.255.255.0
+ no shutdown
+!
+
+!------------------------------------------------------------
+! 3. Routage inter-VLAN (automatique via ip routing)
+! Aucune route statique nécessaire ici pour l’inter-VLAN
+! Les VLANs sont directement connectés au routeur L3
+
+! (Optionnel) Exemple d’ACL pour restreindre les flux de VLAN 20 vers VLAN 10
+ip access-list extended VLAN20_TO_VLAN10_RESTRICT
+ deny ip 172.16.20.0 0.0.0.255 172.16.10.0 0.0.0.255
+ permit ip any any
+!
+interface Vlan20
+ ip access-group VLAN20_TO_VLAN10_RESTRICT in
+!
+
+!------------------------------------------------------------
+! 4. Configuration des interfaces physiques
+
+! 4.1. Trunk vers le Pare-feu
+interface GigabitEthernet1/1/1
+ description &quot;Trunk vers Pare-feu&quot;
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20
+!
+
+! 4.2. Port pour la borne Wi‑Fi Cisco (VLAN 20)
+interface GigabitEthernet1/1/2
+ description &quot;Port d&#x27;accès pour Borne Wi‑Fi Cisco&quot;
+ switchport mode access
+ switchport access vlan 20
+!
+
+! 4.3. Port pour un serveur SOC (VLAN 10)
+interface GigabitEthernet1/1/3
+ description &quot;Port d&#x27;accès pour Serveur SOC&quot;
+ switchport mode access
+ switchport access vlan 10
+!
+
+!------------------------------------------------------------
+! 5. (Optionnel) Port uplink vers le coeur de réseau ou Internet
+interface GigabitEthernet1/1/48
+ description &quot;Uplink vers cœur de réseau&quot;
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20
+!
+
+!------------------------------------------------------------
+! 6. Remarques complémentaires
+! - Le switch agit ici comme un routeur Layer 3 pour le trafic inter-VLAN
+! - Aucune extension L2 n’est faite entre les sites (chaque site a ses propres VLANs et plages IP)
+! - L’ACL utilisée est optionnelle pour la sécurité (blocage des accès de VLAN 20 vers VLAN 10)
+!
+! Fin de configuration
+!------------------------------------------------------------
+</code></pre></li></ul><p id="1af94c02-d31e-80b3-803c-ec3dc3d88d97" class="">
+</p><ul id="7b833161-53b7-4702-a6a7-e37fc60fb35c" class="bulleted-list"><li style="list-style-type:disc"><strong>Schéma Paris</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="92457ae4-fec8-4197-91e3-1fb510c1b188" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">  +-----------------+
+  |  Pare-feu (FW)  |
+  +-----------------+
+        │
+        │ (Access ou Trunk)
+        │
+  +----------------------+
+  |  Cisco Catalyst 9500  |
+  +----------------------+
+     │         │
+     │         │
+ Autres    AP Wi-Fi
+</code></pre><p id="6f0d12bc-1bd5-47a0-a94d-74de5f23b9ae" class="">équipements  (SSID unique)</p></li></ul><p id="1af94c02-d31e-808d-a689-cb376ce2d459" class="">
+</p><ul id="1af94c02-d31e-801f-851b-fd9b76c7ba86" class="bulleted-list"><li style="list-style-type:disc"><strong>Configuration du switch Paris</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="59d623c5-8e5e-4bee-a022-99bc38207bb6" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">!------------------------------------------------------------
+! 1. Configuration des interfaces physiques
+!------------------------------------------------------------
+
+! 1.1. Connexion au Pare-feu (mode access ou trunk selon les besoins)
+interface GigabitEthernet1/1/1
+ description &quot;Connexion vers Pare-feu&quot;
+ switchport mode access
+! Si le pare-feu gère plusieurs réseaux avec des VLANs, activer le mode trunk :
+! switchport mode trunk
+! switchport trunk encapsulation dot1q
+! switchport trunk allowed vlan all
+!
+
+! 1.2. Connexion de la borne Wi-Fi Cisco
+interface GigabitEthernet1/1/2
+ description &quot;Connexion Borne Wi-Fi&quot;
+ switchport mode access
+!
+
+! 1.3. (Optionnel) Uplink vers le réseau principal ou autre équipement
+interface GigabitEthernet1/1/48
+ description &quot;Uplink vers réseau principal&quot;
+ switchport mode access
+!
+
+!------------------------------------------------------------
+! 2. (Optionnel) Configuration d&#x27;une passerelle par défaut si nécessaire
+!------------------------------------------------------------
+! Si le switch doit envoyer tout le trafic via le pare-feu :
+ip default-gateway 192.168.1.254
+!
+
+!------------------------------------------------------------
+! Fin de configuration
+!------------------------------------------------------------
+
+</code></pre><p id="a7a279d5-28a7-4494-b3b9-ad88b5d80a18" class="">équipements  (SSID unique)</p></li></ul><p id="1af94c02-d31e-8066-9765-f44092261ba3" class="">
+</p><p id="1bb94c02-d31e-80b5-877c-dd69e843831b" class="">
+</p><p id="1bb94c02-d31e-803f-861c-ce1c46935ac0" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

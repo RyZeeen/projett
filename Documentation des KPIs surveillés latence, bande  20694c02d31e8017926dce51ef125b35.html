@@ -1,0 +1,686 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Documentation des KPIs surveillés : latence, bande passante, utilisation CPU.</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="20694c02-d31e-8017-926d-ce51ef125b35" class="page sans"><header><h1 class="page-title">Documentation des KPIs surveillés : latence, bande passante, utilisation CPU.</h1><p class="page-description"></p></header><div class="page-body"><p id="20694c02-d31e-80da-bd31-f0fc1add3b25" class="">
+</p><h3 id="315df9d6-47e5-439d-a490-a4dd73b6c1f7" class="">🎯 Objectif</h3><p id="0fa00b13-4df9-460d-988e-7e7f5a5070c5" class="">Mettre en place une supervision complète de l’infrastructure déployée dans le cadre du projet Cyna afin de garantir la performance, la fiabilité et la sécurité du réseau et des services, du déploiement à l’exploitation post-projet.</p><p id="20694c02-d31e-806d-a311-f94d0a4ed05d" class="">
+</p><table id="58934fe3-b605-4850-a2c2-9ce4348e05f0" class="simple-table"><tbody><tr id="6573acaa-bd2f-4624-b523-1fe88aae2e28"><td id="MpPV" class=""><strong>Nom du KPI</strong></td><td id="@Jgf" class=""><strong>Définition</strong></td><td id="O[Il" class=""><strong>Équipements concernés</strong></td><td id="g_=j" class=""><strong>Outils de mesure</strong></td><td id="FxIa" class=""><strong>Seuils d’alerte</strong></td><td id="~vPa" class=""><strong>Fréquence de surveillance</strong></td></tr><tr id="d5891113-1d86-4ca0-80ca-f927804dcd29"><td id="MpPV" class=""><strong>Latence réseau</strong></td><td id="@Jgf" class="">Temps pour atteindre une ressource distante (en ms)</td><td id="O[Il" class="">Routeurs C8000, Cluster K8s, Meraki, Palo Alto</td><td id="g_=j" class="">ICMP (ping), Zabbix, Meraki Dashboard</td><td id="FxIa" class="">&gt; 50 ms (warning), &gt; 100 ms (critique)</td><td id="~vPa" class="">5 min</td></tr><tr id="19348786-d459-4d08-baea-c20a7fd1345f"><td id="MpPV" class=""><strong>Bande passante</strong></td><td id="@Jgf" class="">Débit entrant/sortant sur les interfaces réseau</td><td id="O[Il" class="">Routeurs C8000, Switches C9500, Pare-feux, HAProxy</td><td id="g_=j" class="">SNMP, NetFlow, Zabbix, Meraki Dashboard</td><td id="FxIa" class="">&gt; 80 % capacité réseau (saturation)</td><td id="~vPa" class="">5 min</td></tr><tr id="8f6e62bd-e03f-4738-b831-bfbff8dd5a8e"><td id="MpPV" class=""><strong>Utilisation CPU</strong></td><td id="@Jgf" class="">Charge processeur sur les équipements réseau et serveurs</td><td id="O[Il" class="">C8000, C9500, PA-3220, K8s VMs, HAProxy</td><td id="g_=j" class="">SNMP, Zabbix Agent, Meraki Cloud</td><td id="FxIa" class="">&gt; 70 % (warning), &gt; 90 % (critique)</td><td id="~vPa" class="">5 min</td></tr><tr id="982bb1d4-24c8-4827-bbae-b614949e9b2b"><td id="MpPV" class=""><strong>Taux de perte</strong></td><td id="@Jgf" class="">Pourcentage de paquets perdus entre deux points du réseau</td><td id="O[Il" class="">Liaisons inter-sites / VLAN / SD-WAN</td><td id="g_=j" class="">Ping, traceroute, SIEM</td><td id="FxIa" class="">&gt; 1 % (warning), &gt; 5 % (critique)</td><td id="~vPa" class="">5 min</td></tr><tr id="bf53758a-0376-4133-bc1c-834d92e4685f"><td id="MpPV" class=""><strong>Disponibilité Wi-Fi</strong></td><td id="@Jgf" class="">Taux d’accessibilité des SSID pour les utilisateurs</td><td id="O[Il" class="">Bornes Meraki MR56</td><td id="g_=j" class="">Meraki Dashboard</td><td id="FxIa" class="">&lt; 99 % (warning), &lt; 95 % (critique)</td><td id="~vPa" class="">15 min</td></tr><tr id="9460f034-cc57-4e7b-bdac-2c706a82ea2e"><td id="MpPV" class=""><strong>Charge des pods Kubernetes</strong></td><td id="@Jgf" class="">CPU et mémoire utilisées par pod/container</td><td id="O[Il" class="">Nœuds Kubernetes</td><td id="g_=j" class="">Prometheus, Grafana</td><td id="FxIa" class="">&gt; 80 % CPU ou RAM en moyenne (surcharge)</td><td id="~vPa" class="">1 min</td></tr><tr id="28d4a516-2cb8-451d-aaaf-79c39554ebaa"><td id="MpPV" class=""><strong>Utilisation des interfaces</strong></td><td id="@Jgf" class="">Saturation des ports physiques (uplinks, trunk vers FW)</td><td id="O[Il" class="">Switches C9500, routeurs C8000, PA-3220</td><td id="g_=j" class="">SNMP, Zabbix</td><td id="FxIa" class="">&gt; 85 % d’utilisation réseau</td><td id="~vPa" class="">5 min</td></tr></tbody></table><h3 id="8003739c-e4bc-4c84-a861-b22e7d39b069" class="">🔧 Détail par KPI</h3><h3 id="d2eac921-dc68-48e1-a77b-d0ca4116a976" class="">🔹 1. <strong>Latence réseau</strong></h3><ul id="876c1631-2d07-48d1-9d2d-70cac716ba18" class="bulleted-list"><li style="list-style-type:disc"><strong>Objectif :</strong> S’assurer de la fluidité de la communication entre VLAN, clusters et sites distants.</li></ul><ul id="ce42f20c-43a0-4423-90d8-833507575773" class="bulleted-list"><li style="list-style-type:disc"><strong>Surveillance sur :</strong><ul id="2de09e4e-4502-4591-b2ab-2e55e11ecebb" class="bulleted-list"><li style="list-style-type:circle">Ping entre Genève ↔ Paris via SD-WAN (Catalyst 8000)</li></ul><ul id="8bba444b-84ee-4060-8366-a7af4e8d77f3" class="bulleted-list"><li style="list-style-type:circle">Temps de réponse applicatif (K8s / HAProxy)</li></ul></li></ul><ul id="14ab8886-06b8-4925-8354-37a17d56e1d3" class="bulleted-list"><li style="list-style-type:disc"><strong>Mesure :</strong> Automatisée via Zabbix ICMP + vérification manuelle ponctuelle</li></ul><h3 id="b150491d-2a39-4a9d-a765-a3efbd8efce1" class="">🔹 2. <strong>Bande passante</strong></h3><ul id="7ee7ee52-dfd8-47a4-876c-c8f622ea80fa" class="bulleted-list"><li style="list-style-type:disc"><strong>Objectif :</strong> Détecter les goulots d’étranglement sur les liens WAN, uplinks et ports trunk.</li></ul><ul id="b7189787-8b46-44a6-aae5-ee44f76ea253" class="bulleted-list"><li style="list-style-type:disc"><strong>Surveillance sur :</strong><ul id="c375dafc-98f6-47ba-b46c-f0eacc8ce6f7" class="bulleted-list"><li style="list-style-type:circle">Trunks VLAN (C9500)</li></ul><ul id="b644d121-c73e-462e-9cfa-c46dd661288e" class="bulleted-list"><li style="list-style-type:circle">Interfaces WAN (C8000)</li></ul><ul id="f80a675d-11da-477e-926a-b10b24c1b2a6" class="bulleted-list"><li style="list-style-type:circle">Interfaces FW Palo Alto</li></ul></li></ul><ul id="887a6d88-6bc0-42a3-99cf-84c662ad6d9a" class="bulleted-list"><li style="list-style-type:disc"><strong>Mesure :</strong> SNMP sur Zabbix + NetFlow pour analyse fine du trafic</li></ul><h3 id="7432b5cb-a195-4ad0-9bde-a82d72982815" class="">🔹 3. <strong>Utilisation CPU</strong></h3><ul id="90dae272-4e9f-4e69-9ae8-e3b50b57874a" class="bulleted-list"><li style="list-style-type:disc"><strong>Objectif :</strong> Éviter la surcharge matérielle pouvant provoquer une dégradation de service.</li></ul><ul id="5abcabec-a1e6-4e2b-a62e-a724eb7cacd1" class="bulleted-list"><li style="list-style-type:disc"><strong>Surveillance sur :</strong><ul id="67ca14eb-4d3f-4d1e-bdd8-682a10c4052d" class="bulleted-list"><li style="list-style-type:circle">Routeurs (Cisco 8000)</li></ul><ul id="056f0655-8635-4082-ba30-9631f9e95828" class="bulleted-list"><li style="list-style-type:circle">Switches (Cisco 9500)</li></ul><ul id="d4ce82b6-97c7-4d60-bbd3-6ec917bb9f4f" class="bulleted-list"><li style="list-style-type:circle">Pare-feux (Palo Alto)</li></ul><ul id="661515dc-c0bd-4f68-a97f-781885b1f9be" class="bulleted-list"><li style="list-style-type:circle">VMs et pods Kubernetes (CPU / RAM)</li></ul></li></ul><ul id="18c6fea5-14f0-445a-bb6b-6cdb9aea514c" class="bulleted-list"><li style="list-style-type:disc"><strong>Mesure :</strong> Zabbix agent sur VMs / SNMP pour équipements réseau</li></ul><h3 id="aa211c9d-7c2e-4520-9d06-b1728d6ca222" class="">🔹 4. <strong>Taux de perte</strong></h3><ul id="e7760fde-d3dc-4738-9302-5df897e77cef" class="bulleted-list"><li style="list-style-type:disc"><strong>Objectif :</strong> Identifier les liens instables ou mal configurés.</li></ul><ul id="93d02197-7d85-4bcd-8636-17e0fc4e2997" class="bulleted-list"><li style="list-style-type:disc"><strong>Surveillance sur :</strong><ul id="edbe94a4-6d22-4724-a1c8-f2f89385bb5b" class="bulleted-list"><li style="list-style-type:circle">Trunks VLAN</li></ul><ul id="988c70e5-f9bf-43ee-a179-bc09fbbdd854" class="bulleted-list"><li style="list-style-type:circle">Liaisons SD-WAN</li></ul></li></ul><ul id="00e3d24a-8b5f-4d92-9037-79c6f33204a5" class="bulleted-list"><li style="list-style-type:disc"><strong>Mesure :</strong> Tests ping automatisés entre équipements + SIEM pour alertes réseau</li></ul><h3 id="fa22932c-0833-4f01-bfa2-6a9840e83afe" class="">🔹 5. <strong>Disponibilité Wi-Fi</strong></h3><ul id="3ad4daba-c85b-4c53-823b-c98838c28479" class="bulleted-list"><li style="list-style-type:disc"><strong>Objectif :</strong> Vérifier que les bornes Wi-Fi MR56 assurent un accès stable au réseau.</li></ul><ul id="3ece1a63-2991-4179-94c4-3c6575b9cc6b" class="bulleted-list"><li style="list-style-type:disc"><strong>Surveillance sur :</strong><ul id="545a9d04-877b-4f5b-94c0-cc7135ea35cc" class="bulleted-list"><li style="list-style-type:circle">Uptime de chaque borne</li></ul><ul id="fe8c0dff-abaf-4b9b-9bfe-aeeb1c01b666" class="bulleted-list"><li style="list-style-type:circle">SSID actif et atteignable</li></ul></li></ul><ul id="3d7c4c01-0747-4ad1-92f2-c96617ab1c0f" class="bulleted-list"><li style="list-style-type:disc"><strong>Mesure :</strong> Meraki Cloud Dashboard + seuils de disponibilité</li></ul><h3 id="a6b62c86-b81a-4129-bb2d-46b6005e4b18" class="">🔹 6. <strong>Charge des pods Kubernetes</strong></h3><ul id="93f883bf-08e8-47dd-98de-36f5e4928e33" class="bulleted-list"><li style="list-style-type:disc"><strong>Objectif :</strong> Anticiper les problèmes de performance applicative.</li></ul><ul id="9abb8845-222a-4717-803c-78ae16ca00f9" class="bulleted-list"><li style="list-style-type:disc"><strong>Surveillance sur :</strong><ul id="a19be0f2-f932-464c-ac49-3cb319a63220" class="bulleted-list"><li style="list-style-type:circle">Nœuds du cluster (CPU + RAM)</li></ul><ul id="eec7bb2c-2b62-4928-8fa2-d7c6e1cc542a" class="bulleted-list"><li style="list-style-type:circle">Pods applicatifs critiques</li></ul></li></ul><ul id="9000ae71-323b-42cc-bff0-552d9d361662" class="bulleted-list"><li style="list-style-type:disc"><strong>Mesure :</strong> Prometheus + Grafana avec alerting via AlertManager</li></ul><h3 id="b0a5aa1b-0d6f-47c9-84b0-196d119283d6" class="">🔹 7. <strong>Utilisation des interfaces</strong></h3><ul id="b321709b-04a7-4b45-b7ec-7c793f76d7a8" class="bulleted-list"><li style="list-style-type:disc"><strong>Objectif :</strong> Éviter la saturation des ports critiques du cœur de réseau.</li></ul><ul id="1ea3fd51-c47b-425e-8b6b-edc2492991a1" class="bulleted-list"><li style="list-style-type:disc"><strong>Surveillance sur :</strong><ul id="95b5ddc3-fb00-411f-88b9-0c4885fbee6e" class="bulleted-list"><li style="list-style-type:circle">Switch uplinks</li></ul><ul id="bc612889-a28c-43d6-8d9f-f7bf5d0be3da" class="bulleted-list"><li style="list-style-type:circle">Ports trunk vers FW / cluster</li></ul></li></ul><ul id="cca40ed8-8fec-4420-afde-e74c22a6f55b" class="bulleted-list"><li style="list-style-type:disc"><strong>Mesure :</strong> SNMP + tableau de bord Zabbix</li></ul><p id="20694c02-d31e-807a-bcab-d68dc4433793" class="">
+</p><h3 id="c7d85c3f-df24-4951-9f5b-69d06e5850c6" class="">🧠 Exploitation des KPIs</h3><p id="68297458-0f86-4fec-912b-3033ab563744" class="">Les KPIs permettront de :</p><ul id="0c5bf966-2378-4b69-9758-8b168e70cde6" class="bulleted-list"><li style="list-style-type:disc">Détecter <strong>les pannes réseau en temps réel</strong></li></ul><ul id="e5662e87-ed0a-4f7d-99db-fa789ca87214" class="bulleted-list"><li style="list-style-type:disc">Suivre les <strong>tendances de charge</strong> pour planifier les évolutions (scalabilité)</li></ul><ul id="f4cb626c-a9e1-4d4a-bd90-1aeefffbda0e" class="bulleted-list"><li style="list-style-type:disc">Identifier les <strong>défaillances applicatives ou physiques</strong></li></ul><ul id="b7e3652f-6ab9-42b0-bb5b-633cb4bf0961" class="bulleted-list"><li style="list-style-type:disc">Assurer la conformité aux <strong>engagements de qualité de service (SLA)</strong> internes</li></ul><hr id="f0fb9553-5944-464a-93e8-1f683d2be3ab"/><h3 id="d655c3b5-cb08-4d00-861f-e8000ecd997b" class="">🛠 Outils de supervision déployés</h3><table id="4ea110c9-9853-4062-acef-8a3d12504c34" class="simple-table"><tbody><tr id="ee05d46d-1320-4373-a71d-054941305c26"><td id="Uj[C" class=""><strong>Outil</strong></td><td id="uG|N" class=""><strong>Rôle</strong></td></tr><tr id="f57ddb0e-692e-4299-bc47-1194e87475dd"><td id="Uj[C" class=""><strong>Zabbix</strong></td><td id="uG|N" class="">Supervision centralisée, alertes, graphes</td></tr><tr id="becf6284-e9ee-47a7-8251-3f7f5a84a5a2"><td id="Uj[C" class=""><strong>Grafana</strong></td><td id="uG|N" class="">Visualisation des métriques (via Prometheus)</td></tr><tr id="38c4ee5a-25fe-493a-8166-f6c87ea371c3"><td id="Uj[C" class=""><strong>Prometheus</strong></td><td id="uG|N" class="">Monitoring des clusters Kubernetes</td></tr><tr id="aec538c0-f119-4d7b-8134-e87fab10f69a"><td id="Uj[C" class=""><strong>Meraki Dashboard</strong></td><td id="uG|N" class="">Supervision Wi-Fi cloud</td></tr><tr id="722bcff8-f5dd-48a5-aefa-588eab708d38"><td id="Uj[C" class=""><strong>SNMP/NetFlow</strong></td><td id="uG|N" class="">Collecte des données réseau sur C9500, C8000</td></tr><tr id="3565a222-8628-4a2b-a9be-f1d83e3cd666"><td id="Uj[C" class=""><strong>ICMP/Ping</strong></td><td id="uG|N" class="">Test de latence et de connectivité</td></tr></tbody></table></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

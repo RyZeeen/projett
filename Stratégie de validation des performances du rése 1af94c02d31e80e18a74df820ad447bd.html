@@ -1,0 +1,703 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Stratégie de validation des performances du réseau : tests de charge, tests d&#x27;intrusion.</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1af94c02-d31e-80e1-8a74-df820ad447bd" class="page sans"><header><h1 class="page-title">Stratégie de validation des performances du réseau : tests de charge, tests d&#x27;intrusion.</h1><p class="page-description"></p></header><div class="page-body"><p id="1af94c02-d31e-8039-903d-cfd06c64edc5" class="">
+</p><h2 id="96431f3c-354b-40c0-ad30-dc50e724b2d2" class="">🎯 Objectif</h2><p id="15919053-3643-4ba7-be18-cd98f96883c2" class="">Garantir que le réseau est <strong>robuste</strong>, <strong>suffisamment performant</strong> pour les usages métiers, et <strong>sécurisé</strong> face aux menaces internes/externes via des <strong>tests réguliers</strong> :</p><ul id="546c6cdf-ae3b-46b8-8358-0826dc88f544" class="bulleted-list"><li style="list-style-type:disc"><strong>Tests de performance (charge, latence, disponibilité)</strong></li></ul><ul id="0a1ff02b-9413-4322-a575-2a3beea295e5" class="bulleted-list"><li style="list-style-type:disc"><strong>Tests de sécurité (intrusion, vulnérabilités)</strong></li></ul><hr id="07fa117b-4347-4394-84be-9e525f7dec80"/><h2 id="f28a47d2-eb34-4993-9222-ccf4f8a4dee2" class="">🧱 Contexte réseau à valider</h2><table id="bdfb025d-ba60-4818-8d35-2150b1ce2e01" class="simple-table"><tbody><tr id="31409ee1-662d-4730-8e2e-f895a6172fef"><td id="jGyu" class="">Élément</td><td id="cjy=" class="">Caractéristiques</td></tr><tr id="3210ba1e-1f60-4e1a-b61e-7df9982b9602"><td id="jGyu" class="">Interconnexion</td><td id="cjy=" class="">Paris ↔ Genève via <strong>SD-WAN</strong></td></tr><tr id="a042e61b-0bb2-49f4-93ac-a08d6f7e416b"><td id="jGyu" class="">Accès</td><td id="cjy=" class=""><strong>ZTNA</strong> (Zero Trust Network Access) pour les sédentaires</td></tr><tr id="b882b052-1793-4d79-b298-19ac2a19d01f"><td id="jGyu" class="">Cloud</td><td id="cjy=" class="">Services hébergés sur <strong>Azure</strong> &amp; <strong>AWS</strong></td></tr><tr id="0e585fd0-0dee-4517-adbd-76a2bd0ead03"><td id="jGyu" class="">Infra physique</td><td id="cjy=" class="">Switchs, routeurs, serveurs, postes utilisateurs</td></tr><tr id="4804d576-7572-456c-8083-94df08005028"><td id="jGyu" class="">Sécurité</td><td id="cjy=" class="">Firewalls, EDR, segmentation réseau</td></tr></tbody></table><hr id="e856c50e-5e36-4d92-9df1-8242fdfb5fcc"/><h2 id="31edd5ac-373d-4098-bb46-bd5d1ccf0fa7" class="">🔄 1. Méthodologie de validation continue</h2><table id="b24816db-af91-41ec-8b73-8868a646e50f" class="simple-table"><tbody><tr id="85ae4136-41c8-487a-848f-92e405527f1d"><td id="me|J" class="">Test</td><td id="PT|q" class="">Objectif</td><td id="srqo" class="">Fréquence recommandée</td></tr><tr id="14a46832-84da-42d3-8dd8-4b86ebfff608"><td id="me|J" class="">⚙️ <strong>Test de charge réseau</strong></td><td id="PT|q" class="">Évaluer la résistance, la latence et le débit</td><td id="srqo" class="">Trimestriel / après changement</td></tr><tr id="056d07b7-8214-4080-b9bb-0c6e2c723bca"><td id="me|J" class="">🧪 <strong>Test d’intrusion (Pentest)</strong></td><td id="PT|q" class="">Identifier les failles d’accès ou de contournement</td><td id="srqo" class="">Semestriel / à chaque évolution majeure</td></tr><tr id="9cedb398-30e7-4d5d-8f4e-baff4b86bfe8"><td id="me|J" class="">🔍 <strong>Scan de vulnérabilités</strong></td><td id="PT|q" class="">Relever les faiblesses techniques connues</td><td id="srqo" class="">Mensuel</td></tr><tr id="d31c69d5-cc5a-40ac-b8d2-252cbeedda70"><td id="me|J" class="">🧠 <strong>Audit de sécurité réseau</strong></td><td id="PT|q" class="">Vérification des règles de segmentation / pare-feu</td><td id="srqo" class="">Trimestriel</td></tr></tbody></table><hr id="0806c8a5-31d3-4882-904d-e5501a02cfa6"/><h2 id="5ef10aa9-38a6-4513-9397-42ac906aae3d" class="">📊 2. Tests de performance réseau</h2><h3 id="5d5b4f31-6868-4607-9d2f-1582b4fd281d" class="">a. 🔄 Test de charge (stress test)</h3><p id="693e01e7-3d39-4f44-b671-c885592f4c5c" class=""><strong>Objectif</strong> : Identifier les limites (latence, goulots, saturation)</p><p id="e264cb90-bd00-44e3-b686-466ba532d591" class=""><strong>Outils recommandés</strong> :</p><ul id="02b34a1b-90a9-4695-bcc7-3677be34b122" class="bulleted-list"><li style="list-style-type:disc"><strong>iperf3</strong>, <strong>nuttcp</strong>, <strong>Ostinato</strong> (trafic généré entre sites)</li></ul><ul id="81c64ddb-cd31-400e-a9fa-d707dff741ba" class="bulleted-list"><li style="list-style-type:disc"><strong>Zabbix</strong>, <strong>Grafana</strong>, <strong>PRTG</strong>, <strong>SolarWinds</strong> (visualisation)</li></ul><p id="9e203f18-12b4-4842-aca3-6bd1dbc1aef1" class=""><strong>Scénarios testés</strong> :</p><ul id="a30a29ce-93a8-4272-a9f2-ea9918296f11" class="bulleted-list"><li style="list-style-type:disc">Pics de trafic simultanés Paris ↔ Genève</li></ul><ul id="bf3d182a-e8c7-4eed-8f0f-bb15e630c01d" class="bulleted-list"><li style="list-style-type:disc">Téléchargements lourds via ZTNA</li></ul><ul id="f9a1b8ba-71a1-4a74-bc38-5dfa1602521c" class="bulleted-list"><li style="list-style-type:disc">Débit vers AWS/Azure</li></ul><ul id="de606047-040d-4353-8216-ce3d053ee216" class="bulleted-list"><li style="list-style-type:disc">Résilience SD-WAN (simulation de coupure WAN)</li></ul><p id="349048b3-0c81-49f1-8011-654649aa2803" class=""><strong>KPIs</strong> :</p><ul id="6c4fa8ca-a484-49fa-afe2-b6d084311e7d" class="bulleted-list"><li style="list-style-type:disc">Latence max / moyenne</li></ul><ul id="dc15ee62-1132-4f45-a26e-0be1ec5ef915" class="bulleted-list"><li style="list-style-type:disc">Gigue</li></ul><ul id="c90176f5-d94e-4dac-9739-f677976743a1" class="bulleted-list"><li style="list-style-type:disc">Taux de perte</li></ul><ul id="d87309af-399d-4eb7-bcbf-b58a3d5e4607" class="bulleted-list"><li style="list-style-type:disc">Utilisation bande passante</li></ul><h3 id="e674ec38-aa85-4d17-be49-e401811631e6" class="">b. 🔌 Test de disponibilité et bascule</h3><ul id="a98004a6-978a-4196-a9d4-a63890bc2c8b" class="bulleted-list"><li style="list-style-type:disc">Simulation de coupure de lien (failover SD-WAN)</li></ul><ul id="c66c31f4-4a33-43be-a0a6-21a50d464c8d" class="bulleted-list"><li style="list-style-type:disc">Test d’accès via redondance ZTNA/cloud</li></ul><ul id="6886378f-5c0f-45bc-9e19-15b47194abb4" class="bulleted-list"><li style="list-style-type:disc">Durée de rétablissement</li></ul><hr id="018aefa9-c3a8-47b2-9916-1b54346fa17a"/><h2 id="a041662b-7d74-4570-883d-719b4db5f459" class="">🛡️ 3. Tests de sécurité (intrusion)</h2><h3 id="85ae2712-f8f3-424d-8c70-5effe1712755" class="">a. 🕵️ Pentest réseau interne &amp; distant</h3><p id="26e84162-aa4e-4a00-9a74-de2d74a8606a" class=""><strong>Objectif</strong> : Identifier les failles réseau accessibles depuis :</p><ul id="9eb78a78-8add-4cc2-b6c6-6731fcae3f9e" class="bulleted-list"><li style="list-style-type:disc">L’extérieur (ZTNA, VPN, Cloud)</li></ul><ul id="26dcada9-93f1-42c5-b84e-2b54c672204b" class="bulleted-list"><li style="list-style-type:disc">L’intérieur (LAN, VLAN invités, postes utilisateurs)</li></ul><p id="b8900f65-740f-4213-9252-5499eaca1970" class=""><strong>Méthodologie</strong> :</p><ul id="60aead03-cbbd-40c1-8713-8be2626f84cf" class="bulleted-list"><li style="list-style-type:disc">Reconnaissance (Nmap, Masscan)</li></ul><ul id="c619587b-edbe-4d14-8034-e56e83e915ef" class="bulleted-list"><li style="list-style-type:disc">Exploitation (Metasploit, Nessus Pro, Cobalt Strike)</li></ul><ul id="96909b0c-5b98-4c48-9ef8-d6c4101556fc" class="bulleted-list"><li style="list-style-type:disc">Escalade / rebond</li></ul><ul id="b5f237f1-5711-4f08-8f0c-009632780e14" class="bulleted-list"><li style="list-style-type:disc">Contournement ZTNA / segmentation VLAN</li></ul><p id="28f0612c-dd47-4b2f-836a-024f72c4b4e0" class=""><strong>Cibles</strong> :</p><ul id="bd8d0ff8-4d70-49f5-9f74-b145389b142a" class="bulleted-list"><li style="list-style-type:disc">Firewalls</li></ul><ul id="ae90e962-fabc-4738-b2e5-3e128b5c2793" class="bulleted-list"><li style="list-style-type:disc">Accès cloud</li></ul><ul id="fbc4fcb0-0541-4448-be58-4d597c4d0753" class="bulleted-list"><li style="list-style-type:disc">Réseaux VLAN &quot;sensibles&quot;</li></ul><ul id="c6c54400-c440-47ea-b126-b6dc5de1273d" class="bulleted-list"><li style="list-style-type:disc">Equipements exposés / mal configurés</li></ul><p id="dcd8e941-e87d-449f-a0bc-b9786fc62225" class=""><strong>Rapport attendu</strong> :</p><ul id="cdbe9b81-c74d-4978-8555-db556f822962" class="bulleted-list"><li style="list-style-type:disc">Vulnérabilités détectées</li></ul><ul id="9aeb94ac-ac66-417b-9459-7bcbea406ede" class="bulleted-list"><li style="list-style-type:disc">Score de sévérité</li></ul><ul id="6567c705-4057-40c8-920c-3796fc45435f" class="bulleted-list"><li style="list-style-type:disc">Recommandations de remédiation</li></ul><h3 id="def27ea6-8357-4f1e-86a8-adde18836b58" class="">b. 🔦 Scan de vulnérabilités</h3><p id="56ef2874-b971-4c4d-8a2d-47aaa6674aea" class=""><strong>Outils</strong> :</p><ul id="fb9e115e-4a90-4756-8ede-449e027f526a" class="bulleted-list"><li style="list-style-type:disc"><strong>Nessus</strong>, <strong>OpenVAS</strong>, <strong>Qualys</strong></li></ul><ul id="3abf2766-7e9c-487f-970e-f477096eb824" class="bulleted-list"><li style="list-style-type:disc">Intégrés aux EDR/cloud : Defender for Cloud (Azure), Inspector (AWS)</li></ul><p id="bfeb75bb-9e35-423c-9e6d-a9967f657552" class=""><strong>Zones à couvrir</strong> :</p><ul id="26bf5e41-67e4-4d72-9465-6f7f5f099994" class="bulleted-list"><li style="list-style-type:disc">Équipements réseau (firmware, services actifs)</li></ul><ul id="7bc17578-9cb5-4e8a-96b1-159fc17de98b" class="bulleted-list"><li style="list-style-type:disc">VMs cloud</li></ul><ul id="333463ce-be26-4086-8fe0-7ff56190f0dd" class="bulleted-list"><li style="list-style-type:disc">Interfaces d’administration exposées</li></ul><hr id="303522c6-c703-42a4-8f67-33fb8afa5541"/><h2 id="472ddff6-b897-4710-af8c-386de27bc4aa" class="">🧩 4. Intégration avec les processus internes</h2><table id="616ce7bf-41a8-4c4c-b3f3-5c89a61032a0" class="simple-table"><tbody><tr id="c4c2fde6-7434-44dd-9ee3-a9a24c304aab"><td id="v}TL" class="">Domaine</td><td id="CH;;" class="">Intégration</td></tr><tr id="1cc3ec3f-16a1-46d5-aaaf-0f5d906ad3d8"><td id="v}TL" class=""><strong>PRA/PCA</strong></td><td id="CH;;" class="">Tests inclus dans les scénarios de résilience réseau</td></tr><tr id="56f91465-59cf-4c29-b23f-b9de35538c85"><td id="v}TL" class=""><strong>Patch management</strong></td><td id="CH;;" class="">Résultats de scans → planning de remédiation</td></tr><tr id="6b5dad9a-7f76-489f-9476-e7b0cfa74c72"><td id="v}TL" class=""><strong>Supervision</strong></td><td id="CH;;" class="">KPIs tests de charge ajoutés à Grafana ou Zabbix</td></tr><tr id="4af1702b-06e1-48f4-b9c5-18252c31177e"><td id="v}TL" class=""><strong>Documentation sécurité</strong></td><td id="CH;;" class="">Rapports de pentest intégrés au livret RSSI</td></tr></tbody></table><hr id="0b67ff1d-9c8f-4176-9dbc-c924ca6d8db4"/><h2 id="d3da297c-05c6-4bb1-baec-8bbe278a7e07" class="">🗂️ 5. Exemple de fiche &quot;Test de charge réseau&quot;</h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="c5662dba-faff-493c-aeb6-58bf6dd62ee4" class="code"><code class="language-Markdown" style="white-space:pre-wrap;word-break:break-all">markdown
+CopierModifier
+# ⚙️ Test de charge SD-WAN Paris ↔ Genève - 02/03/2025
+
+**Outil utilisé** : iperf3
+**Durée** : 5 minutes x 3 sessions
+**Débit mesuré** :
+- Moyenne : 220 Mbps
+- Pics : 290 Mbps
+- Gigue max : 8 ms
+**Latence moyenne** : 45 ms
+**Pertes** : 0.3 %
+**Anomalies détectées** :
+- Saturation temporaire VLAN VoIP (QoS mal configuré)
+
+**Action proposée** : Priorisation trafic VoIP SD-WAN
+**Responsable** : Référent Réseau
+**Suivi** : Inclus dans rapport de performance T1-2025
+
+</code></pre><hr id="0ad15875-b161-4700-91b6-d697fc89f166"/><h2 id="fd62dc2a-c85d-4e72-bef1-c8ac4cb9bb83" class="">📆 6. Planning conseillé</h2><table id="db69b77f-b0b7-4368-a472-718f0d6094a3" class="simple-table"><tbody><tr id="f4ed7607-7a09-46dd-a027-1a2504f91888"><td id="L;=g" class="">Mois</td><td id="=orB" class="">Action</td></tr><tr id="c8772579-aac7-4a7d-bd92-fb8948c49977"><td id="L;=g" class="">Janvier</td><td id="=orB" class="">Test de charge + scan vulnérabilités complet</td></tr><tr id="90b239b6-edbb-46f6-bb3e-91f25913f2aa"><td id="L;=g" class="">Mars</td><td id="=orB" class="">Pentest cloud + test failover SD-WAN</td></tr><tr id="9072633e-a85c-4f69-9c92-3e1c9a161ce1"><td id="L;=g" class="">Juin</td><td id="=orB" class="">Audit complet réseau (cartographie, VLAN, ports)</td></tr><tr id="2316d393-a8c2-4cee-8157-1dfe6eeb0736"><td id="L;=g" class="">Septembre</td><td id="=orB" class="">Nouveau scan vulnérabilités + test ZTNA</td></tr><tr id="efd31054-ef81-4e31-a7c2-465f61f28bd9"><td id="L;=g" class="">Novembre</td><td id="=orB" class="">Pentest interne + test d’intrusion physique (red teaming si possible)</td></tr></tbody></table></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

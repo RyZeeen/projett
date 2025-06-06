@@ -1,0 +1,690 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Livrables </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2a4078e6-f927-4ff1-9320-91c5377f02a4" class="page sans"><header><h1 class="page-title">Livrables </h1><p class="page-description"></p></header><div class="page-body"><p id="e56d7529-830c-41e4-bad7-6e04518e84cd" class=""><strong>Objectif :</strong> Modernisation des infrastructures informatiques de l’entreprise dans le cadre du projet de déménagement vers Genève, mise en place d&#x27;une architecture cloud hybride et automatisation de la gestion des infrastructures. L’utilisation de scripts et d’outils d’Infrastructure as Code (IaC) est recommandé.</p><p id="067f85eb-e415-458e-85b9-70a827ce14b5" class="">
+</p><p id="d3518a0e-92d6-4afe-8a3f-a390d227cd60" class=""><strong><span style="border-bottom:0.05em solid">1ER RENDU : RENDEZ-VOUS CLIENT :</span></strong></p><p id="0dd86acf-75a3-40c1-ba8d-f4e4638128e5" class="">
+</p><ul id="a6f2e9fe-cb45-4f65-83c2-4d0cfc039965" class="bulleted-list"><li style="list-style-type:disc"><strong>Rendu :</strong> Rendez-vous client</li></ul><ul id="cf8370e3-a613-4731-bf12-614d7c7cadb0" class="bulleted-list"><li style="list-style-type:disc"><strong>Période idéale : </strong>17 Février (fin du 1er trimestre)</li></ul><ul id="f8c23681-76c1-46ab-88ee-379534c45b21" class="bulleted-list"><li style="list-style-type:disc"><strong>Tâches à inclure :</strong><ul id="bed3c28c-63aa-44ca-b108-2ce4a13e2226" class="bulleted-list"><li style="list-style-type:circle">Entretien de la relation client</li></ul><ul id="430c24db-34ff-48bd-b880-7022e88c6e70" class="bulleted-list"><li style="list-style-type:circle">Conduite des échanges avec toutes les parties prenantes</li></ul><ul id="3cc595d9-b53b-4476-bafe-44e9c039c5d4" class="bulleted-list"><li style="list-style-type:circle">Présentation simple de l&#x27;architecture et des choix technologiques</li></ul></li></ul><ul id="c8af54bc-6da5-408d-aff4-ecc749f88ff9" class="bulleted-list"><li style="list-style-type:disc"><strong>Activités :</strong><ul id="52b27e3e-656c-48d0-86a1-44b843dec582" class="bulleted-list"><li style="list-style-type:circle">Session d&#x27;une journée</li></ul><ul id="7eba3999-3eec-4c44-aac4-87a0b1bb8314" class="bulleted-list"><li style="list-style-type:circle">Réponses reformulées pour montrer la compréhension</li></ul></li></ul><ul id="07ac52e6-69f0-46ba-adaf-35ea49ccdcd0" class="bulleted-list"><li style="list-style-type:disc"><strong>Livrable attendu :</strong><ul id="6cb1b265-66a3-432b-911c-ece9c8f6ea5e" class="bulleted-list"><li style="list-style-type:circle">Liste de questions à poser</li></ul><ul id="36705633-a7a5-42de-91bb-56b576dd1486" class="bulleted-list"><li style="list-style-type:circle">Résumé de l&#x27;architecture et des choix technologiques</li></ul></li></ul><ul id="b696e2f0-bbdd-4162-af69-60c6e729d0ec" class="bulleted-list"><li style="list-style-type:disc"><strong>Résultat attendu :</strong> Chaque étudiant doit poser des questions et reformuler les réponses pour démontrer sa compréhension</li></ul><ul id="14b9c3ab-05a1-412e-8711-c7d19bebadb2" class="bulleted-list"><li style="list-style-type:disc"><strong>Évaluation :</strong> Évaluation individuelle : qualité et quantité des questions posées</li></ul><p id="c9a7b260-65cc-4640-81da-8fc128f01bbd" class="">
+</p><p id="7d90adc9-9de4-4f64-84a5-60adcaaef8a1" class=""><strong><span style="border-bottom:0.05em solid">2EME RENDU : PLANIFICATION DU CADRAGE TECHNIQUE ET METHODOLOGIQUE DU PROJET INFORMATIQUE :</span></strong><div class="indented"><ul id="eac1b691-9252-4f79-9b8f-ddd230bab680" class="bulleted-list"><li style="list-style-type:disc"><strong>Rendu :</strong> Planification du cadrage technique et méthodologique du projet informatique</li></ul><ul id="95517f87-d533-4f84-ae13-bcd3b8568ae9" class="bulleted-list"><li style="list-style-type:disc"><strong>Livrable :</strong> Un dossier unique avec chaque étudiant responsable de la rédaction d&#x27;une partie sur CESAR</li></ul><ul id="c8e3d7a4-2770-4ded-a772-dc8231d520d1" class="bulleted-list"><li style="list-style-type:disc"><strong>Tâches à inclure :</strong><ul id="ec50c7b2-461c-4527-a1e9-3d31a7ca39f4" class="bulleted-list"><li style="list-style-type:circle">Analyse des spécifications fonctionnelles et techniques</li></ul><ul id="3f583301-a595-4972-a5c0-2ba7c997e8ba" class="bulleted-list"><li style="list-style-type:circle">Analyse du positionnement de la structure</li></ul><ul id="b574779b-4c93-4b71-80c8-97c88c3cfb4c" class="bulleted-list"><li style="list-style-type:circle">Explicitation du choix méthodologique pour la gestion du projet</li></ul><ul id="6cda4b91-da13-467f-a45f-5be4fd835316" class="bulleted-list"><li style="list-style-type:circle">Dossier d&#x27;architecture du projet</li></ul><ul id="a0b20519-7677-4efb-ba63-a346791d778c" class="bulleted-list"><li style="list-style-type:circle">Planification du projet</li></ul></li></ul><ul id="624a23ef-9d97-4136-8482-8299fea77683" class="bulleted-list"><li style="list-style-type:disc"><strong>Activités :</strong><ul id="3af9b018-a072-4cfa-8224-7b84c39d8b53" class="bulleted-list"><li style="list-style-type:circle">Conception du cadrage technique et méthodologique du projet informatique</li></ul><ul id="0adca3bd-df40-488f-b3a9-7aa7e5570250" class="bulleted-list"><li style="list-style-type:circle">Structuration de la veille technologique, concurrentielle et réglementaire</li></ul><ul id="65c43c35-70b5-4d77-b4ea-e50ab838604e" class="bulleted-list"><li style="list-style-type:circle">Planification des différentes étapes du projet</li></ul><ul id="dd7f6c83-f902-4b28-baf2-7a3a47637848" class="bulleted-list"><li style="list-style-type:circle">Prévention des risques informatiques</li></ul></li></ul><ul id="c111badd-2620-48d4-98c0-e64bcf9917f3" class="bulleted-list"><li style="list-style-type:disc"><strong>Résultat attendu :</strong> Fournir un dossier complet de planification des tâches du projet, avec des contributions individuelles de chaque étudiant via GANTT ou autres outils.</li></ul><ul id="3b2dcd67-1cb2-4c92-bf67-61c97bbcab68" class="bulleted-list"><li style="list-style-type:disc"><strong>Date limite :</strong> 17 mars</li></ul><ul id="cb711f32-e399-4edd-b8e0-046038798172" class="bulleted-list"><li style="list-style-type:disc"><strong>Aspects clés :</strong><ul id="98f67fe1-0e47-4434-9d4d-a94677ece419" class="bulleted-list"><li style="list-style-type:circle">Planification détaillée du projet</li></ul><ul id="c449aa1d-4525-4542-881c-0d1513fe4bdd" class="bulleted-list"><li style="list-style-type:circle">Analyse technique et fonctionnelle du contexte du projet</li></ul><ul id="32db5e4b-af13-4a3a-b223-a4cb4481d47d" class="bulleted-list"><li style="list-style-type:circle">Stratégies de prévention et de gestion des risques</li></ul><p id="bc9041b7-2546-4578-a7b8-63a9cd8fd555" class="">
+</p></li></ul></div></p><p id="9706d438-9d26-4140-bce6-8ca15eabfb36" class=""><strong><span style="border-bottom:0.05em solid">3EME RENDU : SOUTENANCE : PRESENTATION DE LA SOLUTION INFORMATIQUE :</span></strong><div class="indented"><ul id="80a118d5-88bd-4393-bffe-6bd0dc248af9" class="bulleted-list"><li style="list-style-type:disc"><strong>Rendu :</strong> Soutenance : présentation de la solution informatique</li></ul><ul id="3d02802d-da06-43c1-b856-3ab0f2cae995" class="bulleted-list"><li style="list-style-type:disc"><strong>Calendrier :</strong> 10 juin</li></ul><ul id="fa44e8b8-3886-4c3a-97f4-9306abc65057" class="bulleted-list"><li style="list-style-type:disc"><strong>Tâches à inclure :</strong><ul id="37adf09d-bd15-45bb-9b82-4e87f16ffe66" class="bulleted-list"><li style="list-style-type:circle">Transmission d’informations sur les étapes du projet</li></ul><ul id="d9e90609-c1cb-415c-995c-488c35092d14" class="bulleted-list"><li style="list-style-type:circle">Entretien de la relation cliente fictive via MVP</li></ul><ul id="d197acf2-4c0a-475e-ad0c-5fbb54ed9df6" class="bulleted-list"><li style="list-style-type:circle">Conduite des échanges avec toutes les parties prenantes</li></ul></li></ul><ul id="4a3ee584-25bd-4061-af54-37f38874a182" class="bulleted-list"><li style="list-style-type:disc"><strong>Activités :</strong><ul id="db118649-83ce-4055-b8af-258cd11a260c" class="bulleted-list"><li style="list-style-type:circle">25 et 30 minutes de présentation</li></ul><ul id="3aeb4ed1-733b-4a88-ae5e-eb0b22e466cd" class="bulleted-list"><li style="list-style-type:circle">Présentation devant un jury composé d&#x27;un référent pédagogique et d’un client fictif</li></ul></li></ul><ul id="d860eb30-b7a8-4055-a7d4-4a901c0a2c5d" class="bulleted-list"><li style="list-style-type:disc"><strong>Livrable attendu :</strong><ul id="a1a22b88-c047-45c9-8caf-4caf0942deae" class="bulleted-list"><li style="list-style-type:circle">Diaporama présentant la solution informatique (sur CESAR)</li></ul><ul id="72a61084-31f2-42cc-99d9-bc9f3ffe1b4f" class="bulleted-list"><li style="list-style-type:circle">Présentation de l’infrastructure mise en place chez le client</li></ul><ul id="c4f018f2-f920-46af-bf68-f4b1fab22f9b" class="bulleted-list"><li style="list-style-type:circle">Descriptif détaillé et présentation du MVP</li></ul></li></ul><ul id="30bd8bdd-64e1-4a9a-82b8-c4fcd6e71c3b" class="bulleted-list"><li style="list-style-type:disc"><strong>Évaluation :</strong> Note collective sur 15 (pondérée par la qualité de la prise de parole de chacun sur 5)</li></ul><ul id="d17add2e-a520-4ea3-94a2-6b031963ef0c" class="bulleted-list"><li style="list-style-type:disc"><strong>Coefficient :</strong> Coefficient dans le Bloc BC2 : 12/20</li></ul><ul id="b1769b16-08ff-4b42-ba9d-5b0410417a68" class="bulleted-list"><li style="list-style-type:disc"><strong>Résultat attendu :</strong><ul id="a92a7965-af9f-4b11-96ba-80c3d6c9208a" class="bulleted-list"><li style="list-style-type:circle">Préparation et animation d’une réunion de présentation au client (avant-vente) basée sur les documents fournis</li></ul><ul id="713146e2-808b-4a8e-ae15-fa962ec52ce5" class="bulleted-list"><li style="list-style-type:circle">Réponse à un appel d’offres avec spécifications fonctionnelles et techniques, analyse du positionnement du commanditaire, dossier d&#x27;architecture et planning du projet</li></ul></li></ul></div></p><p id="e2cd31eb-86de-4920-bd5c-1269419f177e" class="">
+</p><p id="d4b0e7f1-7d39-4805-9404-a133209d6552" class=""><strong><span style="border-bottom:0.05em solid">4EME RENDU : ANALYSE DE LA DYNAMIQUE DU PROJET : INTROSPECTION :</span></strong></p><ul id="62750eac-80c6-4492-b359-8c2afc5d71f9" class="bulleted-list"><li style="list-style-type:disc"><strong>Rendu :</strong> Analyse de la dynamique du projet : Introspection</li></ul><ul id="8e419ef9-ce03-4672-bd92-e0169e7de2f2" class="bulleted-list"><li style="list-style-type:disc"><strong>Calendrier :</strong> 22 juin (quelques jours après l’épreuve C)</li></ul><ul id="6ab4b387-e9c6-4c45-b7be-5d279fb63583" class="bulleted-list"><li style="list-style-type:disc"><strong>Tâches à inclure :</strong><ul id="52bbe20e-204c-4026-9548-544bb567bad5" class="bulleted-list"><li style="list-style-type:circle">Analyse de la dynamique du groupe projet</li></ul><ul id="2f097420-2c4b-4e75-9184-5d8608482fe6" class="bulleted-list"><li style="list-style-type:circle">Bilan de la communication et participation individuelle</li></ul><ul id="26ff25b7-54b1-437f-9357-ef8b3fd662cc" class="bulleted-list"><li style="list-style-type:circle">Réflexion sur les éléments fédérateurs et les freins rencontrés</li></ul></li></ul><ul id="44b87b14-b4be-4733-83c9-081472d7417a" class="bulleted-list"><li style="list-style-type:disc"><strong>Questions à traiter (non exhaustives) :</strong><ul id="39d7dfbe-54d0-4bfb-a04e-97b74b84cedc" class="bulleted-list"><li style="list-style-type:circle">Qu’est-ce qui a donné du sens au projet ?</li></ul><ul id="0af91337-1c63-4a59-815c-33fc62144f7d" class="bulleted-list"><li style="list-style-type:circle">Qu’est-ce qui a été fédérateur ?</li></ul><ul id="808c5a2a-c23a-4d07-a50a-b37b1b005586" class="bulleted-list"><li style="list-style-type:circle">Quel rôle le candidat a-t-il joué dans la dynamique du projet ?</li></ul><ul id="f454b7fe-d944-41be-9e8a-f94c76508da7" class="bulleted-list"><li style="list-style-type:circle">Le candidat a-t-il pu représenter un frein ? Si oui, dans quelles mesures ?</li></ul><ul id="4e87e34a-99d1-41d7-bc7f-a00a3f894afe" class="bulleted-list"><li style="list-style-type:circle">Comment les spécificités des membres du groupe ont-elles été prises en compte ?</li></ul><ul id="946bd2a5-14c0-4d77-9672-d38a300e4a59" class="bulleted-list"><li style="list-style-type:circle">Comment les compétences collectives ont-elles enrichi celles du candidat ?</li></ul></li></ul><ul id="507801e5-c486-4552-9b0d-7983b882368a" class="bulleted-list"><li style="list-style-type:disc"><strong>Livrable attendu :</strong> Dossier rédigé de 3 à 5 pages sur CESAR</li></ul><ul id="1337027e-6e2e-4e86-a849-95541ece520b" class="bulleted-list"><li style="list-style-type:disc"><strong>Évaluation :</strong> Travail individuel, à l’écrit</li></ul><ul id="6cd53ddb-5190-410a-a49b-e6dc88d90716" class="bulleted-list"><li style="list-style-type:disc"><strong>Résultat attendu :</strong> Analyse personnelle de la dynamique du groupe et de la participation du candidat au sein du projet collectif</li></ul><p id="8a819872-a8c6-4574-b48e-e7e6f0d22999" class="">
+</p><p id="3ac03947-7f4a-4de9-92ae-acc41c735f00" class=""><strong><span style="border-bottom:0.05em solid">5EME RENDU : DOCUMENTATION ARCHITECTURE TECHNIQUE (DAT) :</span></strong><div class="indented"><ul id="25f85c73-bf75-465e-a642-ef65e63c5aa2" class="bulleted-list"><li style="list-style-type:disc"><strong>Rendu :</strong> Documentation Architecture Technique (DAT)</li></ul><ul id="62a30da5-d2bd-4b3a-87af-5c31b5b18511" class="bulleted-list"><li style="list-style-type:disc"><strong>Calendrier :</strong> 22 juin</li></ul><ul id="5b4516a1-6406-4840-b884-983a56c59fb5" class="bulleted-list"><li style="list-style-type:disc"><strong>Épreuve :</strong> Épreuve 3.1 du BC3 : Travail collectif découpé en rendu individuel</li></ul><ul id="ecdd3ae8-72d8-435c-b2bd-52d5a1e72060" class="bulleted-list"><li style="list-style-type:disc"><strong>Actions à suivre :</strong><ul id="198d6af1-90b2-4f96-9ffd-112aeac2591d" class="bulleted-list"><li style="list-style-type:circle">Rendu individuel sur CESAR</li></ul><ul id="950b8bc9-bdfc-4a85-af3f-30a84e846fb9" class="bulleted-list"><li style="list-style-type:circle">Création d’un dossier groupe par le Responsable Pédagogique</li></ul><ul id="f305ce14-f666-4ee4-900a-161b7e4e6aa6" class="bulleted-list"><li style="list-style-type:circle">Grille d’évaluation à partager avec le(s) correcteur(s), incluant la participation du client suivi</li></ul></li></ul><ul id="8ab07852-e9c1-422e-b175-ae1ec61f1f4d" class="bulleted-list"><li style="list-style-type:disc"><strong>Activités évaluées :</strong><ul id="bcc1e287-1e84-40d9-91f2-4732c24b591d" class="bulleted-list"><li style="list-style-type:circle">Mise en place de l’installation et de la configuration</li></ul><ul id="d6a317d4-a6b2-4cf9-8693-f1a42e68d14d" class="bulleted-list"><li style="list-style-type:circle">Architecture Systèmes</li></ul><ul id="050c2aa7-5ea9-4daa-8a8d-58b1676f1a0c" class="bulleted-list"><li style="list-style-type:circle">Architecture Réseau</li></ul><ul id="6895fba1-9866-4da8-8a75-29a41808fb1a" class="bulleted-list"><li style="list-style-type:circle">Gouvernance des systèmes d’information</li></ul><ul id="d84ec458-4b7d-4dc0-97b2-3d6c0a3e03d7" class="bulleted-list"><li style="list-style-type:circle">Gestion des performances et de la scalabilité</li></ul><ul id="cc8bf9c6-fd2b-4272-bec6-0d5d726c4b2f" class="bulleted-list"><li style="list-style-type:circle">Gouvernance et évolution de l&#x27;architecture</li></ul><ul id="e32636c5-82b2-4f02-b9cc-244fb915abf1" class="bulleted-list"><li style="list-style-type:circle">Gestion de la sécurité de l&#x27;information</li></ul><ul id="785a26e9-b0f6-4bb4-821e-b46cdb044eef" class="bulleted-list"><li style="list-style-type:circle">Sécurité Réseau et Système</li></ul><ul id="f3630318-04d2-4154-8564-ffd4d5ded55d" class="bulleted-list"><li style="list-style-type:circle">Organisation des phases de tests et validation</li></ul><ul id="63ce5651-d9dd-4021-b31d-95030046ebeb" class="bulleted-list"><li style="list-style-type:circle">Sécurité et conformité</li></ul><ul id="295da9bc-518b-4bb7-bea4-f55ba60a4fc1" class="bulleted-list"><li style="list-style-type:circle">Plan de tests techniques</li></ul><ul id="3e9bd3fb-5646-414c-acd5-25ae138446f3" class="bulleted-list"><li style="list-style-type:circle">Élaboration de la documentation technique</li></ul></li></ul></div></p><p id="bc45634b-960d-4d79-b720-ee92b526f80d" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

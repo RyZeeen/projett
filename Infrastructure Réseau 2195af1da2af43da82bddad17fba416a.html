@@ -1,0 +1,691 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Infrastructure Réseau</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2195af1d-a2af-43da-82bd-dad17fba416a" class="page sans"><header><h1 class="page-title">Infrastructure Réseau</h1><p class="page-description"></p></header><div class="page-body"><p id="3c9a7d14-4947-4f51-a297-f3435bfccdea" class="">
+</p><p id="13f6e449-ada6-432f-b0b1-96d7ad3f5be5" class="">Proposition de schéma </p><figure id="9ecf1663-349d-4bdd-beed-dff8e687ab80" class="image"><a href="Infrastructure%20Re%CC%81seau%202195af1da2af43da82bddad17fba416a/image.png"><img style="width:709.9874877929688px" src="Infrastructure%20Re%CC%81seau%202195af1da2af43da82bddad17fba416a/image.png"/></a></figure><p id="f1388b8f-a29b-4e2b-8d87-a90c0a25a7e6" class="">
+</p><p id="94364a8e-efc1-4280-ada2-274410be679f" class="">Equipe centrale basée à Genève :</p><p id="317d37e0-4a20-40e8-aec8-559dd03b40e8" class="">
+</p><p id="75123922-9358-4f9e-afef-5b839f0b410a" class="">Filiale à Paris : </p><ul id="9911c942-a01c-4267-a3ba-c0f3a6882f6e" class="bulleted-list"><li style="list-style-type:disc">6 employés sédentaires</li></ul><ul id="a969b92a-a5a3-40f5-956e-b41e5406629c" class="bulleted-list"><li style="list-style-type:disc">9 commerciaux itinérants </li></ul><p id="9deeb8d2-34d9-446b-b69a-80fef9db4c24" class="">
+</p><p id="14d294da-72dc-44af-a111-8c7ab442d4a6" class="">2 équipes dans l’organigramme : </p><ul id="13bb8f49-6045-4b51-b6f5-dfb95f614648" class="bulleted-list"><li style="list-style-type:disc">Equipe SOC</li></ul><ul id="adc0924a-1fa1-4de7-974e-75a7bf8733fe" class="bulleted-list"><li style="list-style-type:disc">Equipe SaaS</li></ul><p id="a60ce7f6-c3a6-46f3-8475-5217012d59ab" class="">
+</p><p id="f18c9ddf-bf4a-4fee-a62c-39e69c542812" class="">Applications Fonctionnelles : </p><ul id="0bda5354-9dfd-476e-83c0-2288bd204480" class="bulleted-list"><li style="list-style-type:disc">APPLICATIONS COMPTABLE<ul id="2ce9dfec-2aa1-4017-8803-6e0f1b7899bb" class="bulleted-list"><li style="list-style-type:circle">1 serveur<ul id="e7c4e571-2752-4900-953c-2382b5c83e98" class="bulleted-list"><li style="list-style-type:square">Cloud : <strong>AWS</strong><ul id="937f7335-4acc-4099-9572-46b4b3ecce39" class="bulleted-list"><li style="list-style-type:disc">bucket aws</li></ul></li></ul><ul id="fadbe2ba-6661-4d0b-90ea-7c88460ca139" class="bulleted-list"><li style="list-style-type:square">Base de données : <strong>Oracle </strong>dernière version</li></ul><ul id="3ac0eb3c-4180-4a1e-ac2f-5e34fc5baec4" class="bulleted-list"><li style="list-style-type:square">Config :<ul id="413b9c92-4259-4a58-81c4-d1bac3d6de0e" class="bulleted-list"><li style="list-style-type:disc">Mem : 32 go</li></ul><ul id="9d188f22-85f9-49bf-a325-c235170c9b49" class="bulleted-list"><li style="list-style-type:disc">Proc : 4 coeurs</li></ul><ul id="7c01fcf2-ba0f-46c3-ba23-2f1dc8597cb3" class="bulleted-list"><li style="list-style-type:disc">Volumes SSD 1150 Go</li></ul><ul id="07ef35b9-b565-42ba-9072-512ee93d525f" class="bulleted-list"><li style="list-style-type:disc">Carte réseau 1 Gbps DMZ</li></ul><ul id="e49862b0-2620-4392-8bd3-dba1e008be42" class="bulleted-list"><li style="list-style-type:disc">EDR/xrd (<strong>CrowdStrike</strong>)</li></ul></li></ul></li></ul></li></ul><ul id="3e21ca0f-8875-4442-accd-9296f301b917" class="bulleted-list"><li style="list-style-type:disc">APPLICATIONS DE GESTION DE LA TRÉSORERIE<ul id="8f02b3e5-e681-4e6c-aecd-0dc2c7ebb9c6" class="bulleted-list"><li style="list-style-type:circle">Configuration souhaitée :<ul id="34319b0b-6a9e-471b-b2af-7c487b75ad40" class="bulleted-list"><li style="list-style-type:square">Mémoire : 64 Go</li></ul><ul id="9b0f3956-1736-424a-9705-04e05b8f95a8" class="bulleted-list"><li style="list-style-type:square">Processeur : 8 cœurs</li></ul><ul id="41dffb9f-fd3d-42e8-aca8-a55371906a56" class="bulleted-list"><li style="list-style-type:square">Volumes SSD pour le système, les logs, et les données (total de 2150 Go)</li></ul><ul id="bf5179c0-1d3f-4f97-8e76-512b2c060ca3" class="bulleted-list"><li style="list-style-type:square">Subnet dédié au <strong>Back End</strong></li></ul><ul id="06d62a60-2558-4b53-8027-23313bae22e8" class="bulleted-list"><li style="list-style-type:square">Réseau sécurisé avec intégration d’un <strong>firewall virtualisé</strong> géré par le SOC pour garantir l&#x27;isolation des environnements</li></ul><ul id="dcdaff96-8411-47f4-874f-a5e54b1bbfac" class="bulleted-list"><li style="list-style-type:square">La solution devra inclure un monitoring 24/7 avec <strong>Prometheus</strong>, et la sécurité des bases de données sera assurée via des outils de gestion des menaces en temps réel (EDR/XDR).</li></ul></li></ul><p id="66c0b835-3479-4230-b3c0-396e583c8ed7" class=""><span style="border-bottom:0.05em solid">Logiciel proposé :</span><div class="indented"><p id="ac9adf4e-b321-44ff-828b-dcf9155fa161" class=""><strong>titantreasury de 3V Finance</strong></p><p id="ec328aaf-78ba-451f-992e-1d5b03f7f2d6" class="">titantreasury est une solution française hébergée sur un cloud privé haute disponibilité, garantissant la sécurité et la confidentialité des données. Elle offre des fonctionnalités complètes pour la gestion de la trésorerie et des risques financiers, avec une infrastructure conforme aux normes ISO 27001 et RGPD.</p></div></p></li></ul><ul id="4b9651d6-fff9-4fde-b5f1-08c76f29d19b" class="bulleted-list"><li style="list-style-type:disc">SERVEURS WEB (SITE SaaS)<ul id="889af74c-10a1-42de-8ef0-7cd1b29ee248" class="bulleted-list"><li style="list-style-type:circle">Subnet Front End</li></ul><ul id="ae7f98f5-567b-4b1c-b776-ad587f6e1929" class="bulleted-list"><li style="list-style-type:circle">4 serveurs VM Linux (16 Go de RAM, 4 coeurs, 50 Go SSD chacun)</li></ul><ul id="4a227f15-3092-4626-9a18-70184471393f" class="bulleted-list"><li style="list-style-type:circle">répartir la charge </li></ul><ul id="72900630-1ba4-485e-9a56-4f96335bef81" class="bulleted-list"><li style="list-style-type:circle">nom de domaine : plateforme.Cyna.com</li></ul><ul id="babc7832-3b18-49a5-853d-2164941cd51e" class="bulleted-list"><li style="list-style-type:circle"><strong>Kubernetes </strong>et <strong>Prometheus</strong></li></ul></li></ul><ul id="5cab507f-4081-4e1d-b56b-f8aae915362a" class="bulleted-list"><li style="list-style-type:disc">SERVEURS SOC (Security Operations Center)<ul id="867cf231-21f8-4fa4-92d0-3c2b632c5f50" class="bulleted-list"><li style="list-style-type:circle">2 serveurs physiques avec hyperviseurs</li></ul><ul id="0301bd49-0f51-46d4-81ef-9bc4434a62aa" class="bulleted-list"><li style="list-style-type:circle">Proc : 16 coeurs chacun</li></ul><ul id="8d618dcd-8b0d-4c10-b41b-af186794902f" class="bulleted-list"><li style="list-style-type:circle">Mem : 128 Go chacun</li></ul><ul id="26fedcba-b74d-4476-90e8-b384e5f30cea" class="bulleted-list"><li style="list-style-type:circle">Stockage SSD : 5To</li></ul><ul id="4a8362ad-eca4-4dca-8feb-c8d1ef45b0e7" class="bulleted-list"><li style="list-style-type:circle">Réseau : 2 cartes réseau 10 Gbps</li></ul><ul id="30f58bd0-731b-4c12-9c1e-956876c960b7" class="bulleted-list"><li style="list-style-type:circle">SIEM centralisé (ex : <strong>Splunk</strong>, <strong>IBM QRadar</strong>)</li></ul></li></ul><ul id="c761880d-8dcf-46ad-bc2f-838e0cc6702c" class="bulleted-list"><li style="list-style-type:disc">SERVEURS EDR/XDR<ul id="46a25912-178c-4fd3-97ae-7819997ce38d" class="bulleted-list"><li style="list-style-type:circle">Utilisation de Sentinel One pour sécuriser le parc</li></ul></li></ul><ul id="cfce5519-3819-430d-9990-cd439cda6acf" class="bulleted-list"><li style="list-style-type:disc">MESSAGERIE COLLABORATIVE</li></ul><ul id="9a039c9a-4a72-411e-90b8-80d58222727d" class="bulleted-list"><li style="list-style-type:disc">ADMINISTRATION DU RÉSEAU ET GESTION DU PARC<ul id="17c94c02-d31e-80d5-8503-eddb3108c18f" class="bulleted-list"><li style="list-style-type:circle">Serveur centralisé pour gestion<ul id="17c94c02-d31e-8025-b0a7-e01670b28027" class="bulleted-list"><li style="list-style-type:square">Config :<ul id="17c94c02-d31e-8050-a56c-d985c688a937" class="bulleted-list"><li style="list-style-type:disc">Mem : 64 Go</li></ul><ul id="17c94c02-d31e-804a-bb74-fb5e98188071" class="bulleted-list"><li style="list-style-type:disc">Proc : 8 coeurs</li></ul><ul id="17c94c02-d31e-800a-be98-f527faaee607" class="bulleted-list"><li style="list-style-type:disc">Volumes SSD : 500 Go</li></ul><ul id="17c94c02-d31e-80e7-8364-d01a06d4fac8" class="bulleted-list"><li style="list-style-type:disc">Outils :<ul id="17c94c02-d31e-8062-bf08-de9db0517393" class="bulleted-list"><li style="list-style-type:circle">Cisco Meraki pour la gestion réseau</li></ul><ul id="17c94c02-d31e-8083-89b7-d3ef0dfff55c" class="bulleted-list"><li style="list-style-type:circle">SolarWinds NPM pour le monitoring</li></ul><ul id="17c94c02-d31e-80a1-855a-d1ad0f5789d3" class="bulleted-list"><li style="list-style-type:circle">Microsoft Intune pour la gestion des appareils mobiles</li></ul><ul id="17c94c02-d31e-80c8-8365-dc6e15c26bdf" class="bulleted-list"><li style="list-style-type:circle">PDQ Deploy et PDQ Inventory pour le déploiement et l&#x27;inventaire</li></ul><ul id="17c94c02-d31e-80ec-8509-dc5101b8f5f4" class="bulleted-list"><li style="list-style-type:circle">Ansible Tower pour l&#x27;automatisation des tâches</li></ul><ul id="17c94c02-d31e-80c2-9e6c-ed4aa74ddea4" class="bulleted-list"><li style="list-style-type:circle">ServiceNow pour la gestion des incidents et du parc</li></ul></li></ul></li></ul></li></ul></li></ul><ul id="9cbfb0ad-64dd-4719-8f5b-bf088a79f743" class="bulleted-list"><li style="list-style-type:disc">GESTION DES ACCÈS DISTANTS<ul id="d8dc9034-5097-400d-8555-6b22c481c366" class="bulleted-list"><li style="list-style-type:circle">OpenVPN </li></ul><ul id="858e8fbd-7660-41f4-9f14-a6de6304196f" class="bulleted-list"><li style="list-style-type:circle">    <strong>Splunk Phantom</strong>    </li></ul><ul id="61b69f9a-a644-4f8c-97f7-0cc54c48a682" class="bulleted-list"><li style="list-style-type:circle">    <strong>Single Sign-On (SSO)</strong> avec <strong>Okta</strong>   </li></ul></li></ul><ul id="fca2e37a-cc68-47bd-a5ff-788c82231899" class="bulleted-list"><li style="list-style-type:disc">GESTION DES LOGS</li></ul><ul id="beb48803-14b0-4252-95c4-53ddc280e156" class="bulleted-list"><li style="list-style-type:disc">VIRTUALISATION<ul id="6881e7b8-7638-46e7-b73e-526975390abf" class="bulleted-list"><li style="list-style-type:circle"><strong>Microsoft Hyper-V</strong>    </li></ul><ul id="dd310222-d37a-4678-933d-4b720e2171af" class="bulleted-list"><li style="list-style-type:circle"><strong>Veeam</strong></li></ul></li></ul><ul id="3a885af0-d831-4282-bf69-f00abfde7a3f" class="bulleted-list"><li style="list-style-type:disc">HYBRIDATION, ÉLASTICITÉ ET AUTOMATISATION<ul id="8e27af5a-bbab-49bb-b94a-d8a6dbaafc81" class="bulleted-list"><li style="list-style-type:circle">terraform<ul id="5335ade2-b14d-4cf7-afc1-11f56ebca559" class="bulleted-list"><li style="list-style-type:square"> automatisation de l’infrastructure cloud</li></ul></li></ul><ul id="e91ff370-3850-4a7c-a65b-1ccc2a85fef9" class="bulleted-list"><li style="list-style-type:circle">ansible<ul id="5f613812-71f3-4017-b75b-ff9fbab49e5e" class="bulleted-list"><li style="list-style-type:square">configuration openvpn </li></ul></li></ul><ul id="34ad0ceb-4ef0-4913-8fa2-bbc1c91951af" class="bulleted-list"><li style="list-style-type:circle">gitlab<ul id="97163508-9bab-467e-953d-c1dd1ea64f1a" class="bulleted-list"><li style="list-style-type:square">pipelines ci/cd</li></ul></li></ul><ul id="772e16ff-ac00-4579-b600-46040a4c8e37" class="bulleted-list"><li style="list-style-type:circle">k8s<ul id="226fe1b2-e991-40a6-8387-5ff723cdf4eb" class="bulleted-list"><li style="list-style-type:square">prometheus(monitoring metrics)</li></ul><ul id="0b733be9-2aa7-4b4b-90a6-d5fe0064c63b" class="bulleted-list"><li style="list-style-type:square">loki grafana (bdd log)</li></ul><ul id="3ef666ec-1526-4ac7-8cc4-1c177b4a5702" class="bulleted-list"><li style="list-style-type:square">grafana ( dashbord monitoring )</li></ul><ul id="f9eb31d2-7999-4710-a30b-f2b429a2a30d" class="bulleted-list"><li style="list-style-type:square">nginx (<strong>reverse proxy</strong>) </li></ul><ul id="d6239a8a-e897-4259-a61a-6ebf091b1ba6" class="bulleted-list"><li style="list-style-type:square">velero (backup k8s)</li></ul><ul id="e7e03f80-2ae6-4158-9ee4-46cd5f5bc7f8" class="bulleted-list"><li style="list-style-type:square">argocd (visualisation du versinning et de la scalabilité des applications ) </li></ul></li></ul></li></ul><ul id="9167235c-1f68-4ac3-a046-5f592959c21d" class="bulleted-list"><li style="list-style-type:disc">ACTIVE DIRECTORY<ul id="9bc95859-ee32-46c6-a265-1ed36320eda3" class="bulleted-list"><li style="list-style-type:circle">Microsoft AD</li></ul><ul id="c6c92978-baba-4650-91b5-d30bfb3fef19" class="bulleted-list"><li style="list-style-type:circle">Utilisation de tous les outils inné à microsoft AD pour le reste de la gestion </li></ul><ul id="ad3bc162-3c7d-4330-b2c0-a727eba3c3ea" class="bulleted-list"><li style="list-style-type:circle">EDR sentinel One pour la protection</li></ul></li></ul><ul id="5d6ce891-112d-417e-9371-a22f79cc8355" class="bulleted-list"><li style="list-style-type:disc">SERVICE DE FICHIERS</li></ul><p id="33bf451c-ac34-43b1-a8e7-6a440b60e278" class="">
+</p><p id="7567beed-5341-4595-8967-a5c591cc0a6f" class="">
+</p><p id="ccd1d2da-4e5d-4cde-bac5-35c42ec5ccca" class="">Récapitulatif des outils que nous allons utiliser : </p><h3 id="7514f8bb-8a7c-4946-aea0-9d72dbea6c12" class=""><strong>1️⃣ Applications Fonctionnelles</strong></h3><h3 id="148016fc-1157-44a7-84b2-82066de53fd9" class=""><strong>Applications Comptables</strong></h3><ul id="0d066127-7c73-4858-b98e-b96feb593d26" class="bulleted-list"><li style="list-style-type:disc"><strong>Cloud</strong> : <strong>AWS</strong> (pour l&#x27;hébergement)</li></ul><ul id="6e2f8b9e-7381-421a-bab4-f034cbace862" class="bulleted-list"><li style="list-style-type:disc"><strong>Base de données</strong> : <strong>Oracle</strong> (dernière version)</li></ul><ul id="13cdc405-ede6-4652-b2e5-74b461dbc2a2" class="bulleted-list"><li style="list-style-type:disc"><strong>Sécurité</strong> : <strong>CrowdStrike</strong> (EDR/XDR pour la sécurité)</li></ul><ul id="574fb1e3-c5c4-4d17-921d-db1f4a167bcf" class="bulleted-list"><li style="list-style-type:disc"><strong>Stockage</strong> : <strong>AWS S3</strong> (bucket AWS pour le stockage)</li></ul><h3 id="fe4424d3-f079-4f80-ae3b-fb31854c8612" class=""><strong>Applications de Gestion de la Trésorerie</strong></h3><ul id="23c4e2b3-ca02-46f8-81e8-e996073c2aeb" class="bulleted-list"><li style="list-style-type:disc"><strong>Solution logicielle</strong> : <strong>titantreasury de 3V Finance</strong></li></ul><ul id="19ada3b8-eaad-455f-aa38-61e853af8803" class="bulleted-list"><li style="list-style-type:disc"><strong>Monitoring</strong> : <strong>Prometheus</strong> (pour la surveillance 24/7)</li></ul><ul id="8a3ff860-8689-437a-b01a-4c0cda041a78" class="bulleted-list"><li style="list-style-type:disc"><strong>Sécurité</strong> : <strong>EDR/XDR</strong> (pour la gestion des menaces en temps réel)</li></ul><hr id="b0f8eae7-0ea2-4a94-aef5-c50ad633497b"/><h3 id="70e1b4a4-11fe-4997-9a19-0f82386b599d" class=""><strong>2️⃣ Serveurs Web (SaaS)</strong></h3><ul id="1b057b59-fa42-4346-8147-a83bb68db7a9" class="bulleted-list"><li style="list-style-type:disc"><strong>Infrastructure</strong> :<ul id="e10d26fc-33b1-46dd-983d-8202f24d3245" class="bulleted-list"><li style="list-style-type:circle"><strong>Kubernetes</strong> (orchestration des containers)</li></ul><ul id="72cca4eb-2caf-48b6-a22f-b1c635b87043" class="bulleted-list"><li style="list-style-type:circle"><strong>Prometheus</strong> (monitoring des containers)</li></ul></li></ul><ul id="d3408a3f-fdd7-4d30-b5a4-3707459ea9b9" class="bulleted-list"><li style="list-style-type:disc"><strong>Serveurs</strong> : 4 serveurs VM Linux avec ressources spécifiques</li></ul><hr id="a5fea958-e2db-4f75-b0e5-6f62faec7ee9"/><h3 id="a0e71e4c-17f1-4f12-8853-1321989359b7" class=""><strong>3️⃣ Serveurs SOC (Security Operations Center)</strong></h3><ul id="cb5a5b1e-eb92-4922-9db3-f7877c012a90" class="bulleted-list"><li style="list-style-type:disc"><strong>Serveurs physiques</strong> avec hyperviseurs</li></ul><ul id="f8ba358f-5d33-4698-ba63-7100e24fa8c1" class="bulleted-list"><li style="list-style-type:disc"><strong>SIEM centralisé</strong> :<ul id="2e34bd87-299c-420d-8571-28c01962dc91" class="bulleted-list"><li style="list-style-type:circle"><strong>Splunk</strong> ou <strong>IBM QRadar</strong> (pour la gestion des logs et la détection des incidents de sécurité)</li></ul></li></ul><hr id="bb615f98-eccf-4ae7-8796-b45f6153980b"/><h3 id="31879dab-0cc2-4c5e-8983-f6f4e9edd1d4" class=""><strong>4️⃣ Serveurs EDR/XDR</strong></h3><ul id="5af3163e-4aad-47b4-ad10-79b86b79f5c2" class="bulleted-list"><li style="list-style-type:disc"><strong>Solution de sécurité</strong> : <strong>Sentinel One</strong> (pour protéger le parc d&#x27;appareils)</li></ul><hr id="e6df8258-3155-4e3d-be0b-014db5081689"/><h3 id="95cfc051-29cc-4d27-8bf3-a69285f2441a" class=""><strong>5️⃣ Messagerie Collaborative</strong></h3><ul id="044a85bd-4ecb-46b4-a45d-5ef76ae75c38" class="bulleted-list"><li style="list-style-type:disc">Utilisation des outils de messagerie et de collaboration spécifiques à l&#x27;entreprise (non spécifié, mais cela pourrait inclure <strong>Microsoft Teams</strong>, <strong>Slack</strong>, etc.)</li></ul><hr id="0102017f-ac55-4e41-8fb9-75b5a813a8dd"/><h3 id="861515ed-b180-4f67-8cb8-78fe7381bc47" class=""><strong>6️⃣ Administration du Réseau et Gestion du Parc</strong></h3><ul id="acee52a2-588f-4f0c-bfed-f43552dc7139" class="bulleted-list"><li style="list-style-type:disc"><strong>Gestion du réseau</strong> :<ul id="e0641b0a-614e-48cc-b3f2-0066f311b4cf" class="bulleted-list"><li style="list-style-type:circle"><strong>Cisco Meraki</strong> (pour la gestion du réseau)</li></ul><ul id="72b4c5dc-01d6-402c-bd0f-9e27c5b07641" class="bulleted-list"><li style="list-style-type:circle"><strong>SolarWinds NPM</strong> (pour le monitoring des performances réseau)</li></ul><ul id="f346e447-5c4f-4fda-8d30-55f4e0e7aa4a" class="bulleted-list"><li style="list-style-type:circle"><strong>Microsoft Intune</strong> (pour la gestion des appareils mobiles)</li></ul><ul id="c67d498a-12e9-4531-bbf6-599fa97a77fc" class="bulleted-list"><li style="list-style-type:circle"><strong>PDQ Deploy et PDQ Inventory</strong> (pour le déploiement et l&#x27;inventaire des logiciels)</li></ul><ul id="6cd0b82b-5983-46e0-b6f9-628de0c5b57c" class="bulleted-list"><li style="list-style-type:circle"><strong>Ansible Tower</strong> (pour l&#x27;automatisation des tâches)</li></ul><ul id="4f14d098-347e-4532-9f48-ace46b5555f3" class="bulleted-list"><li style="list-style-type:circle"><strong>ServiceNow</strong> (pour la gestion des incidents et du parc informatique)</li></ul></li></ul><hr id="70ec1c62-c1e6-482c-a448-49e2c216be43"/><h3 id="4308580e-0084-4355-9f62-caaddb950bb6" class=""><strong>7️⃣ Gestion des Accès Distants</strong></h3><ul id="c7406584-cc69-45f4-997d-12b2863a4acf" class="bulleted-list"><li style="list-style-type:disc"><strong>VPN</strong> : <strong>OpenVPN</strong></li></ul><ul id="870ecf5a-58bb-4bab-ba75-36d01273c8d7" class="bulleted-list"><li style="list-style-type:disc"><strong>SIEM/Automation</strong> : <strong>Splunk Phantom</strong> (pour l&#x27;automatisation et la gestion des incidents)</li></ul><ul id="d1c8b446-d4b7-4e8a-9dd2-e919a8a7313f" class="bulleted-list"><li style="list-style-type:disc"><strong>SSO</strong> : <strong>Okta</strong> (pour la gestion des identités et des accès)</li></ul><hr id="4f0913bc-f99b-48b4-a66d-a52ad8f94761"/><h3 id="8ee05b96-0911-415c-b555-34449db4663f" class=""><strong>8️⃣ Gestion des Logs</strong></h3><ul id="7eab3440-ae9e-45a5-b2ce-b97406dbae4b" class="bulleted-list"><li style="list-style-type:disc"><strong>Centralisation des logs</strong> :<ul id="ea3d0354-6a9b-4679-a860-5e9e23df3f60" class="bulleted-list"><li style="list-style-type:circle"><strong>Loki</strong> (base de données de logs)</li></ul><ul id="98a1fab1-55e3-4ea9-9706-f45ced177259" class="bulleted-list"><li style="list-style-type:circle"><strong>Grafana</strong> (pour les dashboards de monitoring)</li></ul></li></ul><hr id="66c7a180-104f-4cf5-89e4-cbdb77cb4fcb"/><h3 id="d832ac13-01bc-479c-a877-0321e04c042c" class=""><strong>9️⃣ Virtualisation</strong></h3><ul id="ef7440e5-d7cf-470c-aa42-dc493ca2b279" class="bulleted-list"><li style="list-style-type:disc"><strong>Hyperviseur</strong> : <strong>Microsoft Hyper-V</strong></li></ul><ul id="81325138-0259-4dbb-a3fe-5b7c5f1069bc" class="bulleted-list"><li style="list-style-type:disc"><strong>Backup</strong> : <strong>Veeam</strong> (pour la sauvegarde et la restauration des machines virtuelles)</li></ul><hr id="cace3bbc-fc0d-4cf8-b5bc-63d1551763d0"/><h3 id="b861618b-52c2-4159-9890-e1d5e7b314fa" class=""><strong>🔟 Hybridation, Elasticité et Automatisation</strong></h3><ul id="3ef513bf-95c6-449b-bfd8-ada0d5c04749" class="bulleted-list"><li style="list-style-type:disc"><strong>Terraform</strong> (pour l’automatisation de l’infrastructure cloud)</li></ul><ul id="f7e8eac4-8b69-441d-92ee-403abec78241" class="bulleted-list"><li style="list-style-type:disc"><strong>Ansible</strong> (pour la configuration OpenVPN et d’autres services)</li></ul><ul id="2ae2f48f-e53e-4a28-a87b-fc4115a67cac" class="bulleted-list"><li style="list-style-type:disc"><strong>GitLab</strong> (pour l’intégration continue et le déploiement continu)</li></ul><ul id="2b49de78-3100-4a20-8ce0-f585c924d384" class="bulleted-list"><li style="list-style-type:disc"><strong>Kubernetes</strong> (pour l’orchestration des containers)</li></ul><ul id="2a82d9bd-5ef0-4811-b3b0-7144444ff862" class="bulleted-list"><li style="list-style-type:disc"><strong>Prometheus</strong> (monitoring des métriques)</li></ul><ul id="3b98cfde-9c55-406e-b8b9-e372d3ad4650" class="bulleted-list"><li style="list-style-type:disc"><strong>Loki</strong> (stockage et gestion des logs)</li></ul><ul id="7c364c1d-7e0f-45e0-9c0e-b2017f6bf3d1" class="bulleted-list"><li style="list-style-type:disc"><strong>Grafana</strong> (pour l’affichage des dashboards)</li></ul><ul id="41908a7a-cf6e-40fa-914f-106a1d8ff2d2" class="bulleted-list"><li style="list-style-type:disc"><strong>Nginx</strong> (reverse proxy pour les applications web)</li></ul><ul id="fff8df0b-93bd-4518-b0fc-e7ca69fb5ed0" class="bulleted-list"><li style="list-style-type:disc"><strong>Velero</strong> (pour les sauvegardes Kubernetes)</li></ul><ul id="0bf284e1-e713-4dab-9b2a-f35fb87a6c50" class="bulleted-list"><li style="list-style-type:disc"><strong>ArgoCD</strong> (pour la gestion des déploiements et de la scalabilité des applications)</li></ul><hr id="2cae7b0b-0832-415c-8ff7-62369d4eb548"/><h3 id="7fb6e9d8-6560-41e0-8899-3d54fa71b41a" class=""><strong>1️⃣1️⃣ Active Directory</strong></h3><ul id="a1ff93ed-b8b0-4de5-8fa6-e049cc2bfd9d" class="bulleted-list"><li style="list-style-type:disc"><strong>Gestion des identités</strong> : <strong>Microsoft AD</strong></li></ul><ul id="03a53efd-5a39-49ed-82f6-d291718890fc" class="bulleted-list"><li style="list-style-type:disc"><strong>Sécurité des appareils et des applications</strong> : <strong>Sentinel One</strong> (EDR)</li></ul><p id="1af94c02-d31e-8062-a6cc-d78dcdb7a2fc" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
